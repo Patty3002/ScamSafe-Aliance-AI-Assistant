@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { analysisMode, loadBusinessPolicy, validateModelShape } from './server.mjs'
+import { analysisMode, loadBusinessPolicy, validateModelShape, providerFailure } from './server.mjs'
 
 const validExtraction = {
   summary: 'A person reported a suspicious contact.',
@@ -13,6 +13,11 @@ const validExtraction = {
 }
 
 describe('Model server safeguards', () => {
+  it('distinguishes model, access and quota failures without exposing provider payloads', () => {
+    expect(providerFailure('gemini',404)).toContain('model or endpoint was not found')
+    expect(providerFailure('gemini',403)).toContain('Access was denied')
+    expect(providerFailure('gemini',429)).toContain('Quota or rate limit')
+  })
   it('loads Policy 1.0 from the sole authoritative Markdown file', async () => {
     const policy=await loadBusinessPolicy()
     expect(policy.version).toBe('1.0')

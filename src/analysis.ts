@@ -12,6 +12,8 @@ export const fixtures = [
 
 const id = () => `SSA-${new Date().getFullYear()}-${Math.random().toString(36).slice(2, 7).toUpperCase()}`
 const clean = (s: string) => s.replace(/\s+/g, ' ').trim()
+const redFlagText = (s: string) => clean(s.normalize('NFKC').replace(/[‘’]/g, "'").replace(/[“”]/g, '"').replace(/[‐‑–—]/g, '-')).toLowerCase()
+const redFlagGrounded = (source: string, evidence: string) => { const quote=redFlagText(evidence).replace(/^["']|["']$/g, ''); return quote.length>0 && redFlagText(source).includes(quote) }
 const grounded = (source: string, evidence: string) => Boolean(evidence.trim()) && clean(source).toLocaleLowerCase().includes(clean(evidence).toLocaleLowerCase())
 const exactKeys = (value: unknown, keys: string[]) => value !== null && typeof value === 'object' && !Array.isArray(value) && Object.keys(value).every(k => keys.includes(k)) && keys.every(k => k in (value as object))
 const questionSafe = (s: string) => s.trim().endsWith('?') && !/\b(?:what is|what was|what's|tell me|provide|enter|send|share(?: with me)?|give me|disclose)\b.{0,35}\b(?:(?:your|their|the|a|an|actual|full)\s+)?(?:password|passcode|one[ -]time code|verification code|security code|otp|cvv|cvc|full card number|account number)\b/i.test(s)
@@ -33,7 +35,11 @@ const safetyContextFor = (evidence: string, sources: string[]) => {
 }
 
 export function validateModelExtraction(value: unknown): value is ModelExtraction {
-  if (!exactKeys(value, ['summary','safetyAssessment','caseTypes','facts','missingInformation','conflicts','vulnerabilityIndicators','riskSignals'])) return false
+  if (value && typeof value==='object' && 'redFlags' in value) {
+    const flags=(value as ModelExtraction).redFlags
+    if(!Array.isArray(flags)||flags.length>6||flags.some(f=>!exactKeys(f,['description','evidence'])||typeof f.description!=='string'||!f.description.trim()||f.description.length>400||typeof f.evidence!=='string'||!f.evidence.trim()||f.evidence.length>600)) return false
+  }
+  if (!exactKeys(value, ['summary','safetyAssessment','caseTypes','facts','missingInformation','conflicts','vulnerabilityIndicators','riskSignals',...(value && typeof value==='object' && 'redFlags' in value ? ['redFlags'] : [])])) return false
   const x = value as ModelExtraction
   const arrays = [x.caseTypes, x.facts, x.missingInformation, x.conflicts, x.vulnerabilityIndicators, x.riskSignals]
   if (typeof x.summary !== 'string' || x.summary.length > 900 || arrays.some(a => !Array.isArray(a)) || !exactKeys(x.safetyAssessment,['status','evidence']) || !['current_danger','no_current_danger','uncertain','not_mentioned'].includes(x.safetyAssessment.status) || !Array.isArray(x.safetyAssessment.evidence) || !x.safetyAssessment.evidence.every(e=>typeof e==='string')) return false
@@ -129,10 +135,18 @@ export function analyzeCase(originalNarrative: string, caseId = id(), workerClar
   const rawModelRoute = supportedModelRoute && ['bank_transfer','card','wallet','platform_balance'].includes(supportedModelRoute) ? supportedModelRoute : 'unknown'
   const originalSupportedRoute = originalRoute.length === 1 ? originalRoute[0] : originalRoute.length > 1 ? 'unknown' : rawModelRoute !== 'unknown' ? rawModelRoute : 'unknown'
   let route: Route = employeeRoute ?? originalSupportedRoute
-  const routeConflict = (originalRoute.length > 1) || (ambiguousCorrection && correctionRoutes.length > 0) || (!correctionOverride && correctionRoutes.length === 1 && originalRoute.length === 1 && correctionRoutes[0] !== originalRoute[0]) || (clarificationRoutes.length > 1) || (!correctionOverride && clarificationRoutes.length === 1 && originalRoute.length === 1 && clarificationRoutes[0] !== originalRoute[0])
+  const routeConflict = (!correctionOverride && originalRoute.length > 1) || (ambiguousCorrection && correctionRoutes.length > 0) || (!correctionOverride && correctionRoutes.length === 1 && originalRoute.length === 1 && correctionRoutes[0] !== originalRoute[0]) || (!correctionOverride && clarificationRoutes.length > 1) || (!correctionOverride && clarificationRoutes.length === 1 && originalRoute.length === 1 && clarificationRoutes[0] !== originalRoute[0])
   if (routeConflict) route = 'unknown'
 
-  const allAmounts = sources.flatMap(money); const uniqueAmounts = [...new Set(allAmounts.map(x=>x.value))]
+  // Exclude explicitly rejected amounts, e.g. "AUD 500, not AUD 50".
+  const positiveAmountCorrection = correction.replace(/\b(?:not|rather than|instead of)\s+(?:(?:AUD\s*|A\$\s*|\$\s*)?[\d,]+(?:\.\d+)?(?:\s*AUD\b)?)/gi, '')
+  // Bare numbers count only when explicitly labelled as an amount; dates,
+  // account identifiers and arbitrary numbers must not override a payment.
+  const labelledAmounts = [...positiveAmountCorrection.matchAll(/\bamount\s*(?:(?:is|was|should be)\s*)?[:=]?\s*([\d,]+(?:\.\d+)?)(?![\d,])/gi)]
+    .map(m=>({value:Number(m[1].replace(/,/g,'')),raw:m[0]})).filter(m=>Number.isFinite(m.value))
+  const correctedAmounts = [...money(positiveAmountCorrection), ...labelledAmounts]
+  const amountOverride = new Set(correctedAmounts.map(x=>x.value)).size === 1 && !/\b(maybe|might|possibly|not sure|uncertain|could be)\b/i.test(correction)
+  const allAmounts = amountOverride ? correctedAmounts : sources.flatMap(money); const uniqueAmounts = [...new Set(allAmounts.map(x=>x.value))]
   const intakeAmounts = money(original); const amount = uniqueAmounts.length === 1 ? uniqueAmounts[0] : undefined
   const amountConflict = uniqueAmounts.length > 1
   const authoritativeCorrection = /\b(?:verified correction|correction:|actually|in fact)\b/i.test(correction)
@@ -220,7 +234,13 @@ export function analyzeCase(originalNarrative: string, caseId = id(), workerClar
   const conflicts: string[] = []
   if (amountConflict) conflicts.push(`Amount conflict: ${[...new Set(allAmounts.map(x=>`AUD ${normalizeAmount(x.value)}`))].join(' versus ')}.`)
   if (routeConflict) conflicts.push('Payment-route statements conflict or the employee correction is uncertain; confirm the route before selecting a receiving team.')
-  for (const c of (model?.conflicts ?? [])) if (c.evidence.length >= 2 && c.evidence.every(e=>sources.some(source=>grounded(source,e))) && !conflicts.some(x=>x.toLowerCase().includes(c.topic.replace(/_/g,' ')))) conflicts.push(`${c.topic}: ${c.explanation}`)
+  for (const c of (model?.conflicts ?? [])) {
+    // An explicit correction supersedes historical evidence for this topic only.
+    // Other topics and uncertain corrections must remain blocking.
+    if (c.topic === 'payment_route' && correctionOverride && !routeConflict) continue
+    if (c.topic === 'amount' && amountOverride && !amountConflict) continue
+    if (c.evidence.length >= 2 && c.evidence.every(e=>sources.some(source=>grounded(source,e))) && !conflicts.some(x=>x.toLowerCase().includes(c.topic.replace(/_/g,' ')))) conflicts.push(`${c.topic}: ${c.explanation}`)
+  }
   const pendingVerification = [
     ...(safetyReviewRequired ? ['Current personal safety status — pending immediate human review.'] : []),
     ...(paymentMentioned && route==='unknown' ? ['Payment route — pending verification.'] : []),
@@ -305,7 +325,9 @@ export function analyzeCase(originalNarrative: string, caseId = id(), workerClar
   const reviewDecisions = Object.fromEntries(recommendations.map(r=>[r.id,{state:'pending' as const,editedAction:'',editedTeam:'',notes:''}]))
   const interimAction = safetyReviewRequired ? 'Promptly review immediate personal safety with an authorised employee; do not assume the person is safe while this uncertainty remains.' : safety ? 'Immediately escalate the reported personal safety threat through the organisation’s designated safety procedure.' : priority==='P1 — Immediate' ? p1 && !sources.some(s=>routeEvidence(s).length) && financialLoss ? 'Act promptly: an authorised employee should identify and contact the institution responsible for the reported payment while clarifying the route. Do not wait for every missing detail.' : 'Ask the responsible team to assess the immediate risk and available protective steps while remaining facts are clarified.' : priority==='P2 — Priority' ? 'Arrange prompt employee review with the appropriate organisation; update urgency if the reported risk is ongoing.' : priority==='Priority pending confirmation' ? 'Priority cannot be determined from the current information; obtain prompt human review before assigning P1–P3.' : 'Record the suspicious contact and provide the relevant prevention guidance; reassess if new risk information is reported.'
   const modelExtraction = mode==='demo' ? null : model
-  return {caseId,mode,analysisVersion:1,policyVersion:'1.0',model:null,originalNarrative:original,workerClarifications:clarification,employeeCorrections:correction,summary,summaryOrigin,caseTypes,reportedFacts,priority,priorityRule,priorityEvidence,interimAction,safetyReviewRequired,safetyReviewMessage,vulnerabilityIndicators:vulnerable,missingInfo:[...new Set(missingInfo)],conflicts,pendingVerification,clarifyingQuestions,modelExtraction,recommendations,reviewDecisions}
+  const redFlags = mode==='demo' ? [] : (model?.redFlags??[]).filter((flag,index,flags)=>sources.some(source=>redFlagGrounded(source,flag.evidence)) && flags.findIndex(other=>clean(other.description).toLowerCase()===clean(flag.description).toLowerCase())===index)
+  const redFlagsStatus = mode==='demo' ? 'unavailable' : !model?.redFlags ? 'missing' : model.redFlags.length>0 && redFlags.length===0 ? 'unsupported' : redFlags.length>0 ? 'identified' : 'none'
+  return {redFlagsStatus,redFlags,caseId,mode,analysisVersion:1,policyVersion:'1.0',model:null,originalNarrative,workerClarifications,employeeCorrections,summary,summaryOrigin,caseTypes,reportedFacts,priority,priorityRule,priorityEvidence,interimAction,safetyReviewRequired,safetyReviewMessage,vulnerabilityIndicators:vulnerable,missingInfo:[...new Set(missingInfo)],conflicts,pendingVerification,clarifyingQuestions,modelExtraction,recommendations,reviewDecisions}
 }
 
 export function localAnalyze(narrative: string, caseId = id(), workerClarifications = '', employeeCorrections = ''): Analysis {

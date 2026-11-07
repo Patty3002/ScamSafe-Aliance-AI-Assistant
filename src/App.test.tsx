@@ -21,6 +21,27 @@ afterEach(async()=>{
 })
 
 describe('recommendation review workflow',()=>{
+  it('blocks progression until conflicting information is corrected and reanalysed',async()=>{
+    Object.assign(globalThis,{IS_REACT_ACT_ENVIRONMENT:true})
+    vi.stubGlobal('fetch',vi.fn(async()=>({ok:false,json:async()=>({error:'AI unavailable'})})))
+    host=document.createElement('div'); document.body.append(host); root=createRoot(host)
+    await act(async()=>root!.render(<App/>))
+    const enter=async(field:HTMLTextAreaElement,value:string)=>act(async()=>{
+      Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype,'value')!.set!.call(field,value)
+      field.dispatchEvent(new Event('input',{bubbles:true}))
+    })
+    await enter(document.querySelector('textarea')!,'I paid by bank transfer or credit card today.')
+    await click('Analyse Case')
+    expect(button('Continue with current information').disabled).toBe(true)
+    const resolution=document.querySelector<HTMLTextAreaElement>('section[aria-label="Resolve conflicting information"] textarea')!
+    expect(resolution).not.toBeNull()
+    await enter(resolution,'Correction: I paid by bank transfer.')
+    expect(button('Continue with current information').disabled).toBe(true)
+    await click('Update Analysis')
+    expect(button('Continue with current information').disabled).toBe(false)
+    await click('Continue with current information')
+    expect(document.body.textContent).toContain('Conditional recommendations for missing information')
+  })
   it('keeps a reviewed safety recommendation visible through decisions, navigation, and report generation',async()=>{
     Object.assign(globalThis,{IS_REACT_ACT_ENVIRONMENT:true})
     vi.stubGlobal('fetch',vi.fn(async(input:RequestInfo|URL)=>String(input).includes('/api/status')

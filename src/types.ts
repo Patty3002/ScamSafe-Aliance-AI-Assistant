@@ -14,7 +14,9 @@ export type Recommendation = {
 }
 export type Decision = { state: ReviewState; editedAction: string; editedTeam?: string; notes: string }
 export type ReviewHistoryEntry = { analysisVersion: number; recommendation: Recommendation; decision: Decision }
+export type RedFlag = { description: string; evidence: string }
 export type ModelExtraction = {
+  redFlags?: RedFlag[]
   summary: string
   safetyAssessment: { status: 'current_danger' | 'no_current_danger' | 'uncertain' | 'not_mentioned'; evidence: string[] }
   caseTypes: { value: CaseType; evidence: string }[]
@@ -27,10 +29,13 @@ export type ModelExtraction = {
 export type Analysis = {
   caseId: string; mode: AnalysisMode; analysisVersion: number; originalNarrative: string; workerClarifications: string; employeeCorrections: string
   policyVersion: string; model: string | null
+  redFlags: RedFlag[]
+  redFlagsStatus: 'unavailable' | 'missing' | 'unsupported' | 'identified' | 'none'
   summary: string; summaryOrigin: 'gemini_extracted' | 'openai_extracted' | 'case_intake' | 'demo_extracted'; caseTypes: CaseType[]; reportedFacts: Fact[]
   priority: Priority; priorityRule: string; priorityEvidence: string[]; interimAction: string
   safetyReviewRequired: boolean; safetyReviewMessage: string
   vulnerabilityIndicators: Vulnerability[]; missingInfo: string[]; conflicts: string[]; pendingVerification: string[]
   clarifyingQuestions: string[]; modelExtraction: ModelExtraction | null; recommendations: Recommendation[]
   reviewDecisions: Record<string, Decision>
+  retainedAiConflicts?: string[]
 }

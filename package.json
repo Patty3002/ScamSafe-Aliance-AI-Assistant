@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",
+    "docx": "^9.15.2",
     "lucide-react": "latest",
     "react": "latest",
     "react-dom": "latest",

@@ -4,9 +4,11 @@ import { Component, useEffect, useMemo, useState } from 'react'
 import type { ReactNode } from 'react'
 import { AlertTriangle, ArrowLeft, ArrowRight, Check, Clipboard, Download, FileText, Info, LockKeyhole, RefreshCw, ShieldAlert, SlidersHorizontal, Sparkles, X } from 'lucide-react'
 import { caseInformationFacts, fixtures, localAnalyze, reconcileAnalysis } from './analysis'
+import { conditionalActions } from './conditionalActions'
 import { buildReport } from './report'
 import type { Analysis, Decision, Recommendation, ReviewHistoryEntry, HumanOverride, Priority } from './types'
 
+const reviewText = (text: string) => text.replace(/\s+/g, ' ').trim()
 const newId = () => `SSA-${new Date().getFullYear()}-${Math.random().toString(36).slice(2, 7).toUpperCase()}`
 const preserveDecisionState = (a: Analysis, previous: Record<string, Decision>, prior: Analysis | null) => Object.fromEntries(a.recommendations.map(r=>{const old=prior?.recommendations.find(item=>item.id===r.id);const unchanged=old&&old.fingerprint===r.fingerprint&&old.action===r.action&&old.reason===r.reason&&old.organisation===r.organisation&&old.team===r.team&&old.condition===r.condition;return [r.id,unchanged?(previous[r.id]??a.reviewDecisions[r.id]):a.reviewDecisions[r.id]]}))
 const supersededReviews = (prior: Analysis | null, next: Analysis, decisions: Record<string,Decision>): ReviewHistoryEntry[] => !prior?[]:prior.recommendations.flatMap(old=>{const fresh=next.recommendations.find(r=>r.id===old.id);const changed=!fresh||old.fingerprint!==fresh.fingerprint||old.action!==fresh.action||old.reason!==fresh.reason||old.organisation!==fresh.organisation||old.team!==fresh.team||old.condition!==fresh.condition;const decision=decisions[old.id];return changed&&decision&&(decision.state!=='pending'||decision.editedAction||decision.editedTeam||decision.notes)?[{analysisVersion:prior.analysisVersion,recommendation:old,decision}]:[]})
@@ -34,4 +36,10 @@ export class ErrorBoundary extends Component<{ children: ReactNode }, { error: E
   state = { error: null as Error | null }
   static getDerivedStateFromError(error: Error) { return { error } }
   render() { if (this.state.error) return <div className="error-page"><h2>Analysis could not be displayed</h2><p>The case was not sent or executed. Return to intake and retry with the current synthetic narrative.</p><button className="primary" onClick={() => this.setState({ error: null })}>Return to intake</button></div>; return this.props.children }
+}
+
+function ConditionalRecommendations({a}:{a:Analysis}) {
+const groups=conditionalActions(a)
+if(!groups.length) return null
+return <section className="card"><h3>Conditional recommendations for missing information</h3><p>For the authorised employee to confirm and select. These are alternatives, not parallel referral instructions. Existing urgent guidance remains active.</p>{groups.map(({question,cases})=><div className="questions" key={question}><h4>{question}</h4>{cases.length ? <ul>{cases.map(([condition,action])=><li key={condition}><b>If: {condition}</b><p>{action}</p></li>)}</ul> : <p>No safe alternative action can be determined for this question from the current rules. Retain current guidance and clarify before changing the action.</p>}</div>)}</section>
 }

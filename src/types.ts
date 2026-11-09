@@ -27,4 +27,5 @@ export type Analysis = {
   vulnerabilityIndicators: Vulnerability[]; missingInfo: string[]; conflicts: string[]; pendingVerification: string[]
   clarifyingQuestions: string[]; modelExtraction: ModelExtraction | null; recommendations: Recommendation[]
   reviewDecisions: Record<string, Decision>
+  retainedAiConflicts?: string[]
 }

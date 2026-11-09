@@ -1,0 +1,153 @@
+{
+  "T01": {},
+  "T02": {
+    "contact_status": "Yes",
+    "contact_channel": "SMS",
+    "contact_action": "None",
+    "contact_time": "Yesterday",
+    "financial_status": "No",
+    "exposure_status": "No",
+    "distress_indicator": "No reported",
+    "language_need": "Not needed",
+    "accessibility_need": "Not needed",
+    "basic_needs_impact": "None reported"
+  },
+  "T03": {
+    "contact_status": "Yes",
+    "contact_channel": "SMS",
+    "contact_action": "Clicked",
+    "device_action_taken": "Clicked link"
+  },
+  "T04": {
+    "financial_status": "Yes",
+    "amount": "$800",
+    "transaction_time": "Yesterday"
+  },
+  "T05": {
+    "financial_status": "Yes",
+    "financial_event_type": "Unauthorised transaction",
+    "ongoing_financial_activity": "Yes"
+  },
+  "T06": {
+    "contact_status": "Yes",
+    "contact_channel": "SMS",
+    "contact_action": "Shared info",
+    "exposure_status": "Yes",
+    "exposure_type": "Login credential",
+    "bank_account_concern": "Yes"
+  },
+  "T07": {
+    "contact_status": "Yes",
+    "contact_channel": "Web",
+    "contact_action": "Shared info",
+    "exposure_status": "Yes",
+    "exposure_type": "Identity document"
+  },
+  "T08": {
+    "contact_status": "Yes",
+    "contact_action": "Shared info",
+    "financial_status": "No",
+    "exposure_status": "Yes",
+    "exposure_type": "BSB+account",
+    "ongoing_financial_activity": "No"
+  },
+  "T09": {
+    "financial_status": "Yes",
+    "financial_event_type": "Induced transfer",
+    "amount": "$400",
+    "ongoing_financial_activity": "No",
+    "basic_needs_impact": "Immediate essentials affected"
+  },
+  "T10": {
+    "contact_status": "Yes",
+    "contact_channel": "Call",
+    "financial_status": "No",
+    "exposure_status": "No",
+    "distress_indicator": "Severe reported",
+    "distress_prevents_proceeding": "Yes",
+    "immediate_safety_threat": "No"
+  },
+  "T11": {
+    "contact_status": "Yes",
+    "contact_channel": "Call",
+    "immediate_safety_threat": "Yes"
+  },
+  "T12": {
+    "financial_status": "Conflicting",
+    "amount": "$500",
+    "transaction_time": "Yesterday"
+  },
+  "T13": {
+    "contact_status": "Yes",
+    "contact_channel": "SMS",
+    "contact_action": "None",
+    "financial_status": "No",
+    "exposure_status": "No",
+    "language_need": "Needed",
+    "support_details": "Mandarin",
+    "immediate_safety_threat": "No"
+  },
+  "T14": {
+    "contact_status": "Yes",
+    "financial_status": "Yes",
+    "financial_event_type": "Induced transfer",
+    "amount": "$1,500",
+    "transaction_time": "Yesterday",
+    "ongoing_financial_activity": "No",
+    "platform_controlled_issue": "Yes",
+    "platform_evidence": "Marketplace listing"
+  },
+  "T15": {
+    "contact_status": "Yes",
+    "contact_channel": "Social",
+    "financial_status": "No",
+    "exposure_status": "No",
+    "accessibility_need": "Needed",
+    "platform_controlled_issue": "Yes",
+    "platform_evidence": "Social media account"
+  },
+  "T16": {
+    "contact_status": "Yes",
+    "financial_status": "Yes",
+    "exposure_status": "Yes",
+    "exposure_type": "Login credential",
+    "bank_account_concern": "Yes",
+    "transaction_time": "Yesterday"
+  },
+  "T17": {
+    "immediate_safety_threat": "Yes",
+    "distress_indicator": "Some"
+  },
+  "T18": {
+    "contact_status": "Yes",
+    "contact_action": "Clicked",
+    "device_action_taken": "Clicked link",
+    "device_security_indicator": [
+      "persistent unwanted page",
+      "device unusable"
+    ],
+    "device_credential_exposure": "credentials stored only on device"
+  },
+  "T19": {
+    "contact_channel": "SMS",
+    "authority_claim_present": "Yes",
+    "authority_claimed_entity": "Police",
+    "authority_request": "Contact claimed authority about an investigation"
+  },
+  "T20": {
+    "contact_status": "Yes",
+    "distress_indicator": "Some",
+    "accessibility_need": "Needed"
+  },
+  "T21": {
+    "telecom_service_issue": "Yes",
+    "bank_account_concern": "Yes"
+  },
+  "T22": {
+    "contact_status": "Yes",
+    "contact_action": "Shared info",
+    "exposure_status": "Yes",
+    "exposure_type": "Identity document",
+    "identity_misuse": "Yes"
+  }
+}

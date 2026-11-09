@@ -1,0 +1,322 @@
+# ScamSafe Alliance — Acceptance Scenarios v1.1
+
+> **Status:** Synthetic educational scenarios only. These 22 T01–T22 scenarios REPLACE all prior scenario fixtures and expected outcomes. They are assertions for the product, not evidence that any specific model has passed.
+> **Companion policy:** `ScamSafe_Rulebook_v1.1.md`.
+> **Test split:** deterministic engine tests use structured fixtures and exact predicates; provider-neutral semantic tests check relevant facts/evidence rather than exact AI prose; provider connection smoke tests verify the configured API. No vendor-specific tests are needed.
+
+## T01 — Ambiguous loss
+
+- **Case focus:** Ambiguous loss
+- **Synthetic narrative:** I lost money. I am not sure what happened.
+- **Expected A:** Unknown
+- **Expected B:** Unknown
+- **Expected C:** Unknown
+- **Expected urgency:** Undetermined
+- **Expected Primary route:** Undetermined
+- **Expected Additional route(s):** None confirmed
+- **Key missing / clarification:** How lost; scam context; timing
+- **Expected verification / safeguard:** Intake needs clarification; no fabricated bank
+- **Key rules:** CL02,UG08,IR01
+
+## T02 — Contact-only confirmed
+
+- **Case focus:** Contact-only confirmed
+- **Synthetic narrative:** Yesterday I got a fake bank SMS. I did not click, reply, share data or send any money. I need no extra support.
+- **Expected A:** Yes
+- **Expected B:** No
+- **Expected C:** No
+- **Expected urgency:** Routine
+- **Expected Primary route:** Undetermined (unless reporting is requested)
+- **Expected Additional route(s):** Government Scam Reporting (optional if reporting need); Telecom only if carrier-action issue
+- **Key missing / clarification:** No critical gap for basic triage; ask if person wants a report
+- **Expected verification / safeguard:** Do not route to Telecom solely because SMS was the channel
+- **Key rules:** CL01,UG07,RT05,RT09,RT10
+
+## T03 — Clicked suspicious SMS link but unclear
+
+- **Case focus:** Clicked suspicious SMS link but unclear
+- **Synthetic narrative:** I received an SMS with a suspicious link and clicked it. I don't know if I entered anything or if money moved.
+- **Expected A:** Yes
+- **Expected B:** Unknown
+- **Expected C:** Unknown
+- **Expected urgency:** Undetermined
+- **Expected Primary route:** Undetermined
+- **Expected Additional route(s):** Telecom only if actionable carrier issue; Digital Platform only if a platform controls the content
+- **Key missing / clarification:** Whether information entered, files downloaded, credentials exposed or funds moved
+- **Expected verification / safeguard:** No forced route from channel alone; device/credential specialist review if indicated
+- **Key rules:** CL01,IR02,IR08,UG08,RT09,RT10,SP01
+
+## T04 — Unexplained debit
+
+- **Case focus:** Unexplained debit
+- **Synthetic narrative:** There was an $800 transaction yesterday I didn't recognise. I haven't said which bank yet.
+- **Expected A:** Unknown
+- **Expected B:** Yes
+- **Expected C:** Unknown
+- **Expected urgency:** Provisional Priority
+- **Expected Primary route:** Bank
+- **Expected Additional route(s):** Government reporting
+- **Key missing / clarification:** Bank name, whether more unusual activity, bank contacted
+- **Expected verification / safeguard:** Named bank handover Needs information; preliminary route works
+- **Key rules:** CL02,UG04,IR03,RT01
+
+## T05 — Ongoing financial activity
+
+- **Case focus:** Ongoing financial activity
+- **Synthetic narrative:** Someone made three deductions from my account and it is still happening now. I don't know the total.
+- **Expected A:** Unknown
+- **Expected B:** Yes
+- **Expected C:** Unknown
+- **Expected urgency:** Provisional Urgent
+- **Expected Primary route:** Bank
+- **Expected Additional route(s):** Government reporting
+- **Key missing / clarification:** Provider, dates, total; ongoing risk explicitly reported
+- **Expected verification / safeguard:** Urgency shown regardless of unknown total
+- **Key rules:** UG02,RT01,VE04
+
+## T06 — Bank password disclosed
+
+- **Case focus:** Bank password disclosed
+- **Synthetic narrative:** I replied to a fake bank SMS and gave my banking password. I don't know if any money was taken.
+- **Expected A:** Yes
+- **Expected B:** Unknown
+- **Expected C:** Yes
+- **Expected urgency:** Provisional Priority
+- **Expected Primary route:** Bank & Payment Providers
+- **Expected Additional route(s):** Government Scam Reporting if reporting need; Telecom only if carrier-action issue
+- **Key missing / clarification:** Active suspicious access, timing, whether funds moved
+- **Expected verification / safeguard:** Do not ask for actual password; SMS alone does not trigger Telecom
+- **Key rules:** CL01,CL03,UG05,RT01,RT05,RT09,CTL02
+
+## T07 — Identity documents disclosed
+
+- **Case focus:** Identity documents disclosed
+- **Synthetic narrative:** I sent a photo of my identity document to a fake recruitment site. I don't know whether it has been misused.
+- **Expected A:** Yes
+- **Expected B:** No
+- **Expected C:** Yes
+- **Expected urgency:** Provisional Priority
+- **Expected Primary route:** Identity Recovery Services
+- **Expected Additional route(s):** Digital Platforms only if a platform controls the recruitment listing/account; Government reporting if requested
+- **Key missing / clarification:** Type of identity info and observed misuse
+- **Expected verification / safeguard:** Not a confirmed identity theft finding; no actual ID number/image collected
+- **Key rules:** CL03,UG05,RT04,RT05,RT09
+
+## T08 — BSB and account alone
+
+- **Case focus:** BSB and account alone
+- **Synthetic narrative:** I provided my BSB and account number to a suspicious person. I did not send any money and have not seen an unusual transaction.
+- **Expected A:** Yes
+- **Expected B:** No
+- **Expected C:** Yes
+- **Expected urgency:** Undetermined
+- **Expected Primary route:** Bank (candidate)
+- **Expected Additional route(s):** Government reporting
+- **Key missing / clarification:** Details on interaction, signs of misuse
+- **Expected verification / safeguard:** Do not equate receiving details with OTP/password
+- **Key rules:** CL03,IR04,UG08
+
+## T09 — Hardship after loss
+
+- **Case focus:** Hardship after loss
+- **Synthetic narrative:** I sent $400 and now can't buy groceries this week. No further payment is taking place.
+- **Expected A:** Unknown
+- **Expected B:** Yes
+- **Expected C:** Unknown
+- **Expected urgency:** Provisional Priority
+- **Expected Primary route:** Bank & Payment Providers
+- **Expected Additional route(s):** Community Support; Victim Support only if separate emotional distress is reported
+- **Key missing / clarification:** Provider, transaction time, exact practical support need
+- **Expected verification / safeguard:** Community handles basic-needs support; Victim Support not auto-matched
+- **Key rules:** UG04,UG06,VU04,RT01,RT07
+
+## T10 — Distressed without safety threat
+
+- **Case focus:** Distressed without safety threat
+- **Synthetic narrative:** I got a scam phone call. I am panicking and can't manage the paperwork. I am not in immediate danger and did not send money or share data.
+- **Expected A:** Yes
+- **Expected B:** No
+- **Expected C:** No
+- **Expected urgency:** Provisional Priority
+- **Expected Primary route:** Victim Support Organisations
+- **Expected Additional route(s):** Government Scam Reporting if requested; Telecom only if actionable carrier issue
+- **Key missing / clarification:** Whether emotional support or practical assistance is requested
+- **Expected verification / safeguard:** Do not infer self-harm or immediate danger from distress alone
+- **Key rules:** VU01,UG06,RT06,RT09
+
+## T11 — Immediate personal safety threat
+
+- **Case focus:** Immediate personal safety threat
+- **Synthetic narrative:** After this scam call, someone threatened to hurt me today. I fear immediate physical danger.
+- **Expected A:** Yes
+- **Expected B:** Unknown
+- **Expected C:** Unknown
+- **Expected urgency:** Provisional Urgent
+- **Expected Primary route:** Undetermined
+- **Expected Additional route(s):** Internal safety escalation; Telecom possible
+- **Key missing / clarification:** Other scam details not prerequisite
+- **Expected verification / safeguard:** Immediate authorised human safety protocol; no auto-call
+- **Key rules:** UG01,SAFE01
+
+## T12 — Conflicting transfer report
+
+- **Case focus:** Conflicting transfer report
+- **Synthetic narrative:** I sent $500 yesterday. Later I said I never transferred any money.
+- **Expected A:** Unknown
+- **Expected B:** Conflicting
+- **Expected C:** Unknown
+- **Expected urgency:** Provisional Priority
+- **Expected Primary route:** Bank (tentative)
+- **Expected Additional route(s):** None confirmed
+- **Key missing / clarification:** Resolve contradictory transfer statements
+- **Expected verification / safeguard:** Conflict per fact; no silent selection
+- **Key rules:** VE02,UG04,VE04
+
+## T13 — Language need on contact-only
+
+- **Case focus:** Language need on contact-only
+- **Synthetic narrative:** I got a scam SMS but did not click, reply, share information or pay. Please explain in Mandarin; I struggle with English. I have no other urgent concerns.
+- **Expected A:** Yes
+- **Expected B:** No
+- **Expected C:** No
+- **Expected urgency:** Routine
+- **Expected Primary route:** Community Support Organisations
+- **Expected Additional route(s):** Government Scam Reporting if reporting is requested
+- **Key missing / clarification:** Preferred supported language/modality
+- **Expected verification / safeguard:** Language barrier alone does not raise urgency; SMS alone does not trigger Telecom
+- **Key rules:** VU02,RT07,UG07,RT09,RT10
+
+## T14 — Bank payment plus fake marketplace
+
+- **Case focus:** Bank payment plus fake marketplace
+- **Synthetic narrative:** I bought from a fake marketplace and sent $1,500 yesterday. The vendor disappeared. No other deductions are reported.
+- **Expected A:** Yes
+- **Expected B:** Yes
+- **Expected C:** Unknown
+- **Expected urgency:** Provisional Priority
+- **Expected Primary route:** Bank
+- **Expected Additional route(s):** Digital platform, government reporting
+- **Key missing / clarification:** Bank provider, exact transaction time, account exposure unknown
+- **Expected verification / safeguard:** Multiple route suggestions; named handover pending
+- **Key rules:** CL01,CL02,UG04,RT01,RT02
+
+## T15 — Accessibility need on social platform
+
+- **Case focus:** Accessibility need on social platform
+- **Synthetic narrative:** A suspicious social media account contacted me. I didn't share information or send money. I need an accessible way to report the account.
+- **Expected A:** Yes
+- **Expected B:** No
+- **Expected C:** No
+- **Expected urgency:** Routine
+- **Expected Primary route:** Digital Platforms
+- **Expected Additional route(s):** Community Support Organisations
+- **Key missing / clarification:** Preferred assisted reporting mode
+- **Expected verification / safeguard:** Digital Platform handles platform content; Community Support handles accessibility assistance
+- **Key rules:** VU03,RT02,RT07,UG07,RT09
+
+## T16 — Online purchase + subsequent unexpected deduction + bank credential report
+
+- **Case focus:** Online purchase + subsequent unexpected deduction + bank credential report
+- **Synthetic narrative:** I bought something online yesterday and paid A$200. I entered my bank login information. No order or parcel details arrived. Now another A$1,000 has been deducted; I do not know whether it was authorised or whether more activity is occurring.
+- **Expected A:** Yes
+- **Expected B:** Yes
+- **Expected C:** Yes
+- **Expected urgency:** Provisional Priority; Urgent only if continuing/repeated unexpected activity is explicitly reported
+- **Expected Primary route:** ORG01 Bank & Payment Providers
+- **Expected Additional route(s):** ORG02 only if an identifiable platform controls the seller/content; ORG05 if reporting is requested
+- **Key missing / clarification:** Second transaction authorisation; whether more unexpected activity is occurring; credential type; provider; times
+- **Expected verification / safeguard:** Do not assume first purchase was scam or second transaction unauthorised; named bank handover may need provider details
+- **Key rules:** CL01,CL02,CL03,IR03,IR04,UG02,UG04,UG05,RT01,RT02,RT08
+
+## T17 — Explicit death threat and coercive transfer demand
+
+- **Case focus:** Explicit death threat and coercive transfer demand
+- **Synthetic narrative:** Someone threatened to kill me if I did not transfer money. I am frightened. I have not said whether I transferred anything.
+- **Expected A:** Unknown
+- **Expected B:** Unknown
+- **Expected C:** Unknown
+- **Expected urgency:** Provisional Urgent
+- **Expected Primary route:** Undetermined
+- **Expected Additional route(s):** Internal Safety Escalation Rule (independent); other routes only after safety attention and facts
+- **Key missing / clarification:** Only essential safe clarification: current safety/location if safe to answer; whether money was transferred
+- **Expected verification / safeguard:** Do not wait for ABC, missing fields or transaction details before internal safety escalation
+- **Key rules:** UG01,SAFE01,VE04
+
+## T18 — Persistent pop-ups and unusable device after suspicious link
+
+- **Case focus:** Persistent pop-ups and unusable device after suspicious link
+- **Synthetic narrative:** I clicked an unknown link. My computer now keeps showing an unwanted webpage and I cannot use it. Some banking information is stored on the computer, but I have not said whether I entered it on the suspicious page.
+- **Expected A:** Yes
+- **Expected B:** Unknown
+- **Expected C:** Unknown
+- **Expected urgency:** Undetermined
+- **Expected Primary route:** Undetermined
+- **Expected Additional route(s):** ORG02 only if a platform controls the implicated content/account; otherwise Specialist Review workflow
+- **Key missing / clarification:** Whether files/software were downloaded, permissions granted, credentials entered versus stored only, any account anomalies
+- **Expected verification / safeguard:** Device anomaly does not prove malware; stored information does not prove exposure; no forced organisation route
+- **Key rules:** IR08,VE07,SP01,RT09,RT10
+
+## T19 — SMS claiming to be from police
+
+- **Case focus:** SMS claiming to be from police
+- **Synthetic narrative:** I received a text claiming to be from the police saying I am under investigation and must contact them.
+- **Expected A:** Unknown
+- **Expected B:** Unknown
+- **Expected C:** Unknown
+- **Expected urgency:** Undetermined
+- **Expected Primary route:** Undetermined
+- **Expected Additional route(s):** ORG05 only if a suspected scam/reporting need is separately identified; ORG03 only for an actionable telecom issue
+- **Key missing / clarification:** Claimed police entity, requested action, message link/number presence, payment/credential request, actions taken, independent verification
+- **Expected verification / safeguard:** Do not label genuine or fraudulent; verify using independently sourced official contact details; no message link/number
+- **Key rules:** IR07,VE06,RT09,RT10
+
+## T20 — Emotional support and accessibility needs together
+
+- **Case focus:** Emotional support and accessibility needs together
+- **Synthetic narrative:** After a scam I feel very anxious and need someone to talk to. I also cannot use the online reporting form because it is not accessible to me.
+- **Expected A:** Yes
+- **Expected B:** Unknown
+- **Expected C:** Unknown
+- **Expected urgency:** Provisional Priority only if severe distress materially prevents proceeding under UG06; otherwise Undetermined/Routine depends on other facts
+- **Expected Primary route:** ORG07 if accessible reporting is the main actionable need; otherwise ORG06 if emotional support is the main need
+- **Expected Additional route(s):** The other support organisation for its distinct task
+- **Key missing / clarification:** Specific accessibility barrier; preferred communication; type of emotional support requested
+- **Expected verification / safeguard:** Victim Support owns emotional recovery; Community Support owns practical accessibility; each task has a separate rationale
+- **Key rules:** VU01,VU03,VU05,RT06,RT07,RT08
+
+## T21 — SIM swap / phone number takeover
+
+- **Case focus:** SIM swap / phone number takeover
+- **Synthetic narrative:** My mobile number suddenly stopped working. My provider says the number may have been transferred to another SIM without my permission. I am also concerned about bank verification messages.
+- **Expected A:** Unknown
+- **Expected B:** Unknown
+- **Expected C:** Unknown
+- **Expected urgency:** Provisional Priority; reassess Urgent only if active unauthorised financial activity is reported
+- **Expected Primary route:** ORG03 Telecommunications Providers
+- **Expected Additional route(s):** ORG01 Bank & Payment Providers if bank account/verification risk is reported
+- **Key missing / clarification:** Provider, timing, whether bank accounts show abnormal access/transactions
+- **Expected verification / safeguard:** Telecom is Primary because the SIM/number service itself is the compromised service
+- **Key rules:** RT03,RT08,IR02,IR03,UG04
+
+## T22 — Identity document exposure and suspected misuse
+
+- **Case focus:** Identity document exposure and suspected misuse
+- **Synthetic narrative:** I sent a copy of an identity document to a suspicious recruiter. Later I received a notice that someone may have used my identity to apply for a service.
+- **Expected A:** Yes
+- **Expected B:** Unknown
+- **Expected C:** Yes
+- **Expected urgency:** Provisional Priority
+- **Expected Primary route:** ORG04 Identity Recovery Services
+- **Expected Additional route(s):** ORG02 if recruiter account/listing is platform-controlled; ORG05 if reporting is requested; ORG01 only if financial account activity is involved
+- **Key missing / clarification:** Identity data category, timing, type of suspected misuse, whether financial accounts affected
+- **Expected verification / safeguard:** Do not collect actual identity document numbers or images; suspected misuse is not independently verified
+- **Key rules:** CL01,CL03,UG05,RT04,RT02,RT05,RT09
+
+## Cross-case acceptance invariants
+
+- No fabricated amounts, payment routes, identities, emotions, vulnerabilities or evidence.
+- Explicit negatives and historical threats must not become positive, current risk flags.
+- If the model fails to parse or returns unsupported facts, do not present a valid-looking deterministic risk classification.
+- A model/provider change requires rerunning the *same* T01–T22 semantic evaluation; mocks do not prove model understanding.
+- Cases that cannot be reliably resolved must display Unknown/Undetermined or a human-specialist task, never arbitrarily choose an institution.
+- Existing employee review states and Report output must remain functional, but old scenario fixtures must be removed.

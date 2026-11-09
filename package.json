@@ -7,7 +7,11 @@
     "dev": "node server.mjs",
     "build": "tsc -b && vite build",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "check:policy": "node scripts/check-policy.mjs",
+    "prebuild": "node scripts/check-policy.mjs",
+    "pretest": "node scripts/check-policy.mjs",
+    "eval:live": "node scripts/evaluate-provider.mjs"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",

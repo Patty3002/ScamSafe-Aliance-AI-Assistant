@@ -1,0 +1,8 @@
+{
+  "policyVersion": "1.1",
+  "provider": "demo",
+  "model": null,
+  "status": "NOT RUN",
+  "reason": "No key configured for selected provider. Mock and deterministic tests do not prove semantic extraction.",
+  "cases": []
+}

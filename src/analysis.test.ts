@@ -1,35 +1,169 @@
-import { describe, expect, it } from 'vitest'
-import { analyzeCase, caseInformationFacts, localAnalyze, reconcileAnalysis, validateModelExtraction } from './analysis'
-import type { ModelExtraction } from './types'
+import { describe,it,expect } from 'vitest'
+import { evaluate, type StaffVerification } from './policy/ruleEngine'
+import { workingFacts } from './policy/ruleEngine'
+import { validateExtraction } from './policy/contract.mjs'
+import { RULE_IDS } from './policy/policyVersion'
+import { structuredScenarios } from './policy/structuredScenarios'
+import { reconcileAnalysis,localAnalyze } from './analysis'
 import { buildReport } from './report'
+import { applyHumanOverride } from './policy/staffReview'
+import type { Extraction, Sources } from './policy/types'
+const run=(values:Record<string,string|string[]>,verified:StaffVerification={})=>{
+ const original='Synthetic structured report for predicate testing.'
+ const extraction:Extraction={summary:'',facts:Object.entries(values).flatMap(([field,v])=>(Array.isArray(v)?v:[v]).map(value=>({field,value,source:'original',evidence:[original]})))}
+ return evaluate(extraction,{original,clarification:'',correction:''},verified)
+}
+const ids=(d:ReturnType<typeof run>)=>d.rulesFired.map(r=>r.id)
 
-const extraction = (narrative: string, changes: Partial<ModelExtraction> = {}): ModelExtraction => ({ summary:narrative, safetyAssessment:{status:'not_mentioned',evidence:[]}, caseTypes:[], facts:[], missingInformation:[], conflicts:[], vulnerabilityIndicators:[], riskSignals:[], ...changes })
-describe('ScamSafe extraction, rule decisions and review boundaries',()=>{
-  it('keeps unspecified transfer route pending, surfaces key gaps and preserves reported facts',()=>{const a=localAnalyze('Yesterday, after receiving a phone call, an individual transferred AUD 1,250 to a recipient suspected of being involved in a scam.');expect(a.priority).toBe('P1 — Immediate');expect(a.reportedFacts.map(f=>[f.label,f.value])).toEqual(expect.arrayContaining([['Transaction Status','Reported as completed'],['Contact Channel','Phone call'],['Reported Amount','AUD 1,250'],['Payment Route','Not specified']]));expect(a.recommendations).toHaveLength(1);expect(a.recommendations[0]).toMatchObject({team:null,routingStatus:'pending_clarification'});expect(a.recommendations[0].condition).toContain('Card payment →');expect(a.missingInfo).toContain('The payment route is not specified.');expect(a.clarifyingQuestions.every(q=>q.endsWith('?'))).toBe(true)})
-  it.each([['bank transfer','Fraud / Scam Response'],['card payment','Card Fraud / Disputes'],['third-party payment wallet','Payment Provider Fraud']])('routes explicit %s correctly', (route,team)=>{const a=localAnalyze(`Yesterday a person completed a ${route} of AUD 500 to a suspected scam recipient.`);expect(a.recommendations[0].team).toBe(team)})
-  it('extracts AUD 500 as one amount and does not match 50 inside 500',()=>{const a=localAnalyze('The reported loss is AUD 500.');expect(a.reportedFacts.find(f=>f.label==='Reported Amount')?.value).toBe('AUD 500');expect(a.conflicts).toEqual([])})
-  it('recognises a recent unauthorised charge on a reported lost bank card in Limited Demo Mode',()=>{const a=localAnalyze('Yesterday, I lost my bank card. Today, I noticed an unauthorised charge of AUD 2,000 on it. What should I do?');expect(a.priority).toBe('P1 — Immediate');expect(a.reportedFacts.map(f=>[f.label,f.value])).toEqual(expect.arrayContaining([['Transaction Status','Reported as completed'],['Reported Amount','AUD 2,000'],['Payment Route','Card payment']]));expect(a.recommendations[0]).toMatchObject({kind:'Primary Recommendation',team:'Card Fraud / Disputes'});expect(a.missingInfo).toContain('It is not stated whether protective action has been taken.');expect(a.clarifyingQuestions.some(q=>/passwords|one-time codes/i.test(q))).toBe(true);expect(a.clarifyingQuestions.filter(q=>/contacted the institution|contacted the card provider/i.test(q))).toHaveLength(1)})
-  it('flags genuinely contradictory amounts',()=>{const a=localAnalyze('The person reported AUD 500 and later reported AUD 50 for the same payment.');expect(a.conflicts.join(' ')).toContain('AUD 500');expect(a.conflicts.join(' ')).toContain('AUD 50');expect(a.reportedFacts.find(f=>f.label==='Reported Amount')?.value).toBe('Conflicting reported amounts')})
-  it('does not treat inability to use a banking app as credential disclosure',()=>{const a=localAnalyze('I cannot use my banking app.');expect(a.reportedFacts.some(f=>f.label==='Credential Disclosure')).toBe(false);expect(a.vulnerabilityIndicators.map(v=>v.title)).toContain('Digital access difficulty');expect(a.recommendations.some(r=>r.team==='Community Access & Practical Support')).toBe(true)})
-  it('does not treat “not suicidal” as an immediate safety threat',()=>{const a=localAnalyze('I am not suicidal.');expect(a.priority).not.toBe('P1 — Immediate');expect(a.recommendations.some(r=>r.team==='Designated Safety Contact')).toBe(false)})
-  it('recognises an explicit immediate physical danger report',()=>{const a=localAnalyze('Someone threatened to come to my home today and hurt me. I am in immediate physical danger.');expect(a.priority).toBe('P1 — Immediate');expect(a.recommendations[0].team).toBe('Designated Safety Contact')})
-  it('makes an immediate danger report the primary action even without financial loss',()=>{const a=localAnalyze('The suspected scammer threatened to come to the person’s home today and the person reports being in immediate danger.');expect(a.priority).toBe('P1 — Immediate');expect(a.recommendations[0]).toMatchObject({kind:'Primary Recommendation',organisation:"Reporting Organisation's Designated Emergency Safety Contact",team:'Designated Safety Contact',action:'Immediately escalate the reported personal safety threat through the organisation’s designated safety procedure.'});expect(a.recommendations).not.toHaveLength(0)})
-  it.each([
-    ['The scammer is coming to my house to hurt me today.',true],
-    ['对方威胁今天上门伤害我，我现在有危险。',true],
-    ['I am not suicidal.',false],
-    ['I was threatened last year, but there is no current danger.',false],
-    ['I am worried that someone may threaten me in the future.',false],
-    ['The suspected scammer threatened to come to the person’s home today and the person reports being in immediate danger.',true],
-  ])('distinguishes current safety meaning for %s', (narrative,urgent)=>{const a=localAnalyze(narrative);expect(a.priority.startsWith('P1')).toBe(urgent);expect(a.recommendations.some(r=>r.team==='Designated Safety Contact')).toBe(urgent);if(urgent)expect(a.recommendations[0].kind).toBe('Primary Recommendation')})
-  it('does not default an ambiguous Demo Mode safety cue to P3',()=>{const a=localAnalyze('Someone threatened me, but I cannot tell whether there is current danger.');expect(a.priority).toBe('Priority pending confirmation');expect(a.safetyReviewRequired).toBe(true);expect(a.pendingVerification).toContain('Current personal safety status — pending immediate human review.');expect(a.recommendations[0].routingStatus).toBe('pending_clarification')})
-  it('uses grounded Gemini semantic safety assessment, but still validates its evidence',()=>{const narrative='A person says they are in immediate danger right now.';const model=extraction(narrative,{safetyAssessment:{status:'current_danger',evidence:['in immediate danger right now']}});expect(reconcileAnalysis(model,narrative,'SSA-TEST','','','gemini').priority).toBe('P1 — Immediate');const neutral='The person received a suspicious message.';const invented=extraction(neutral,{safetyAssessment:{status:'current_danger',evidence:['the scammer is coming with a weapon']}});expect(reconcileAnalysis(invented,neutral,'SSA-TEST','','','gemini').priority).not.toBe('P1 — Immediate')})
-  it('lets an unambiguous employee correction supersede the original route',()=>{const a=analyzeCase('Yesterday, a bank transfer of AUD 500 was completed to a suspected scam recipient.','SSA-TEST','','The payment actually used a third-party payment wallet.');expect(a.reportedFacts.find(f=>f.label==='Payment Route')?.value).toBe('Payment wallet');expect(a.recommendations[0].team).toBe('Payment Provider Fraud')})
-  it('preserves prior protective action and does not claim the institution verified the report',()=>{const a=localAnalyze('Yesterday a person completed a bank transfer of AUD 500 and contacted the bank, which blocked the account.');expect(a.missingInfo.some(x=>/protective action/i.test(x))).toBe(false);expect(a.reportedFacts.find(f=>f.label==='Transaction Status')?.value).toBe('Reported as completed')})
-  it('does not refer a general request for help to vulnerability support',()=>{const a=localAnalyze('I need help.');expect(a.vulnerabilityIndicators).toEqual([]);expect(a.recommendations.some(r=>r.organisation==='Victim Support Organisations'||r.organisation==='Community Support Organisations')).toBe(false)})
-  it('adds independent community support for a stated digital access barrier',()=>{const a=localAnalyze('I cannot access the online banking app because I do not know how to operate it.');expect(a.recommendations.some(r=>r.organisation==='Community Support Organisations')).toBe(true)})
-  it('rejects model-invented route evidence and unsupported recommendations',()=>{const narrative='A person transferred AUD 500 yesterday.';const raw=extraction(narrative,{summary:'A person made a bank transfer of AUD 500 yesterday.',facts:[{key:'payment_route',value:'bank_transfer',evidence:'bank transfer',certainty:'reported'}]});const a=reconcileAnalysis(raw,narrative,'SSA-TEST');expect(a.reportedFacts.find(f=>f.label==='Payment Route')?.value).toBe('Not specified');expect(a.recommendations[0].team).toBeNull()})
-  it('uses limited Demo Mode when AI output is unavailable or invalid',()=>{const a=reconcileAnalysis(null,'I need help.','SSA-TEST');expect(a.mode).toBe('demo');expect(a.modelExtraction).toBeNull();expect(validateModelExtraction({summary:'invented',recommendations:[]})).toBe(false)})
-  it('keeps clarification and correction distinct in the final report',()=>{const a=analyzeCase('A person paid AUD 500 by bank transfer.','SSA-TEST','The bank has been contacted.','Correction: the payment used a third-party payment wallet.');const report=buildReport(a,a.reviewDecisions);expect(report).toContain('Employee clarification: The bank has been contacted.');expect(report).toContain('Employee correction: Correction: the payment used a third-party payment wallet.');expect(report).toContain('Proposed receiving department: Payment Provider Fraud')})
-  it('keeps fixed Case Analysis fields relevant and includes employee reviews in report',()=>{const a=localAnalyze('I received a suspicious SMS with a link.');expect(caseInformationFacts(a.reportedFacts).map(f=>f.label)).toContain('Contact Channel');const report=buildReport(a,{...a.reviewDecisions,primary:{state:'accepted',editedAction:'Preserve the message.',editedTeam:'Scam Messaging Reporting',notes:'Reviewed'}});expect(report).toContain('Employee decision: accepted');expect(report).toContain('Employee comment: Reviewed');expect(report).toContain('Not Sent')})
+describe('urgency predicates, boundaries and evidence gates',()=>{
+ it('UG01 precedes completeness; safety is never an external organisation',()=>{
+  const d=run({immediate_safety_threat:'Yes'});expect(ids(d).slice(0,2)).toEqual(['UG01','SAFE01']);expect(d.urgency).toBe('Urgent');expect(d.routes).toEqual([])
+ })
+ it('UG02 requires reported ongoing activity; amount/time do not create urgency',()=>{
+  expect(run({financial_status:'Yes',amount:'A$999999',transaction_time:'Just now'}).urgency).toBe('Priority')
+  expect(run({financial_status:'Yes',ongoing_financial_activity:'No'}).urgency).toBe('Priority')
+  expect(run({financial_status:'Yes',ongoing_financial_activity:'Yes'}).urgency).toBe('Urgent')
+ })
+ it('UG03 requires exposure, credential subtype and suspicious access',()=>{
+  for(const type of ['Login credential','OTP']){
+   expect(run({exposure_status:'Yes',exposure_type:type}).urgency).toBe('Priority')
+   const d=run({exposure_status:'Yes',exposure_type:type,suspicious_access:'Yes',bank_account_concern:'Yes'})
+   expect(d.urgency).toBe('Urgent');expect(ids(d)).toContain('UG03')
+  }
+  expect(run({exposure_status:'Yes',exposure_type:'BSB+account',suspicious_access:'Yes'}).urgency).toBe('Undetermined')
+ })
+ it('UG05 separates identity documents, receiving identifiers and stored credentials',()=>{
+  expect(run({exposure_status:'Yes',exposure_type:'Identity document'}).urgency).toBe('Priority')
+  const stored=run({device_credential_exposure:'credentials stored only on device'})
+  expect(stored.facts.exposure_status.value).toBe('Unknown');expect(stored.routes).toEqual([]);expect(stored.urgency).toBe('Undetermined')
+ })
+ it('UG06 requires essentials affected or severe distress preventing progress',()=>{
+  expect(run({distress_indicator:'Severe reported'}).urgency).toBe('Undetermined')
+  expect(run({distress_indicator:'Severe reported',distress_prevents_proceeding:'Yes'}).urgency).toBe('Priority')
+  expect(run({basic_needs_impact:'Immediate essentials affected'}).urgency).toBe('Priority')
+  expect(run({language_need:'Needed',accessibility_need:'Needed'}).urgency).toBe('Undetermined')
+ })
+ it('UG07 cannot infer no interaction, no financial event or no disclosure from absence',()=>{
+  const routine={contact_status:'Yes',contact_action:'None',financial_status:'No',exposure_status:'No'}
+  expect(run(routine).urgency).toBe('Routine')
+  for(const key of ['contact_action','financial_status','exposure_status']) expect(run({...routine,[key]:'Unknown'}).urgency).toBe('Undetermined')
+  expect(run({...routine,immediate_safety_threat:'Yes'}).urgency).toBe('Urgent')
+  expect(run({...routine,distress_indicator:'Some'}).urgency).toBe('Undetermined')
+ })
+ it('UG09 takes highest priority and independently verified decisive facts clear the overlay',()=>{
+  const values={financial_status:'Yes',ongoing_financial_activity:'Yes',immediate_safety_threat:'Yes'}
+  expect(run(values).provisional).toBe(true)
+  expect(run(values,{ongoing_financial_activity:{reference:'Synthetic provider record',authorisedBy:'Synthetic staff'},immediate_safety_threat:{reference:'Synthetic safety review',authorisedBy:'Synthetic staff'}}).provisional).toBe(false)
+  const verified={reference:'Synthetic record',authorisedBy:'Synthetic staff'}
+  expect(run({exposure_status:'Yes',exposure_type:'Login credential'},{exposure_status:verified,exposure_type:verified}).provisional).toBe(false)
+ })
+ it('does not accept derived fields, forged verification or unsupported evidence',()=>{
+  const base={summary:'',facts:[{field:'financial_status',value:'Yes',source:'original',evidence:['Not in source']}]}
+  expect(validateExtraction(base,{original:'Original',clarification:'',correction:''})).toBe(false)
+  for(const field of ['urgency_level','organisation_routes','authority_verification_status','fact_review_status']) expect(validateExtraction({...base,facts:[{...base.facts[0],field}]})).toBe(false)
+  expect(()=>reconcileAnalysis(base,'Original','test')).toThrow()
+  expect(validateExtraction({...base,priority:'Urgent'})).toBe(false)
+ })
+ it('invalid/missing extraction never becomes reassuring Routine or a successful AI result',()=>{
+  expect(localAnalyze('No extraction available').priority).toBe('Priority pending confirmation')
+  expect(localAnalyze('No extraction available').mode).toBe('demo')
+  expect(()=>reconcileAnalysis(null,'Report','test')).toThrow()
+ })
+})
+describe('organisation responsibility boundaries',()=>{
+ it('RT09/RT10: channel alone cannot select Telecom or Platform',()=>{
+  for(const contact_channel of ['SMS','Call','Web','Social']) expect(run({contact_status:'Yes',contact_channel}).routes).toEqual([])
+ })
+ it('RT01/RT04: bank credentials and identity recovery have separate mandates',()=>{
+  expect(run({exposure_status:'Yes',exposure_type:'Login credential'}).routes).toEqual([])
+  expect(run({exposure_status:'Yes',exposure_type:'Login credential',bank_account_concern:'Yes'}).routes.map(r=>r.id)).toEqual(['ORG01'])
+  expect(run({exposure_status:'Yes',exposure_type:'Identity document'}).routes.map(r=>r.id)).toEqual(['ORG04'])
+  expect(run({exposure_status:'Yes',exposure_type:'Other',identity_data_exposure:'Yes'}).routes.map(r=>r.id)).toEqual(['ORG04'])
+ })
+ it('RT02/RT03 require actionable platform/carrier issues',()=>{
+  expect(run({platform_controlled_issue:'Yes'}).primary).toBe('ORG02')
+  expect(run({telecom_service_issue:'Yes'}).primary).toBe('ORG03')
+ })
+ it('RT05 requires suspected event AND reporting need',()=>{
+  expect(run({reporting_need:'Yes'}).routes).toEqual([])
+  const d=run({contact_status:'Yes',reporting_need:'Yes'});expect(d.primary).toBe('ORG05');expect(ids(d)).toContain('RT05')
+ })
+ it('VU01–VU05/RT06/RT07 separate emotional and practical support',()=>{
+  expect(run({distress_indicator:'Some'}).routes.map(r=>r.id)).toEqual(['ORG06'])
+  for(const v of ([{language_need:'Needed'},{accessibility_need:'Needed'},{basic_needs_impact:'Other hardship'}] as Record<string,string>[])) expect(run(v).routes.map(r=>r.id)).toEqual(['ORG07'])
+  const d=run({distress_indicator:'Some',accessibility_need:'Needed'});expect(d.routes.map(r=>r.id)).toEqual(['ORG06','ORG07']);expect(d.primary).toBe('Undetermined');expect(ids(d)).toContain('VU05')
+ })
+ it('RT08 honours stated dominant need only among valid mandate matches; unresolved ties stay unresolved',()=>{
+  const issues={telecom_service_issue:'Yes',bank_account_concern:'Yes'}
+  expect(run(issues).primary).toBe('Undetermined')
+  expect(run({...issues,main_actionable_issue:'Telecom service'}).primary).toBe('ORG03')
+  expect(run({...issues,main_actionable_issue:'Identity recovery'}).primary).toBe('Undetermined')
+  expect(run({...issues,ongoing_financial_activity:'Yes'}).primary).toBe('ORG01')
+  expect(run({financial_status:'Yes',distress_indicator:'Severe reported',distress_prevents_proceeding:'Yes'}).primary).toBe('Undetermined')
+ })
+ it('VE06/IR07/SP01 never authenticate authority or select a carrier from a police SMS',()=>{
+  const d=run({authority_claim_present:'Yes',authority_claimed_entity:'Police',contact_channel:'SMS'})
+  expect(d.urgency).toBe('Undetermined');expect(d.routes).toEqual([]);expect(d.verification.find(t=>t.id==='authority')?.reason).toContain('Never use message-provided')
+  expect(ids(d)).toEqual(expect.arrayContaining(['IR07','VE06','SP01']))
+  expect(d.authorityVerificationStatus).toBe('Unverified')
+  const verified=run({authority_claim_present:'Yes'},{authority_verification_status:{reference:'Synthetic official check',authorisedBy:'Synthetic staff',authorityOutcome:'Independently verified through official channel'}})
+  expect(verified.authorityVerificationStatus).toBe('Independently verified through official channel')
+  expect(verified.verification.some(t=>t.id==='authority')).toBe(false)
+ })
+ it('VE07/IR08/SP01: device failure is not vulnerability, exposure, or a platform mandate',()=>{
+  const d=run({device_security_indicator:'device unusable',device_credential_exposure:'credentials stored only on device'})
+  expect(d.support).toEqual([]);expect(d.routes).toEqual([]);expect(d.facts.exposure_status.value).toBe('Unknown')
+  expect(ids(d)).toEqual(expect.arrayContaining(['IR08','VE07','SP01']))
+ })
+})
+describe('information, provenance and control gates',()=>{
+ it('human overrides require rationale, preserve computed evidence/safety and reset approvals',()=>{
+  const s=structuredScenarios.find(s=>s.id==='T11')!
+  const a=reconcileAnalysis(s.extraction,s.narrative,s.id)
+  expect(()=>applyHumanOverride(a,{priority:'P2 — Priority',primary:'Undetermined',reason:''})).toThrow()
+  expect(()=>applyHumanOverride(a,{priority:'P2 — Priority',primary:'ORG01',reason:'Staff rationale'})).toThrow()
+  a.reviewDecisions['internal-safety'].state='accepted'
+  const next=applyHumanOverride(a,{priority:'P2 — Priority',primary:'Undetermined',reason:'Synthetic staff assessment recorded; safety attention continues.'})
+  expect(next.priority).toBe('P1 — Immediate');expect(next.safetyReviewRequired).toBe(true)
+  expect(next.humanOverrides[0].priority).toBe('P2 — Priority');expect(next.reviewDecisions['internal-safety'].state).toBe('pending')
+  expect(next.decision).toEqual(a.decision);expect(buildReport(next,next.reviewDecisions)).toContain('Synthetic staff assessment recorded')
+ })
+ it('IR01–IR06 and VE01: applicability and task requirements, not a global all-fields gate',()=>{
+  const absent=run({financial_status:'No',exposure_status:'No'})
+  expect(absent.missing.some(t=>['amount','exposure_type','financial_provider'].includes(t.field||''))).toBe(false)
+  const active=run({financial_status:'Yes',ongoing_financial_activity:'Yes',amount:'N/A'})
+  expect(active.urgency).toBe('Urgent');expect(active.missing.some(t=>t.field==='amount')).toBe(false)
+  expect(active.routes[0].status).toBe('Needs information');expect(active.missing.find(t=>t.field==='financial_provider')?.reason).toContain('handover')
+  expect(ids(active)).toEqual(expect.arrayContaining(['IR01','IR03','IR06','VE01','VE04']))
+ })
+ it('VE02 preserves both conflict quotes and provisional financial attention',()=>{
+  const s=structuredScenarios.find(s=>s.id==='T12')!
+  const d=evaluate(s.extraction,{original:s.narrative,clarification:'',correction:''})
+  expect(d.conflicts[0].reason).toContain('I sent $500');expect(d.conflicts[0].reason).toContain('never transferred')
+  expect(d.facts.financial_status.value).toBe('Conflicting');expect(d.urgency).toBe('Priority');expect(d.missing.some(t=>t.field==='financial_status')).toBe(false)
+ })
+ it('VE03/VE05: correction recomputes and preserves original provenance without proving the report',()=>{
+  const sources:Sources={original:'I reported a transfer.',clarification:'',correction:'Correction: I did not send money.'}
+  const raw:Extraction={summary:'',facts:[{field:'financial_status',value:'Yes',source:'original',evidence:[sources.original]}]}
+  const before=reconcileAnalysis(raw,sources.original,'test')
+  raw.facts.push({field:'financial_status',value:'No',source:'correction',evidence:[sources.correction]})
+  const after=reconcileAnalysis(raw,sources.original,'test','',sources.correction)
+  expect(before.decision.primary).toBe('ORG01');expect(after.decision.routes).toEqual([])
+  expect(after.originalNarrative).toBe(sources.original);expect(after.modelExtraction?.facts).toHaveLength(2)
+  expect(after.decision.facts.financial_status.review).toBe('Staff-reviewed report');expect(ids(after.decision)).toContain('VE05')
+  const corrected=workingFacts(raw,sources);expect(corrected.financial_status.value).toBe('No')
+ })
+ it('CTL01–CTL04: proposals contain rules/evidence/guidance, human gates and no execution',()=>{
+  const s=structuredScenarios.find(s=>s.id==='T06')!;const a=reconcileAnalysis(s.extraction,s.narrative,s.id)
+  for(const r of a.recommendations){expect(r.ruleIds.length).toBeGreaterThan(0);expect(r.supportingFacts.length).toBeGreaterThan(0);expect(r.team).toBeNull();expect(r.guidance).toBeTruthy()}
+  const report=buildReport(a,Object.fromEntries(a.recommendations.map(r=>[r.id,{state:'accepted' as const,editedAction:'',notes:''}])))
+  expect(report).toContain('NOT SENT / NOT EXECUTED');expect(report).toContain('Provisional: true');expect(report).toContain('CTL04');expect(report).toContain(s.narrative)
+ })
+ it('all 48 rule IDs fire in structured scenarios or explicit predicate/control tests',()=>{
+  const runs=structuredScenarios.map(s=>evaluate(s.extraction,{original:s.narrative,clarification:'',correction:''}))
+  runs.push(run({contact_status:'Yes',reporting_need:'Yes'}),run({exposure_status:'Yes',exposure_type:'OTP',suspicious_access:'Yes',bank_account_concern:'Yes'}))
+  const original='Synthetic initial report.';const correction='Synthetic correction.'
+  runs.push(evaluate({summary:'',facts:[{field:'financial_status',value:'Yes',source:'correction',evidence:[correction]}]},{original,clarification:'',correction}))
+  const covered=new Set(runs.flatMap(ids));expect(RULE_IDS).toHaveLength(48);expect([...RULE_IDS].filter(id=>!covered.has(id))).toEqual([])
+ })
 })

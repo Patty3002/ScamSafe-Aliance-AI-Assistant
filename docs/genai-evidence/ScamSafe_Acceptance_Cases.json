@@ -1,0 +1,187 @@
+{
+  "policyVersion": "1.0",
+  "note": "Synthetic regression fixtures. Expected outcomes are invariants, not literal response strings. Some require mocking employee input, model response, or API failure.",
+  "cases": [
+    {
+      "id": "immediate_safety_en",
+      "input": "The suspected scammer threatened to come to the person's home today and the person reports being in immediate danger.",
+      "expected": {
+        "priority": "P1",
+        "primaryTeam": "Designated Safety Contact",
+        "emptyRecommendations": false
+      }
+    },
+    {
+      "id": "immediate_safety_zh",
+      "input": "对方说今天要来我家伤害我，我现在有危险。",
+      "expected": {
+        "priority": "P1",
+        "primaryTeam": "Designated Safety Contact"
+      }
+    },
+    {
+      "id": "negated_safety",
+      "input": "I am not suicidal. I received a suspicious SMS but did not click or pay.",
+      "expected": {
+        "mustNotPrimaryTeam": "Designated Safety Contact",
+        "mustNotPriority": "P1"
+      }
+    },
+    {
+      "id": "past_safety",
+      "input": "I was threatened last year. There is no current danger.",
+      "expected": {
+        "mustNotPrimaryTeam": "Designated Safety Contact"
+      }
+    },
+    {
+      "id": "ambiguous_safety",
+      "input": "I think the scammer might come to hurt me, but I do not know when.",
+      "expected": {
+        "urgentHumanSafetyReview": true,
+        "mustNotPriority": "P3"
+      }
+    },
+    {
+      "id": "recent_transfer_unknown_route",
+      "input": "Yesterday, after receiving a phone call, an individual transferred 1,250 AUD to a recipient suspected of being involved in a scam.",
+      "expected": {
+        "priority": "P1",
+        "reportedAmount": "AUD 1250",
+        "transaction": "reported_completed",
+        "paymentRoute": "unknown",
+        "pendingVerification": true,
+        "hasConditionalRoutes": true
+      }
+    },
+    {
+      "id": "bank_transfer_explicit",
+      "input": "Yesterday I sent AUD 1250 from my bank account and have not contacted my bank.",
+      "expected": {
+        "priority": "P1",
+        "primaryTeam": "Fraud / Scam Response",
+        "paymentRoute": "bank_transfer"
+      }
+    },
+    {
+      "id": "card_merchant_dispute",
+      "input": "I paid AUD 280 with my credit card on a suspicious cheap shopping website but received no order confirmation.",
+      "expected": {
+        "primaryTeam": "Card Fraud / Disputes",
+        "mustNotTransactionLabel": "unauthorised"
+      }
+    },
+    {
+      "id": "unauthorised_card",
+      "input": "I did not make this AUD 200 card payment. Another charge is still appearing.",
+      "expected": {
+        "priority": "P1",
+        "primaryTeam": "Card Fraud / Disputes",
+        "transactionType": "suspected_unauthorised"
+      }
+    },
+    {
+      "id": "ordinary_delay",
+      "input": "I ordered from a known seller and my tracking is two days late, with no other suspicious activity.",
+      "expected": {
+        "mustNotPriority": "P1",
+        "mustNotClaim": "confirmed_scam"
+      }
+    },
+    {
+      "id": "wallet_explicit",
+      "input": "I paid AUD 800 using my third-party payment wallet and suspect a scam.",
+      "expected": {
+        "paymentRoute": "wallet",
+        "primaryTeam": "Payment Provider Fraud"
+      }
+    },
+    {
+      "id": "platform_balance",
+      "input": "My marketplace platform balance was reduced by AUD 400 without my agreement.",
+      "expected": {
+        "paymentRoute": "platform_balance",
+        "primaryTeam": "Platform Balance Support"
+      }
+    },
+    {
+      "id": "500_not_50",
+      "input": "The person reported one disputed payment of AUD 500.",
+      "expected": {
+        "mustNotInventConflict": true
+      }
+    },
+    {
+      "id": "actual_amount_conflict",
+      "input": "First they said AUD 500 and later AUD 800 for the same transfer. Neither amount was confirmed.",
+      "expected": {
+        "conflictFlag": true,
+        "pendingVerification": true
+      }
+    },
+    {
+      "id": "app_difficulty",
+      "input": "I cannot use my banking app and need step-by-step help with this scam report.",
+      "expected": {
+        "additionalTeam": "Community Access & Practical Support",
+        "mustNotAssume": "credential_exposed"
+      }
+    },
+    {
+      "id": "generic_help",
+      "input": "I need help reporting a suspicious text message.",
+      "expected": {
+        "mustNotAdditionalTeam": "Community Access & Practical Support"
+      }
+    },
+    {
+      "id": "credentials_exposed",
+      "input": "I gave the caller my bank password and one-time code.",
+      "expected": {
+        "priority": "P1",
+        "primaryTeam": "Account Security"
+      }
+    },
+    {
+      "id": "identity_document",
+      "input": "I sent a picture of my passport to a person I suspect was a scammer.",
+      "expected": {
+        "primaryTeam": "Identity Recovery Support"
+      }
+    },
+    {
+      "id": "correction_overrides",
+      "input": "Original: I paid by bank transfer. Employee verified correction: the actual payment used a third-party wallet.",
+      "expected": {
+        "paymentRoute": "wallet",
+        "primaryTeam": "Payment Provider Fraud",
+        "retainAuditHistory": true
+      }
+    },
+    {
+      "id": "accept_persists",
+      "input": "A frontline worker accepted the primary recommendation and reopened the case.",
+      "expected": {
+        "reviewStatePersists": true,
+        "originalRecommendationVisible": true,
+        "notSent": true
+      }
+    },
+    {
+      "id": "malformed_model_result",
+      "input": "Model response sets P3 for a report of immediate danger.",
+      "expected": {
+        "validatorMustReject": true,
+        "mustNotDisplayAsValidP3": true
+      }
+    },
+    {
+      "id": "api_failure",
+      "input": "Gemini response is invalid JSON during case analysis.",
+      "expected": {
+        "analysisModeNotRealAI": true,
+        "mustNotSilentlyMarkP3": true
+      }
+    }
+  ]
+}

@@ -1,3 +1,5 @@
+> **Historical record (2026-11-09).** This describes the Rulebook v1.1 migration at the time it was made. It has since been merged and deployed; the live evaluation it lists as NOT RUN was run on 2026-11-10 — see `LIVE_E2E_REPORT_2026-11-10.md` and `LIVE_E2E_REPORT_2026-11-10_iter2.md`.
+
 # Rulebook 1.1 migration report
 
 Implementation and offline verification are finished on `codex/rulebook-v1-1-migration`. The replacement engine is connected to the application and exercised through the UI tests. Full live semantic acceptance is **not claimed**: no provider key is configured, and several published scenario expectations conflict with the authoritative rulebook.

@@ -25,8 +25,9 @@ describe('live E2E scorer', () => {
   it('reports provider failures as ERROR, never PASS', () => {
     expect(scoreRecord({ run: 1, id: 'T10', http: 502, body: { error: 'Provider output failed schema or exact source-evidence validation.' } }).status).toBe('ERROR')
   })
-  // Scores recorded live runs (scripts/run-live-e2e.mjs) when present. Records results; does not gate CI on model quality.
-  it.runIf(existsSync('docs/live-e2e-runs.json'))('scores recorded live runs into docs/live-e2e-report.json', () => {
+  // Scores recorded live runs (scripts/run-live-e2e.mjs). Only `pnpm run eval:e2e:score` writes the report, so a plain
+  // `pnpm test` never rewrites committed evidence. Records results; does not gate CI on model quality.
+  it.runIf(existsSync('docs/live-e2e-runs.json') && process.env.npm_lifecycle_event === 'eval:e2e:score')('scores recorded live runs into docs/live-e2e-report.json', () => {
     const { records, base, status, recordedAt } = JSON.parse(readFileSync('docs/live-e2e-runs.json', 'utf8'))
     const report = { base, provider: status, recordedAt, ...scoreRuns(records) }
     writeFileSync('docs/live-e2e-report.json', JSON.stringify(report, null, 2) + '\n')

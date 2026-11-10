@@ -1,0 +1,3109 @@
+{
+  "base": "http://localhost:5173",
+  "provider": {
+    "configuredProvider": "gemini",
+    "policyVersion": "1.1"
+  },
+  "recordedAt": "2026-11-10T04:48:02.038Z",
+  "totals": {
+    "results": 66,
+    "PASS": 45,
+    "MISMATCH": 14,
+    "FAIL": 1,
+    "ERROR": 6
+  },
+  "byCase": {
+    "T01": {
+      "runs": 3,
+      "ok": 3,
+      "pass": 3,
+      "stable": true
+    },
+    "T02": {
+      "runs": 3,
+      "ok": 3,
+      "pass": 3,
+      "stable": true
+    },
+    "T03": {
+      "runs": 3,
+      "ok": 3,
+      "pass": 3,
+      "stable": true
+    },
+    "T04": {
+      "runs": 3,
+      "ok": 2,
+      "pass": 2,
+      "stable": true
+    },
+    "T05": {
+      "runs": 3,
+      "ok": 3,
+      "pass": 3,
+      "stable": true
+    },
+    "T06": {
+      "runs": 3,
+      "ok": 3,
+      "pass": 3,
+      "stable": true
+    },
+    "T07": {
+      "runs": 3,
+      "ok": 3,
+      "pass": 3,
+      "stable": true
+    },
+    "T08": {
+      "runs": 3,
+      "ok": 3,
+      "pass": 3,
+      "stable": true
+    },
+    "T09": {
+      "runs": 3,
+      "ok": 3,
+      "pass": 3,
+      "stable": true
+    },
+    "T10": {
+      "runs": 3,
+      "ok": 1,
+      "pass": 1,
+      "stable": true
+    },
+    "T11": {
+      "runs": 3,
+      "ok": 3,
+      "pass": 1,
+      "stable": false
+    },
+    "T12": {
+      "runs": 3,
+      "ok": 3,
+      "pass": 2,
+      "stable": true
+    },
+    "T13": {
+      "runs": 3,
+      "ok": 2,
+      "pass": 2,
+      "stable": true
+    },
+    "T14": {
+      "runs": 3,
+      "ok": 3,
+      "pass": 0,
+      "stable": true
+    },
+    "T15": {
+      "runs": 3,
+      "ok": 3,
+      "pass": 0,
+      "stable": true
+    },
+    "T16": {
+      "runs": 3,
+      "ok": 3,
+      "pass": 3,
+      "stable": true
+    },
+    "T17": {
+      "runs": 3,
+      "ok": 2,
+      "pass": 2,
+      "stable": true
+    },
+    "T18": {
+      "runs": 3,
+      "ok": 2,
+      "pass": 2,
+      "stable": true
+    },
+    "T19": {
+      "runs": 3,
+      "ok": 3,
+      "pass": 3,
+      "stable": true
+    },
+    "T20": {
+      "runs": 3,
+      "ok": 3,
+      "pass": 0,
+      "stable": false
+    },
+    "T21": {
+      "runs": 3,
+      "ok": 3,
+      "pass": 0,
+      "stable": true
+    },
+    "T22": {
+      "runs": 3,
+      "ok": 3,
+      "pass": 3,
+      "stable": true
+    }
+  },
+  "results": [
+    {
+      "id": "T01",
+      "run": 1,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 3161,
+      "decision": {
+        "urgency": "Undetermined",
+        "primary": "Undetermined",
+        "routes": [],
+        "safety": false,
+        "provisional": false
+      },
+      "decisionFails": [],
+      "fieldFails": [],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG08",
+        "RT10",
+        "RT09",
+        "SP01",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Was there a scam-related payment or unexpected transaction?",
+        "Was information entered or shared, and of what category? Do not provide secret values.",
+        "What happened and what makes the contact or loss suspicious?"
+      ]
+    },
+    {
+      "id": "T02",
+      "run": 1,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 1984,
+      "decision": {
+        "urgency": "Routine",
+        "primary": "Undetermined",
+        "routes": [],
+        "safety": false,
+        "provisional": true
+      },
+      "decisionFails": [],
+      "fieldFails": [
+        "distress_indicator: expected No reported, got Unknown",
+        "language_need: expected Not needed, got Unknown",
+        "accessibility_need: expected Not needed, got Unknown",
+        "basic_needs_impact: expected None reported, got Unknown"
+      ],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG07",
+        "UG09",
+        "IR02",
+        "RT10",
+        "RT09",
+        "VE03",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": []
+    },
+    {
+      "id": "T03",
+      "run": 1,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 5096,
+      "decision": {
+        "urgency": "Undetermined",
+        "primary": "Undetermined",
+        "routes": [],
+        "safety": false,
+        "provisional": false
+      },
+      "decisionFails": [],
+      "fieldFails": [
+        "device_action_taken: expected Clicked link, got Unknown"
+      ],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG08",
+        "IR02",
+        "RT10",
+        "RT09",
+        "SP01",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Was there a scam-related payment or unexpected transaction?",
+        "Was information entered or shared, and of what category? Do not provide secret values.",
+        "Approximately when did the contact occur?"
+      ]
+    },
+    {
+      "id": "T04",
+      "run": 1,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 3725,
+      "decision": {
+        "urgency": "Priority",
+        "primary": "ORG01",
+        "routes": [
+          "ORG01"
+        ],
+        "safety": false,
+        "provisional": true
+      },
+      "decisionFails": [],
+      "fieldFails": [
+        "bank_account_concern: unsupported positive"
+      ],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG04",
+        "UG09",
+        "IR03",
+        "RT10",
+        "RT09",
+        "RT01",
+        "IR06",
+        "CTL04",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Are further unexpected transactions continuing?",
+        "Which provider or provider category is involved?",
+        "Do you recognise or recall authorising the transaction?"
+      ]
+    },
+    {
+      "id": "T05",
+      "run": 1,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 1641,
+      "decision": {
+        "urgency": "Urgent",
+        "primary": "ORG01",
+        "routes": [
+          "ORG01"
+        ],
+        "safety": false,
+        "provisional": true
+      },
+      "decisionFails": [],
+      "fieldFails": [
+        "bank_account_concern: unsupported positive"
+      ],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG02",
+        "UG09",
+        "IR03",
+        "RT10",
+        "RT09",
+        "RT01",
+        "IR06",
+        "CTL04",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Which provider or provider category is involved?",
+        "Do you recognise or recall authorising the transaction?",
+        "Has the responsible provider been contacted?"
+      ]
+    },
+    {
+      "id": "T06",
+      "run": 1,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 5202,
+      "decision": {
+        "urgency": "Priority",
+        "primary": "ORG01",
+        "routes": [
+          "ORG01"
+        ],
+        "safety": false,
+        "provisional": true
+      },
+      "decisionFails": [],
+      "fieldFails": [
+        "contact_action: expected Shared info, got Replied"
+      ],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG05",
+        "UG09",
+        "IR02",
+        "IR04",
+        "RT10",
+        "RT09",
+        "RT01",
+        "IR06",
+        "CTL04",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Approximately when did the contact occur?",
+        "Approximately when was the information shared?",
+        "Has suspicious account access or active misuse been noticed?"
+      ]
+    },
+    {
+      "id": "T07",
+      "run": 1,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 3581,
+      "decision": {
+        "urgency": "Priority",
+        "primary": "ORG04",
+        "routes": [
+          "ORG04"
+        ],
+        "safety": false,
+        "provisional": true
+      },
+      "decisionFails": [],
+      "fieldFails": [],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG05",
+        "UG09",
+        "IR02",
+        "IR04",
+        "RT10",
+        "RT09",
+        "RT04",
+        "IR06",
+        "CTL04",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Approximately when did the contact occur?",
+        "Approximately when was the information shared?",
+        "Have any signs of identity misuse been reported?"
+      ]
+    },
+    {
+      "id": "T08",
+      "run": 1,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 6623,
+      "decision": {
+        "urgency": "Undetermined",
+        "primary": "Undetermined",
+        "routes": [],
+        "safety": false,
+        "provisional": false
+      },
+      "decisionFails": [],
+      "fieldFails": [
+        "ongoing_financial_activity: expected No, got Unknown"
+      ],
+      "invariantFails": [],
+      "publishedMatch": false,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG08",
+        "IR02",
+        "IR04",
+        "RT10",
+        "RT09",
+        "SP01",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Through which channel did the contact occur?",
+        "Approximately when did the contact occur?",
+        "Approximately when was the information shared?"
+      ]
+    },
+    {
+      "id": "T09",
+      "run": 1,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 3703,
+      "decision": {
+        "urgency": "Priority",
+        "primary": "Undetermined",
+        "routes": [
+          "ORG01",
+          "ORG07"
+        ],
+        "safety": false,
+        "provisional": true
+      },
+      "decisionFails": [],
+      "fieldFails": [],
+      "invariantFails": [],
+      "publishedMatch": false,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG04",
+        "UG06",
+        "UG09",
+        "IR03",
+        "VU04",
+        "IR05",
+        "RT10",
+        "RT09",
+        "RT08",
+        "RT01",
+        "IR06",
+        "CTL04",
+        "RT07",
+        "IR06",
+        "CTL04",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Which provider or provider category is involved?",
+        "Do you recognise or recall authorising the transaction?",
+        "Has the responsible provider been contacted?"
+      ]
+    },
+    {
+      "id": "T10",
+      "run": 1,
+      "status": "ERROR",
+      "error": "Provider output failed schema or exact source-evidence validation."
+    },
+    {
+      "id": "T11",
+      "run": 1,
+      "status": "MISMATCH",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 3975,
+      "decision": {
+        "urgency": "Urgent",
+        "primary": "Undetermined",
+        "routes": [
+          "ORG06"
+        ],
+        "safety": true,
+        "provisional": true
+      },
+      "decisionFails": [
+        "routes [ORG06] ≠ []"
+      ],
+      "fieldFails": [],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "UG01",
+        "SAFE01",
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG09",
+        "IR02",
+        "VU01",
+        "IR05",
+        "RT10",
+        "RT09",
+        "RT06",
+        "IR06",
+        "CTL04",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "If safe to answer, what is the current safety situation and location for authorised staff?",
+        "What action was taken after the contact?",
+        "Approximately when did the contact occur?"
+      ]
+    },
+    {
+      "id": "T12",
+      "run": 1,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 5471,
+      "decision": {
+        "urgency": "Priority",
+        "primary": "ORG01",
+        "routes": [
+          "ORG01"
+        ],
+        "safety": false,
+        "provisional": true
+      },
+      "decisionFails": [],
+      "fieldFails": [],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG04",
+        "UG09",
+        "IR03",
+        "VE02",
+        "VE02",
+        "RT10",
+        "RT09",
+        "RT01",
+        "IR06",
+        "CTL04",
+        "SP01",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Which statement about transaction authorisation should be used, and why?",
+        "Which statement about financial status should be used, and why?",
+        "Are further unexpected transactions continuing?"
+      ]
+    },
+    {
+      "id": "T13",
+      "run": 1,
+      "status": "ERROR",
+      "error": "Provider unavailable. No successful semantic extraction."
+    },
+    {
+      "id": "T14",
+      "run": 1,
+      "status": "MISMATCH",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 1786,
+      "decision": {
+        "urgency": "Priority",
+        "primary": "ORG01",
+        "routes": [
+          "ORG01"
+        ],
+        "safety": false,
+        "provisional": true
+      },
+      "decisionFails": [
+        "routes [ORG01] ≠ [ORG01,ORG02]"
+      ],
+      "fieldFails": [
+        "contact_status: expected Yes, got Unknown",
+        "platform_controlled_issue: expected Yes, got Unknown"
+      ],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG04",
+        "UG09",
+        "IR03",
+        "RT10",
+        "RT09",
+        "RT01",
+        "IR06",
+        "CTL04",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Which provider or provider category is involved?",
+        "Do you recognise or recall authorising the transaction?",
+        "Has the responsible provider been contacted?"
+      ]
+    },
+    {
+      "id": "T15",
+      "run": 1,
+      "status": "MISMATCH",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 1695,
+      "decision": {
+        "urgency": "Routine",
+        "primary": "ORG05",
+        "routes": [
+          "ORG05",
+          "ORG07"
+        ],
+        "safety": false,
+        "provisional": true
+      },
+      "decisionFails": [
+        "urgency Routine ≠ Undetermined",
+        "primary ORG05 ≠ ORG02",
+        "routes [ORG05,ORG07] ≠ [ORG02,ORG07]"
+      ],
+      "fieldFails": [
+        "platform_controlled_issue: expected Yes, got Unknown",
+        "reporting_need: unsupported positive"
+      ],
+      "invariantFails": [],
+      "publishedMatch": false,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG07",
+        "UG09",
+        "IR02",
+        "VU03",
+        "IR05",
+        "RT10",
+        "RT09",
+        "RT08",
+        "RT05",
+        "IR06",
+        "CTL04",
+        "RT07",
+        "IR06",
+        "CTL04",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Approximately when did the contact occur?",
+        "What specific support and communication method would help?"
+      ]
+    },
+    {
+      "id": "T16",
+      "run": 1,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 5944,
+      "decision": {
+        "urgency": "Priority",
+        "primary": "ORG01",
+        "routes": [
+          "ORG01"
+        ],
+        "safety": false,
+        "provisional": true
+      },
+      "decisionFails": [],
+      "fieldFails": [
+        "contact_status: expected Yes, got Unknown"
+      ],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG04",
+        "UG05",
+        "UG09",
+        "IR03",
+        "IR04",
+        "VE02",
+        "RT10",
+        "RT09",
+        "RT01",
+        "IR06",
+        "CTL04",
+        "SP01",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Which statement about amount should be used, and why?",
+        "Are further unexpected transactions continuing?",
+        "Which provider or provider category is involved?"
+      ]
+    },
+    {
+      "id": "T17",
+      "run": 1,
+      "status": "ERROR",
+      "error": "Provider unavailable. No successful semantic extraction."
+    },
+    {
+      "id": "T18",
+      "run": 1,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 4176,
+      "decision": {
+        "urgency": "Undetermined",
+        "primary": "Undetermined",
+        "routes": [],
+        "safety": false,
+        "provisional": false
+      },
+      "decisionFails": [],
+      "fieldFails": [
+        "device_credential_exposure: expected credentials stored only on device, got Unknown"
+      ],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG08",
+        "IR02",
+        "IR08",
+        "VE07",
+        "RT10",
+        "RT09",
+        "SP01",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Was there a scam-related payment or unexpected transaction?",
+        "Was information entered or shared, and of what category? Do not provide secret values.",
+        "Through which channel did the contact occur?"
+      ]
+    },
+    {
+      "id": "T19",
+      "run": 1,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 4732,
+      "decision": {
+        "urgency": "Undetermined",
+        "primary": "Undetermined",
+        "routes": [],
+        "safety": false,
+        "provisional": false
+      },
+      "decisionFails": [],
+      "fieldFails": [
+        "contact_status: expected Unknown, got Yes"
+      ],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG08",
+        "IR02",
+        "IR07",
+        "VE06",
+        "RT10",
+        "RT09",
+        "SP01",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Was there a scam-related payment or unexpected transaction?",
+        "Was information entered or shared, and of what category? Do not provide secret values.",
+        "What action was taken after the contact?"
+      ]
+    },
+    {
+      "id": "T20",
+      "run": 1,
+      "status": "MISMATCH",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 7435,
+      "decision": {
+        "urgency": "Undetermined",
+        "primary": "ORG06",
+        "routes": [
+          "ORG05",
+          "ORG06",
+          "ORG07"
+        ],
+        "safety": false,
+        "provisional": false
+      },
+      "decisionFails": [
+        "primary ORG06 ≠ Undetermined",
+        "routes [ORG05,ORG06,ORG07] ≠ [ORG06,ORG07]"
+      ],
+      "fieldFails": [
+        "contact_status: expected Yes, got Unknown",
+        "distress_indicator: expected Some, got Severe reported",
+        "exposure_status: expected Unknown, got Yes",
+        "reporting_need: unsupported positive"
+      ],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG08",
+        "IR04",
+        "VU01",
+        "VU03",
+        "IR05",
+        "VU05",
+        "RT10",
+        "RT09",
+        "RT08",
+        "RT05",
+        "IR06",
+        "CTL04",
+        "RT06",
+        "IR06",
+        "CTL04",
+        "RT07",
+        "IR06",
+        "CTL04",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Was there a scam-related payment or unexpected transaction?",
+        "What happened and what makes the contact or loss suspicious?",
+        "What category of information was exposed? Do not provide the actual values."
+      ]
+    },
+    {
+      "id": "T21",
+      "run": 1,
+      "status": "MISMATCH",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 5326,
+      "decision": {
+        "urgency": "Undetermined",
+        "primary": "ORG03",
+        "routes": [
+          "ORG01",
+          "ORG03"
+        ],
+        "safety": false,
+        "provisional": false
+      },
+      "decisionFails": [
+        "primary ORG03 ≠ Undetermined"
+      ],
+      "fieldFails": [],
+      "invariantFails": [],
+      "publishedMatch": false,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG08",
+        "RT10",
+        "RT09",
+        "RT08",
+        "RT01",
+        "IR06",
+        "CTL04",
+        "RT03",
+        "IR06",
+        "CTL04",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Was there a scam-related payment or unexpected transaction?",
+        "Was information entered or shared, and of what category? Do not provide secret values.",
+        "What happened and what makes the contact or loss suspicious?"
+      ]
+    },
+    {
+      "id": "T22",
+      "run": 1,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 4995,
+      "decision": {
+        "urgency": "Priority",
+        "primary": "ORG04",
+        "routes": [
+          "ORG04"
+        ],
+        "safety": false,
+        "provisional": true
+      },
+      "decisionFails": [],
+      "fieldFails": [
+        "contact_status: expected Yes, got Unknown",
+        "contact_action: expected Shared info, got Unknown"
+      ],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG05",
+        "UG09",
+        "IR04",
+        "RT10",
+        "RT09",
+        "RT04",
+        "IR06",
+        "CTL04",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Approximately when was the information shared?"
+      ]
+    },
+    {
+      "id": "T01",
+      "run": 2,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 7586,
+      "decision": {
+        "urgency": "Undetermined",
+        "primary": "Undetermined",
+        "routes": [],
+        "safety": false,
+        "provisional": false
+      },
+      "decisionFails": [],
+      "fieldFails": [],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG08",
+        "RT10",
+        "RT09",
+        "SP01",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Was there a scam-related payment or unexpected transaction?",
+        "Was information entered or shared, and of what category? Do not provide secret values.",
+        "What happened and what makes the contact or loss suspicious?"
+      ]
+    },
+    {
+      "id": "T02",
+      "run": 2,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 3938,
+      "decision": {
+        "urgency": "Routine",
+        "primary": "Undetermined",
+        "routes": [],
+        "safety": false,
+        "provisional": true
+      },
+      "decisionFails": [],
+      "fieldFails": [
+        "distress_indicator: expected No reported, got Unknown",
+        "language_need: expected Not needed, got Unknown",
+        "accessibility_need: expected Not needed, got Unknown",
+        "basic_needs_impact: expected None reported, got Unknown"
+      ],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG07",
+        "UG09",
+        "IR02",
+        "RT10",
+        "RT09",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Approximately when did the contact occur?"
+      ]
+    },
+    {
+      "id": "T03",
+      "run": 2,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 4715,
+      "decision": {
+        "urgency": "Undetermined",
+        "primary": "Undetermined",
+        "routes": [],
+        "safety": false,
+        "provisional": false
+      },
+      "decisionFails": [],
+      "fieldFails": [
+        "device_action_taken: expected Clicked link, got Unknown"
+      ],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG08",
+        "IR02",
+        "RT10",
+        "RT09",
+        "SP01",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Was there a scam-related payment or unexpected transaction?",
+        "Was information entered or shared, and of what category? Do not provide secret values.",
+        "Approximately when did the contact occur?"
+      ]
+    },
+    {
+      "id": "T04",
+      "run": 2,
+      "status": "ERROR",
+      "error": "Provider unavailable. No successful semantic extraction."
+    },
+    {
+      "id": "T05",
+      "run": 2,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 1361,
+      "decision": {
+        "urgency": "Urgent",
+        "primary": "ORG01",
+        "routes": [
+          "ORG01"
+        ],
+        "safety": false,
+        "provisional": true
+      },
+      "decisionFails": [],
+      "fieldFails": [
+        "bank_account_concern: unsupported positive"
+      ],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG02",
+        "UG09",
+        "IR03",
+        "RT10",
+        "RT09",
+        "RT01",
+        "IR06",
+        "CTL04",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Which provider or provider category is involved?",
+        "Do you recognise or recall authorising the transaction?",
+        "Has the responsible provider been contacted?"
+      ]
+    },
+    {
+      "id": "T06",
+      "run": 2,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 1639,
+      "decision": {
+        "urgency": "Priority",
+        "primary": "ORG01",
+        "routes": [
+          "ORG01"
+        ],
+        "safety": false,
+        "provisional": true
+      },
+      "decisionFails": [],
+      "fieldFails": [
+        "contact_action: expected Shared info, got Replied"
+      ],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG05",
+        "UG09",
+        "IR02",
+        "IR04",
+        "RT10",
+        "RT09",
+        "RT01",
+        "IR06",
+        "CTL04",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Approximately when did the contact occur?",
+        "Approximately when was the information shared?",
+        "Has suspicious account access or active misuse been noticed?"
+      ]
+    },
+    {
+      "id": "T07",
+      "run": 2,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 4163,
+      "decision": {
+        "urgency": "Priority",
+        "primary": "ORG04",
+        "routes": [
+          "ORG04"
+        ],
+        "safety": false,
+        "provisional": true
+      },
+      "decisionFails": [],
+      "fieldFails": [],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG05",
+        "UG09",
+        "IR02",
+        "IR04",
+        "RT10",
+        "RT09",
+        "RT04",
+        "IR06",
+        "CTL04",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Approximately when did the contact occur?",
+        "Approximately when was the information shared?",
+        "Have any signs of identity misuse been reported?"
+      ]
+    },
+    {
+      "id": "T08",
+      "run": 2,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 2429,
+      "decision": {
+        "urgency": "Undetermined",
+        "primary": "Undetermined",
+        "routes": [],
+        "safety": false,
+        "provisional": false
+      },
+      "decisionFails": [],
+      "fieldFails": [
+        "ongoing_financial_activity: expected No, got Unknown"
+      ],
+      "invariantFails": [],
+      "publishedMatch": false,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG08",
+        "IR02",
+        "IR04",
+        "RT10",
+        "RT09",
+        "SP01",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Through which channel did the contact occur?",
+        "Approximately when did the contact occur?",
+        "Approximately when was the information shared?"
+      ]
+    },
+    {
+      "id": "T09",
+      "run": 2,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 5013,
+      "decision": {
+        "urgency": "Priority",
+        "primary": "Undetermined",
+        "routes": [
+          "ORG01",
+          "ORG07"
+        ],
+        "safety": false,
+        "provisional": true
+      },
+      "decisionFails": [],
+      "fieldFails": [],
+      "invariantFails": [],
+      "publishedMatch": false,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG04",
+        "UG06",
+        "UG09",
+        "IR03",
+        "VU04",
+        "IR05",
+        "RT10",
+        "RT09",
+        "RT08",
+        "RT01",
+        "IR06",
+        "CTL04",
+        "RT07",
+        "IR06",
+        "CTL04",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Which provider or provider category is involved?",
+        "Do you recognise or recall authorising the transaction?",
+        "Has the responsible provider been contacted?"
+      ]
+    },
+    {
+      "id": "T10",
+      "run": 2,
+      "status": "ERROR",
+      "error": "Provider unavailable. No successful semantic extraction."
+    },
+    {
+      "id": "T11",
+      "run": 2,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 3391,
+      "decision": {
+        "urgency": "Urgent",
+        "primary": "Undetermined",
+        "routes": [],
+        "safety": true,
+        "provisional": true
+      },
+      "decisionFails": [],
+      "fieldFails": [],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "UG01",
+        "SAFE01",
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG09",
+        "IR02",
+        "RT10",
+        "RT09",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "If safe to answer, what is the current safety situation and location for authorised staff?",
+        "What action was taken after the contact?",
+        "Approximately when did the contact occur?"
+      ]
+    },
+    {
+      "id": "T12",
+      "run": 2,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 5612,
+      "decision": {
+        "urgency": "Priority",
+        "primary": "ORG01",
+        "routes": [
+          "ORG01"
+        ],
+        "safety": false,
+        "provisional": true
+      },
+      "decisionFails": [],
+      "fieldFails": [],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG04",
+        "UG09",
+        "IR03",
+        "VE02",
+        "VE02",
+        "RT10",
+        "RT09",
+        "RT01",
+        "IR06",
+        "CTL04",
+        "SP01",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Which statement about transaction authorisation should be used, and why?",
+        "Which statement about financial status should be used, and why?",
+        "Are further unexpected transactions continuing?"
+      ]
+    },
+    {
+      "id": "T13",
+      "run": 2,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 4345,
+      "decision": {
+        "urgency": "Routine",
+        "primary": "ORG07",
+        "routes": [
+          "ORG07"
+        ],
+        "safety": false,
+        "provisional": true
+      },
+      "decisionFails": [],
+      "fieldFails": [
+        "immediate_safety_threat: expected No, got Unknown"
+      ],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG07",
+        "UG09",
+        "IR02",
+        "VU02",
+        "IR05",
+        "RT10",
+        "RT09",
+        "RT07",
+        "IR06",
+        "CTL04",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Approximately when did the contact occur?",
+        "What specific support and communication method would help?"
+      ]
+    },
+    {
+      "id": "T14",
+      "run": 2,
+      "status": "MISMATCH",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 3621,
+      "decision": {
+        "urgency": "Priority",
+        "primary": "ORG01",
+        "routes": [
+          "ORG01"
+        ],
+        "safety": false,
+        "provisional": true
+      },
+      "decisionFails": [
+        "routes [ORG01] ≠ [ORG01,ORG02]"
+      ],
+      "fieldFails": [
+        "contact_status: expected Yes, got Unknown",
+        "platform_controlled_issue: expected Yes, got Unknown"
+      ],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG04",
+        "UG09",
+        "IR03",
+        "RT10",
+        "RT09",
+        "RT01",
+        "IR06",
+        "CTL04",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Which provider or provider category is involved?",
+        "Do you recognise or recall authorising the transaction?",
+        "Has the responsible provider been contacted?"
+      ]
+    },
+    {
+      "id": "T15",
+      "run": 2,
+      "status": "MISMATCH",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 2012,
+      "decision": {
+        "urgency": "Routine",
+        "primary": "ORG05",
+        "routes": [
+          "ORG05",
+          "ORG07"
+        ],
+        "safety": false,
+        "provisional": true
+      },
+      "decisionFails": [
+        "urgency Routine ≠ Undetermined",
+        "primary ORG05 ≠ ORG02",
+        "routes [ORG05,ORG07] ≠ [ORG02,ORG07]"
+      ],
+      "fieldFails": [
+        "platform_controlled_issue: expected Yes, got Unknown",
+        "reporting_need: unsupported positive"
+      ],
+      "invariantFails": [],
+      "publishedMatch": false,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG07",
+        "UG09",
+        "IR02",
+        "VU03",
+        "IR05",
+        "RT10",
+        "RT09",
+        "RT08",
+        "RT05",
+        "IR06",
+        "CTL04",
+        "RT07",
+        "IR06",
+        "CTL04",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Approximately when did the contact occur?",
+        "What specific support and communication method would help?"
+      ]
+    },
+    {
+      "id": "T16",
+      "run": 2,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 4587,
+      "decision": {
+        "urgency": "Priority",
+        "primary": "ORG01",
+        "routes": [
+          "ORG01"
+        ],
+        "safety": false,
+        "provisional": true
+      },
+      "decisionFails": [],
+      "fieldFails": [
+        "contact_status: expected Yes, got Unknown"
+      ],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG04",
+        "UG05",
+        "UG09",
+        "IR03",
+        "IR04",
+        "VE02",
+        "RT10",
+        "RT09",
+        "RT01",
+        "IR06",
+        "CTL04",
+        "SP01",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Which statement about financial event type should be used, and why?",
+        "Are further unexpected transactions continuing?",
+        "Which provider or provider category is involved?"
+      ]
+    },
+    {
+      "id": "T17",
+      "run": 2,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 5023,
+      "decision": {
+        "urgency": "Urgent",
+        "primary": "Undetermined",
+        "routes": [
+          "ORG06"
+        ],
+        "safety": true,
+        "provisional": true
+      },
+      "decisionFails": [],
+      "fieldFails": [],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "UG01",
+        "SAFE01",
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG09",
+        "VU01",
+        "IR05",
+        "RT10",
+        "RT09",
+        "RT06",
+        "IR06",
+        "CTL04",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "If safe to answer, what is the current safety situation and location for authorised staff?",
+        "What specific support and communication method would help?"
+      ]
+    },
+    {
+      "id": "T18",
+      "run": 2,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 4856,
+      "decision": {
+        "urgency": "Undetermined",
+        "primary": "Undetermined",
+        "routes": [],
+        "safety": false,
+        "provisional": false
+      },
+      "decisionFails": [],
+      "fieldFails": [
+        "device_action_taken: expected Clicked link, got Unknown",
+        "device_credential_exposure: expected credentials stored only on device, got Unknown",
+        "exposure_status: expected Unknown, got No"
+      ],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG08",
+        "IR02",
+        "IR08",
+        "VE07",
+        "RT10",
+        "RT09",
+        "SP01",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Was there a scam-related payment or unexpected transaction?",
+        "Through which channel did the contact occur?",
+        "Approximately when did the contact occur?"
+      ]
+    },
+    {
+      "id": "T19",
+      "run": 2,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 4254,
+      "decision": {
+        "urgency": "Undetermined",
+        "primary": "Undetermined",
+        "routes": [],
+        "safety": false,
+        "provisional": false
+      },
+      "decisionFails": [],
+      "fieldFails": [
+        "contact_status: expected Unknown, got Yes"
+      ],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG08",
+        "IR02",
+        "IR07",
+        "VE06",
+        "RT10",
+        "RT09",
+        "SP01",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Was there a scam-related payment or unexpected transaction?",
+        "Was information entered or shared, and of what category? Do not provide secret values.",
+        "What action was taken after the contact?"
+      ]
+    },
+    {
+      "id": "T20",
+      "run": 2,
+      "status": "MISMATCH",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 4890,
+      "decision": {
+        "urgency": "Undetermined",
+        "primary": "ORG06",
+        "routes": [
+          "ORG05",
+          "ORG06",
+          "ORG07"
+        ],
+        "safety": false,
+        "provisional": false
+      },
+      "decisionFails": [
+        "primary ORG06 ≠ Undetermined",
+        "routes [ORG05,ORG06,ORG07] ≠ [ORG06,ORG07]"
+      ],
+      "fieldFails": [
+        "distress_indicator: expected Some, got Severe reported",
+        "reporting_need: unsupported positive"
+      ],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG08",
+        "IR02",
+        "VU01",
+        "VU03",
+        "IR05",
+        "VU05",
+        "RT10",
+        "RT09",
+        "RT08",
+        "RT05",
+        "IR06",
+        "CTL04",
+        "RT06",
+        "IR06",
+        "CTL04",
+        "RT07",
+        "IR06",
+        "CTL04",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Was there a scam-related payment or unexpected transaction?",
+        "Was information entered or shared, and of what category? Do not provide secret values.",
+        "What action was taken after the contact?"
+      ]
+    },
+    {
+      "id": "T21",
+      "run": 2,
+      "status": "MISMATCH",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 5380,
+      "decision": {
+        "urgency": "Undetermined",
+        "primary": "ORG03",
+        "routes": [
+          "ORG01",
+          "ORG03"
+        ],
+        "safety": false,
+        "provisional": false
+      },
+      "decisionFails": [
+        "primary ORG03 ≠ Undetermined"
+      ],
+      "fieldFails": [],
+      "invariantFails": [],
+      "publishedMatch": false,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG08",
+        "RT10",
+        "RT09",
+        "RT08",
+        "RT01",
+        "IR06",
+        "CTL04",
+        "RT03",
+        "IR06",
+        "CTL04",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Was there a scam-related payment or unexpected transaction?",
+        "Was information entered or shared, and of what category? Do not provide secret values.",
+        "What happened and what makes the contact or loss suspicious?"
+      ]
+    },
+    {
+      "id": "T22",
+      "run": 2,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 3908,
+      "decision": {
+        "urgency": "Priority",
+        "primary": "ORG04",
+        "routes": [
+          "ORG04"
+        ],
+        "safety": false,
+        "provisional": true
+      },
+      "decisionFails": [],
+      "fieldFails": [],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG05",
+        "UG09",
+        "IR02",
+        "IR04",
+        "RT10",
+        "RT09",
+        "RT04",
+        "IR06",
+        "CTL04",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Through which channel did the contact occur?",
+        "Approximately when did the contact occur?",
+        "Approximately when was the information shared?"
+      ]
+    },
+    {
+      "id": "T01",
+      "run": 3,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 4487,
+      "decision": {
+        "urgency": "Undetermined",
+        "primary": "Undetermined",
+        "routes": [],
+        "safety": false,
+        "provisional": false
+      },
+      "decisionFails": [],
+      "fieldFails": [],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG08",
+        "RT10",
+        "RT09",
+        "SP01",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Was there a scam-related payment or unexpected transaction?",
+        "Was information entered or shared, and of what category? Do not provide secret values.",
+        "What happened and what makes the contact or loss suspicious?"
+      ]
+    },
+    {
+      "id": "T02",
+      "run": 3,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 2347,
+      "decision": {
+        "urgency": "Routine",
+        "primary": "Undetermined",
+        "routes": [],
+        "safety": false,
+        "provisional": true
+      },
+      "decisionFails": [],
+      "fieldFails": [
+        "language_need: expected Not needed, got Unknown",
+        "accessibility_need: expected Not needed, got Unknown",
+        "basic_needs_impact: expected None reported, got Unknown"
+      ],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG07",
+        "UG09",
+        "IR02",
+        "RT10",
+        "RT09",
+        "VE03",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": []
+    },
+    {
+      "id": "T03",
+      "run": 3,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 4021,
+      "decision": {
+        "urgency": "Undetermined",
+        "primary": "Undetermined",
+        "routes": [],
+        "safety": false,
+        "provisional": false
+      },
+      "decisionFails": [],
+      "fieldFails": [],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG08",
+        "IR02",
+        "IR08",
+        "VE07",
+        "RT10",
+        "RT09",
+        "SP01",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Was there a scam-related payment or unexpected transaction?",
+        "Was information entered or shared, and of what category? Do not provide secret values.",
+        "Approximately when did the contact occur?"
+      ]
+    },
+    {
+      "id": "T04",
+      "run": 3,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 4014,
+      "decision": {
+        "urgency": "Priority",
+        "primary": "ORG01",
+        "routes": [
+          "ORG01"
+        ],
+        "safety": false,
+        "provisional": true
+      },
+      "decisionFails": [],
+      "fieldFails": [
+        "bank_account_concern: unsupported positive"
+      ],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG04",
+        "UG09",
+        "IR03",
+        "RT10",
+        "RT09",
+        "RT01",
+        "IR06",
+        "CTL04",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Are further unexpected transactions continuing?",
+        "Which provider or provider category is involved?",
+        "Do you recognise or recall authorising the transaction?"
+      ]
+    },
+    {
+      "id": "T05",
+      "run": 3,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 6389,
+      "decision": {
+        "urgency": "Urgent",
+        "primary": "ORG01",
+        "routes": [
+          "ORG01"
+        ],
+        "safety": false,
+        "provisional": true
+      },
+      "decisionFails": [],
+      "fieldFails": [
+        "bank_account_concern: unsupported positive"
+      ],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG02",
+        "UG09",
+        "IR03",
+        "RT10",
+        "RT09",
+        "RT01",
+        "IR06",
+        "CTL04",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Which provider or provider category is involved?",
+        "Do you recognise or recall authorising the transaction?",
+        "Has the responsible provider been contacted?"
+      ]
+    },
+    {
+      "id": "T06",
+      "run": 3,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 1595,
+      "decision": {
+        "urgency": "Priority",
+        "primary": "ORG01",
+        "routes": [
+          "ORG01"
+        ],
+        "safety": false,
+        "provisional": true
+      },
+      "decisionFails": [],
+      "fieldFails": [
+        "contact_action: expected Shared info, got Replied"
+      ],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG05",
+        "UG09",
+        "IR02",
+        "IR04",
+        "RT10",
+        "RT09",
+        "RT01",
+        "IR06",
+        "CTL04",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Approximately when did the contact occur?",
+        "Approximately when was the information shared?",
+        "Has suspicious account access or active misuse been noticed?"
+      ]
+    },
+    {
+      "id": "T07",
+      "run": 3,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 4678,
+      "decision": {
+        "urgency": "Priority",
+        "primary": "ORG04",
+        "routes": [
+          "ORG04"
+        ],
+        "safety": false,
+        "provisional": true
+      },
+      "decisionFails": [],
+      "fieldFails": [
+        "contact_status: expected Yes, got Unknown",
+        "contact_channel: expected Web, got Unknown",
+        "contact_action: expected Shared info, got Unknown"
+      ],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG05",
+        "UG09",
+        "IR04",
+        "RT10",
+        "RT09",
+        "RT04",
+        "IR06",
+        "CTL04",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Approximately when was the information shared?",
+        "Have any signs of identity misuse been reported?"
+      ]
+    },
+    {
+      "id": "T08",
+      "run": 3,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 4300,
+      "decision": {
+        "urgency": "Undetermined",
+        "primary": "Undetermined",
+        "routes": [],
+        "safety": false,
+        "provisional": false
+      },
+      "decisionFails": [],
+      "fieldFails": [
+        "contact_status: expected Yes, got Unknown",
+        "contact_action: expected Shared info, got Unknown",
+        "ongoing_financial_activity: expected No, got Unknown"
+      ],
+      "invariantFails": [],
+      "publishedMatch": false,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG08",
+        "IR04",
+        "RT10",
+        "RT09",
+        "SP01",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "What happened and what makes the contact or loss suspicious?",
+        "Approximately when was the information shared?"
+      ]
+    },
+    {
+      "id": "T09",
+      "run": 3,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 4075,
+      "decision": {
+        "urgency": "Priority",
+        "primary": "Undetermined",
+        "routes": [
+          "ORG01",
+          "ORG07"
+        ],
+        "safety": false,
+        "provisional": true
+      },
+      "decisionFails": [],
+      "fieldFails": [],
+      "invariantFails": [],
+      "publishedMatch": false,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG04",
+        "UG06",
+        "UG09",
+        "IR03",
+        "VU04",
+        "IR05",
+        "RT10",
+        "RT09",
+        "RT08",
+        "RT01",
+        "IR06",
+        "CTL04",
+        "RT07",
+        "IR06",
+        "CTL04",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Which provider or provider category is involved?",
+        "Do you recognise or recall authorising the transaction?",
+        "Has the responsible provider been contacted?"
+      ]
+    },
+    {
+      "id": "T10",
+      "run": 3,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 1645,
+      "decision": {
+        "urgency": "Priority",
+        "primary": "ORG06",
+        "routes": [
+          "ORG06"
+        ],
+        "safety": false,
+        "provisional": true
+      },
+      "decisionFails": [],
+      "fieldFails": [],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG06",
+        "UG09",
+        "IR02",
+        "VU01",
+        "IR05",
+        "RT10",
+        "RT09",
+        "RT06",
+        "IR06",
+        "CTL04",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "What action was taken after the contact?",
+        "Approximately when did the contact occur?",
+        "What specific support and communication method would help?"
+      ]
+    },
+    {
+      "id": "T11",
+      "run": 3,
+      "status": "MISMATCH",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 3557,
+      "decision": {
+        "urgency": "Urgent",
+        "primary": "Undetermined",
+        "routes": [
+          "ORG06"
+        ],
+        "safety": true,
+        "provisional": true
+      },
+      "decisionFails": [
+        "routes [ORG06] ≠ []"
+      ],
+      "fieldFails": [],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "UG01",
+        "SAFE01",
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG09",
+        "IR02",
+        "VU01",
+        "IR05",
+        "RT10",
+        "RT09",
+        "RT06",
+        "IR06",
+        "CTL04",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "If safe to answer, what is the current safety situation and location for authorised staff?",
+        "What action was taken after the contact?",
+        "Approximately when did the contact occur?"
+      ]
+    },
+    {
+      "id": "T12",
+      "run": 3,
+      "status": "FAIL",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 4578,
+      "decision": {
+        "urgency": "Priority",
+        "primary": "ORG01",
+        "routes": [
+          "ORG01"
+        ],
+        "safety": false,
+        "provisional": true
+      },
+      "decisionFails": [],
+      "fieldFails": [
+        "financial_status: expected Conflicting, got Yes"
+      ],
+      "invariantFails": [
+        "Contradictory transfer kept as Conflicting, no silent selection (VE02)"
+      ],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG04",
+        "UG09",
+        "IR03",
+        "VE02",
+        "RT10",
+        "RT09",
+        "RT01",
+        "IR06",
+        "CTL04",
+        "SP01",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Which statement about transaction authorisation should be used, and why?",
+        "Are further unexpected transactions continuing?",
+        "Which provider or provider category is involved?"
+      ]
+    },
+    {
+      "id": "T13",
+      "run": 3,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 2128,
+      "decision": {
+        "urgency": "Routine",
+        "primary": "ORG07",
+        "routes": [
+          "ORG07"
+        ],
+        "safety": false,
+        "provisional": true
+      },
+      "decisionFails": [],
+      "fieldFails": [],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG07",
+        "UG09",
+        "IR02",
+        "VU02",
+        "IR05",
+        "RT10",
+        "RT09",
+        "RT07",
+        "IR06",
+        "CTL04",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Approximately when did the contact occur?",
+        "What specific support and communication method would help?"
+      ]
+    },
+    {
+      "id": "T14",
+      "run": 3,
+      "status": "MISMATCH",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 3546,
+      "decision": {
+        "urgency": "Priority",
+        "primary": "ORG01",
+        "routes": [
+          "ORG01"
+        ],
+        "safety": false,
+        "provisional": true
+      },
+      "decisionFails": [
+        "routes [ORG01] ≠ [ORG01,ORG02]"
+      ],
+      "fieldFails": [
+        "contact_status: expected Yes, got Unknown",
+        "platform_controlled_issue: expected Yes, got Unknown"
+      ],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG04",
+        "UG09",
+        "IR03",
+        "RT10",
+        "RT09",
+        "RT01",
+        "IR06",
+        "CTL04",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Which provider or provider category is involved?",
+        "Do you recognise or recall authorising the transaction?",
+        "Has the responsible provider been contacted?"
+      ]
+    },
+    {
+      "id": "T15",
+      "run": 3,
+      "status": "MISMATCH",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 2089,
+      "decision": {
+        "urgency": "Routine",
+        "primary": "ORG05",
+        "routes": [
+          "ORG05",
+          "ORG07"
+        ],
+        "safety": false,
+        "provisional": true
+      },
+      "decisionFails": [
+        "urgency Routine ≠ Undetermined",
+        "primary ORG05 ≠ ORG02",
+        "routes [ORG05,ORG07] ≠ [ORG02,ORG07]"
+      ],
+      "fieldFails": [
+        "platform_controlled_issue: expected Yes, got Unknown",
+        "reporting_need: unsupported positive"
+      ],
+      "invariantFails": [],
+      "publishedMatch": false,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG07",
+        "UG09",
+        "IR02",
+        "VU03",
+        "IR05",
+        "RT10",
+        "RT09",
+        "RT08",
+        "RT05",
+        "IR06",
+        "CTL04",
+        "RT07",
+        "IR06",
+        "CTL04",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Approximately when did the contact occur?",
+        "What specific support and communication method would help?"
+      ]
+    },
+    {
+      "id": "T16",
+      "run": 3,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 5565,
+      "decision": {
+        "urgency": "Priority",
+        "primary": "ORG01",
+        "routes": [
+          "ORG01"
+        ],
+        "safety": false,
+        "provisional": true
+      },
+      "decisionFails": [],
+      "fieldFails": [
+        "contact_status: expected Yes, got Unknown"
+      ],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG04",
+        "UG05",
+        "UG09",
+        "IR03",
+        "IR04",
+        "RT10",
+        "RT09",
+        "RT01",
+        "IR06",
+        "CTL04",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Are further unexpected transactions continuing?",
+        "Which provider or provider category is involved?",
+        "Was this an induced transfer, unexplained transaction or reported scam-related loss?"
+      ]
+    },
+    {
+      "id": "T17",
+      "run": 3,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 3729,
+      "decision": {
+        "urgency": "Urgent",
+        "primary": "Undetermined",
+        "routes": [
+          "ORG06"
+        ],
+        "safety": true,
+        "provisional": true
+      },
+      "decisionFails": [],
+      "fieldFails": [],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "UG01",
+        "SAFE01",
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG09",
+        "VU01",
+        "IR05",
+        "RT10",
+        "RT09",
+        "RT06",
+        "IR06",
+        "CTL04",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "If safe to answer, what is the current safety situation and location for authorised staff?",
+        "What specific support and communication method would help?"
+      ]
+    },
+    {
+      "id": "T18",
+      "run": 3,
+      "status": "ERROR",
+      "error": "Provider unavailable. No successful semantic extraction."
+    },
+    {
+      "id": "T19",
+      "run": 3,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 3581,
+      "decision": {
+        "urgency": "Undetermined",
+        "primary": "Undetermined",
+        "routes": [],
+        "safety": false,
+        "provisional": false
+      },
+      "decisionFails": [],
+      "fieldFails": [
+        "contact_status: expected Unknown, got Yes"
+      ],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG08",
+        "IR02",
+        "IR07",
+        "VE06",
+        "RT10",
+        "RT09",
+        "SP01",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Was there a scam-related payment or unexpected transaction?",
+        "Was information entered or shared, and of what category? Do not provide secret values.",
+        "What action was taken after the contact?"
+      ]
+    },
+    {
+      "id": "T20",
+      "run": 3,
+      "status": "MISMATCH",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 5026,
+      "decision": {
+        "urgency": "Undetermined",
+        "primary": "ORG06",
+        "routes": [
+          "ORG06",
+          "ORG07"
+        ],
+        "safety": false,
+        "provisional": false
+      },
+      "decisionFails": [
+        "primary ORG06 ≠ Undetermined"
+      ],
+      "fieldFails": [
+        "contact_status: expected Yes, got Unknown",
+        "distress_indicator: expected Some, got Severe reported",
+        "reporting_need: unsupported positive"
+      ],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG08",
+        "VU01",
+        "VU03",
+        "IR05",
+        "VU05",
+        "RT10",
+        "RT09",
+        "RT08",
+        "RT06",
+        "IR06",
+        "CTL04",
+        "RT07",
+        "IR06",
+        "CTL04",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Was there a scam-related payment or unexpected transaction?",
+        "Was information entered or shared, and of what category? Do not provide secret values.",
+        "What happened and what makes the contact or loss suspicious?"
+      ]
+    },
+    {
+      "id": "T21",
+      "run": 3,
+      "status": "MISMATCH",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 5059,
+      "decision": {
+        "urgency": "Undetermined",
+        "primary": "ORG03",
+        "routes": [
+          "ORG01",
+          "ORG03"
+        ],
+        "safety": false,
+        "provisional": false
+      },
+      "decisionFails": [
+        "primary ORG03 ≠ Undetermined"
+      ],
+      "fieldFails": [],
+      "invariantFails": [],
+      "publishedMatch": false,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG08",
+        "RT10",
+        "RT09",
+        "RT08",
+        "RT01",
+        "IR06",
+        "CTL04",
+        "RT03",
+        "IR06",
+        "CTL04",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Was there a scam-related payment or unexpected transaction?",
+        "Was information entered or shared, and of what category? Do not provide secret values.",
+        "What happened and what makes the contact or loss suspicious?"
+      ]
+    },
+    {
+      "id": "T22",
+      "run": 3,
+      "status": "PASS",
+      "valid": true,
+      "model": "gemini-3.5-flash-lite",
+      "ms": 5360,
+      "decision": {
+        "urgency": "Priority",
+        "primary": "ORG04",
+        "routes": [
+          "ORG04"
+        ],
+        "safety": false,
+        "provisional": true
+      },
+      "decisionFails": [],
+      "fieldFails": [],
+      "invariantFails": [],
+      "publishedMatch": true,
+      "rulesFired": [
+        "CL01",
+        "CL02",
+        "CL03",
+        "IR01",
+        "UG05",
+        "UG09",
+        "IR02",
+        "IR04",
+        "RT10",
+        "RT09",
+        "RT04",
+        "IR06",
+        "CTL04",
+        "VE01",
+        "VE03",
+        "VE04",
+        "CTL01",
+        "CTL02",
+        "CTL03"
+      ],
+      "questions": [
+        "Through which channel did the contact occur?",
+        "Approximately when did the contact occur?",
+        "Approximately when was the information shared?"
+      ]
+    }
+  ]
+}

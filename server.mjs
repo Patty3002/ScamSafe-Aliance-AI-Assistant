@@ -32,7 +32,7 @@ export async function extractCase(input,{env=process.env,fetchImpl=fetch,timeout
   const expired=new Promise((_,reject)=>{timer=setTimeout(()=>{controller.abort();reject(new Error('Provider request timed out.'))},timeoutMs)})
   try {
     const request=provider==='gemini'
-      ? ['https://generativelanguage.googleapis.com/v1beta/models/'+encodeURIComponent(model)+':generateContent',{method:'POST',signal:controller.signal,headers:{'content-type':'application/json','x-goog-api-key':env.GEMINI_API_KEY},body:JSON.stringify({systemInstruction:{parts:[{text:extractionInstructions}]},contents:[{role:'user',parts:[{text:prompt}]}],generationConfig:{temperature:0.1,responseMimeType:'application/json',responseSchema:toGeminiResponseSchema(extractionSchema)}})}]
+      ? ['https://generativelanguage.googleapis.com/v1beta/models/'+encodeURIComponent(model)+':generateContent',{method:'POST',signal:controller.signal,headers:{'content-type':'application/json','x-goog-api-key':env.GEMINI_API_KEY},body:JSON.stringify({systemInstruction:{parts:[{text:extractionInstructions}]},contents:[{role:'user',parts:[{text:prompt}]}],generationConfig:{thinkingConfig: { thinkingLevel: 'medium' },temperature:0.2,responseMimeType:'application/json',responseSchema:toGeminiResponseSchema(extractionSchema)}})}]
       : ['https://api.openai.com/v1/responses',{method:'POST',signal:controller.signal,headers:{'content-type':'application/json',authorization:`Bearer ${env.OPENAI_API_KEY}`},body:JSON.stringify({model,store:false,instructions:extractionInstructions,input:prompt,text:{format:{type:'json_schema',name:'scamsafe_extraction',strict:true,schema:extractionSchema}}})}]
     const work=(async()=>{
       const response=await fetchImpl(...request)

@@ -1,0 +1,302 @@
+From 769f30082477174894d109937f6682501013b230 Mon Sep 17 00:00:00 2001
+From: INFS5706 Team <team@example.invalid>
+Date: Tue, 10 Nov 2026 11:42:47 +1100
+Subject: [PATCH] =?UTF-8?q?Add=20live=20end-to-end=20T01=E2=80=93T22=20eva?=
+ =?UTF-8?q?luation=20and=20first=20live=20results?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+- src/liveEvaluation.ts: scores real /api/analyze responses through the
+  validator and deterministic rule engine against the team's rulebook
+  expectations, published expectations and per-case safety invariants
+- src/liveEvaluation.test.ts: scorer self-checks; scores recorded runs
+- scripts/run-live-e2e.mjs: records T01–T22 x N runs from a running server
+- docs/LIVE_E2E_REPORT_2026-11-10.md: 66-run results against the deployed
+  Gemini prototype (39 PASS / 18 MISMATCH / 3 FAIL / 6 ERROR)
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01YLDZ4MPsnx2xDKy1Jzj5mS
+---
+ README.md                          |  1 +
+ docs/LIVE_E2E_REPORT_2026-11-10.md | 58 ++++++++++++++++++
+ package.json                       |  4 +-
+ scripts/run-live-e2e.mjs           | 23 +++++++
+ src/liveEvaluation.test.ts         | 37 +++++++++++
+ src/liveEvaluation.ts              | 98 ++++++++++++++++++++++++++++++
+ 6 files changed, 220 insertions(+), 1 deletion(-)
+ create mode 100644 docs/LIVE_E2E_REPORT_2026-11-10.md
+ create mode 100644 scripts/run-live-e2e.mjs
+ create mode 100644 src/liveEvaluation.test.ts
+ create mode 100644 src/liveEvaluation.ts
+
+diff --git a/README.md b/README.md
+index ba5cc84..de8a38b 100644
+--- a/README.md
++++ b/README.md
+@@ -24,6 +24,7 @@ Original intake and case ID are locked after the first analysis attempt. Clarifi
+ - `pnpm run typecheck`: TypeScript validation.
+ - `pnpm run build`: policy change gate, typecheck and production bundle.
+ - `pnpm run check:policy`: rulebook hash, 48 documented IDs, coverage map and exact fixture narrative synchronization.
++- `pnpm run eval:e2e -- <baseUrl> [runs] [gapMs]` then `pnpm run eval:e2e:score`: full live pipeline (narrative → provider → validator → rule engine) against a running server, scored for decisions and safety invariants by `src/liveEvaluation.ts`. Latest results: `docs/LIVE_E2E_REPORT_2026-11-10.md`.
+ - `pnpm run eval:live`: same T01–T22 semantic evaluation against the selected configured provider; writes `docs/provider-evaluation.json`. With no key it records NOT RUN, never PASS.
+ 
+ Fixtures are generated from the supplied acceptance Markdown. Human-curated structured facts are only imported by tests/evaluation, never by the runtime narrative analysis. Expected differences from the scenario prose are explicit in the discrepancy report. Mock provider tests establish request/response handling only. Exact quote validation does not prove that a model interpreted the quote correctly; live semantic evaluation and human review remain necessary.
+diff --git a/docs/LIVE_E2E_REPORT_2026-11-10.md b/docs/LIVE_E2E_REPORT_2026-11-10.md
+new file mode 100644
+index 0000000..caa13b6
+--- /dev/null
++++ b/docs/LIVE_E2E_REPORT_2026-11-10.md
+@@ -0,0 +1,58 @@
++# Live end-to-end evaluation — 2026-11-10
++
++> Synthetic T01–T22 narratives only. First live semantic run of the deployed prototype (previously `provider-evaluation.json` = NOT RUN).
++
++## Setup
++
++| Item | Value |
++| --- | --- |
++| Target | `https://scamsafe-aliance-ai-assistant.onrender.com` (`/api/analyze`) |
++| Provider / model | Gemini · `gemini-3.5-flash-lite` (server-configured) |
++| Code under test | Deployed `ruleEngine.ts`, `organisationRouting.ts`, `contract.mjs` — SHA-256 identical to commit `e2e8187` |
++| Pipeline | narrative → live LLM extraction → server evidence validator → deterministic `evaluate()` → `src/liveEvaluation.ts` scorer |
++| Runs | 3 × 22 = 66 requests (run 1 at 1.5 s spacing, runs 2–3 at 5 s) |
++| Scorer self-check | Curated extractions score 22/22 PASS; broken-safety and fabricated-quote cases score FAIL |
++
++Status meanings: **PASS** = urgency, primary and routes equal the team's rulebook-adjudicated expectation and all invariants hold. **MISMATCH** = invariants hold but the decision differs. **FAIL** = a safety/boundary invariant broke or evidence was invalid. **ERROR** = no successful extraction (UI shows Limited Demo).
++
++## Totals
++
++| PASS | MISMATCH | FAIL | ERROR |
++| --- | --- | --- | --- |
++| 39 | 18 | 3 | 6 (4 provider unavailable, 2 validation rejects) |
++
++Median latency of successful calls 1.5 s (max 3.3 s). All 60 successful extractions passed exact-quote validation; SAFE01 fired on every T11/T17 run; no SMS-only case was routed to ORG03; T16 was never escalated to Urgent; T18 never treated stored banking data as exposure; T19 authority claim stayed unverified.
++
++## Per scenario (valid runs)
++
++| Case | Result | Observed decision(s) | Cause |
++| --- | --- | --- | --- |
++| T02 T03 T04 T05 T07 T08 T19 T22 | 3/3 PASS | as expected | — |
++| T10 T16 T17 T18 | 2/2 PASS | as expected | run 1 ERROR only |
++| T01 | 2 PASS, 1 **FAIL** | run 2: Priority / ORG01 | model set `financial_status=Yes` from "I lost money" (CL02 boundary) |
++| T12 | 0/2 — **FAIL** both | Priority / ORG01 | model cites both contradictory quotes but labels `Yes`, not `Conflicting` (VE02). Decision matches; safeguard fails |
++| T06 | 2/3 | run 2: Priority / no route | `bank_account_concern` omitted although "banking password" disclosed |
++| T09 | 2/3 | run 1: ORG01 primary | model inferred `main_actionable_issue` (primary matches published, not team reading) |
++| T21 | 1/2 | run 2: ORG03 primary | model inferred `main_actionable_issue=Telecom service` (primary matches published) |
++| T11 | 0/3 MISMATCH | + ORG06 additional | "I fear immediate physical danger" read as severe distress |
++| T13 | 0/3 MISMATCH | Undetermined (expected Routine) | model never emits `exposure_status=No` from "did not … share information" |
++| T14 | 0/3 MISMATCH | ORG01 only | `platform_controlled_issue` never set for "fake marketplace" → ORG02 missing |
++| T15 | 0/3 MISMATCH | Routine / ORG05 primary | model sets `reporting_need` + `main_actionable_issue=Scam reporting`; platform issue missed |
++| T20 | 0/3 MISMATCH | ORG06 primary | `main_actionable_issue=Emotional support` inferred (allowed by published row) |
++
++## Findings and recommended actions
++
++1. **Conflict detection is not reliable with the live model (T12, VE02).** Recommend a prompt example for contradictions, plus a staff-review prompt whenever a four-state fact cites two or more evidence spans.
++2. **`main_actionable_issue` is inferred, not "explicitly stated"** (T09, T15, T20, T21). This is the largest driver of primary-route deviation. Tighten the instruction or ignore the field unless the narrative uses explicit "main/most important" wording.
++3. **Under-extraction of negatives and platform context** (T13 `exposure_status=No`; T14/T15 `platform_controlled_issue`). These fail safe (Undetermined / fewer routes) but lose the published Routine/ORG02 outcomes.
++4. **Rate limiting on fast consecutive requests** (run 1, 4 ERRORs at ~300 ms). In the demo video, wait several seconds between analyses; consider a retry with back-off on HTTP 429.
++5. **Occasional schema/evidence rejects** (T10, T12 run 1). The validator correctly refuses; a single automatic retry would reduce Limited Demo screens.
++
++## Re-running
++
++```
++node scripts/run-live-e2e.mjs https://scamsafe-aliance-ai-assistant.onrender.com 3 5000   # writes docs/live-e2e-runs.json
++pnpm run eval:e2e:score                                                                    # writes docs/live-e2e-report.json
++```
++
++Rerun after any prompt, model or provider change (cross-case invariant: same T01–T22 semantic evaluation). Keep the raw JSON as test evidence.
+diff --git a/package.json b/package.json
+index de9cd88..972f564 100644
+--- a/package.json
++++ b/package.json
+@@ -11,7 +11,9 @@
+     "check:policy": "node scripts/check-policy.mjs",
+     "prebuild": "node scripts/check-policy.mjs",
+     "pretest": "node scripts/check-policy.mjs",
+-    "eval:live": "node scripts/evaluate-provider.mjs"
++    "eval:live": "node scripts/evaluate-provider.mjs",
++    "eval:e2e": "node scripts/run-live-e2e.mjs",
++    "eval:e2e:score": "vitest run src/liveEvaluation.test.ts"
+   },
+   "dependencies": {
+     "@vitejs/plugin-react": "latest",
+diff --git a/scripts/run-live-e2e.mjs b/scripts/run-live-e2e.mjs
+new file mode 100644
+index 0000000..2940ee2
+--- /dev/null
++++ b/scripts/run-live-e2e.mjs
+@@ -0,0 +1,23 @@
++// Sends the 22 synthetic T01–T22 narratives to a running ScamSafe server's /api/analyze and records raw responses.
++// Usage: node scripts/run-live-e2e.mjs [baseUrl] [runs] [gapMs]
++//   e.g. node scripts/run-live-e2e.mjs https://scamsafe-aliance-ai-assistant.onrender.com 3 5000
++// Then score with: pnpm run eval:e2e:score
++// Synthetic scenario text only. Uses the server's configured provider key; nothing is sent elsewhere.
++import { readFile, writeFile } from 'node:fs/promises'
++const [base = 'http://localhost:5173', runs = '3', gap = '5000'] = process.argv.slice(2)
++const scenarios = JSON.parse(await readFile(new URL('../src/policy/scenarios.json', import.meta.url), 'utf8'))
++const status = await fetch(new URL('/api/status', base)).then(r => r.json())
++console.log(`Server ${base}: provider=${status.configuredProvider}, policy=${status.policyVersion}`)
++if (status.configuredProvider === 'demo') { console.log('No provider key configured on server: live E2E NOT RUN.'); process.exit(2) }
++const records = []
++for (let run = 1; run <= Number(runs); run++) for (const s of scenarios) {
++  const t0 = Date.now(); let rec
++  try {
++    const r = await fetch(new URL('/api/analyze', base), { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ narrative: s.narrative }) })
++    rec = { run, id: s.id, http: r.status, ms: Date.now() - t0, body: await r.json() }
++  } catch (e) { rec = { run, id: s.id, error: String(e) } }
++  records.push(rec); console.log(`run ${run} ${s.id}: HTTP ${rec.http ?? 'ERR'} ${rec.body?.error ?? ''}`)
++  await new Promise(r => setTimeout(r, Number(gap))) // stay under provider rate limits
++}
++await writeFile(new URL('../docs/live-e2e-runs.json', import.meta.url), JSON.stringify({ base, status, recordedAt: new Date().toISOString(), records }, null, 2) + '\n')
++console.log('Saved docs/live-e2e-runs.json')
+diff --git a/src/liveEvaluation.test.ts b/src/liveEvaluation.test.ts
+new file mode 100644
+index 0000000..684289b
+--- /dev/null
++++ b/src/liveEvaluation.test.ts
+@@ -0,0 +1,37 @@
++import { describe, it, expect } from 'vitest'
++import { existsSync, readFileSync, writeFileSync } from 'node:fs'
++import { scoreRecord, scoreRuns, type LiveRecord } from './liveEvaluation'
++import { structuredScenarios } from './policy/structuredScenarios'
++
++const asRecord = (id: string, analysis: unknown, run = 0): LiveRecord => ({ run, id, http: 200, body: { analysis: analysis as never } })
++
++describe('live E2E scorer', () => {
++  it('scores the human-curated extractions as 22/22 PASS (scorer self-check)', () => {
++    const s = scoreRuns(structuredScenarios.map(x => asRecord(x.id, x.extraction)))
++    expect(s.totals).toMatchObject({ results: 22, PASS: 22, MISMATCH: 0, FAIL: 0, ERROR: 0 })
++  })
++  it('flags a safety-invariant break as FAIL (T17 without safety threat)', () => {
++    const t17 = structuredScenarios.find(x => x.id === 'T17')!
++    const broken = { ...t17.extraction, facts: t17.extraction.facts.filter(f => f.field !== 'immediate_safety_threat') }
++    const r = scoreRecord(asRecord('T17', broken))
++    expect(r.status).toBe('FAIL')
++    expect('invariantFails' in r && r.invariantFails).toContain('Safety escalation fires without ABC facts (SAFE01)')
++  })
++  it('flags fabricated evidence quotes as FAIL', () => {
++    const t02 = structuredScenarios.find(x => x.id === 'T02')!
++    const r = scoreRecord(asRecord('T02', { ...t02.extraction, facts: [{ field: 'contact_status', value: 'Yes', source: 'original', evidence: ['not in the narrative'] }] }))
++    expect(r.status).toBe('FAIL')
++  })
++  it('reports provider failures as ERROR, never PASS', () => {
++    expect(scoreRecord({ run: 1, id: 'T10', http: 502, body: { error: 'Provider output failed schema or exact source-evidence validation.' } }).status).toBe('ERROR')
++  })
++  // Scores recorded live runs (scripts/run-live-e2e.mjs) when present. Records results; does not gate CI on model quality.
++  it.runIf(existsSync('docs/live-e2e-runs.json'))('scores recorded live runs into docs/live-e2e-report.json', () => {
++    const { records, base, status, recordedAt } = JSON.parse(readFileSync('docs/live-e2e-runs.json', 'utf8'))
++    const report = { base, provider: status, recordedAt, ...scoreRuns(records) }
++    writeFileSync('docs/live-e2e-report.json', JSON.stringify(report, null, 2) + '\n')
++    console.table(Object.entries(report.byCase).map(([id, c]) => ({ id, ...c })))
++    console.log(report.totals)
++    expect(report.totals.results).toBe(records.length)
++  })
++})
+diff --git a/src/liveEvaluation.ts b/src/liveEvaluation.ts
+new file mode 100644
+index 0000000..b452286
+--- /dev/null
++++ b/src/liveEvaluation.ts
+@@ -0,0 +1,98 @@
++// End-to-end live evaluation: real provider extraction -> validator -> deterministic rule engine -> compare.
++// Scores recorded /api/analyze responses for T01–T22. It does NOT call any provider itself.
++import { evaluate } from './policy/ruleEngine'
++import { validateExtraction, fieldDefinitions } from './policy/contract.mjs'
++import { expected as rulebookExpected } from './policy/structuredScenarios'
++import scenarios from './policy/scenarios.json'
++import curatedFacts from './policy/structuredFacts.json'
++import type { Extraction, DecisionResult } from './policy/types'
++
++export type LiveRecord = { run: number; id: string; http?: number; ms?: number; error?: string; body?: { model?: string; analysis?: Extraction; error?: string } }
++
++// Published (acceptance Markdown) urgency/primary, normalised. Conditional rows accept several values.
++export const published: Record<string, { urgency: string[]; primary: string[] }> = {
++  T01: { urgency: ['Undetermined'], primary: ['Undetermined'] }, T02: { urgency: ['Routine'], primary: ['Undetermined'] },
++  T03: { urgency: ['Undetermined'], primary: ['Undetermined'] }, T04: { urgency: ['Priority'], primary: ['ORG01'] },
++  T05: { urgency: ['Urgent'], primary: ['ORG01'] }, T06: { urgency: ['Priority'], primary: ['ORG01'] },
++  T07: { urgency: ['Priority'], primary: ['ORG04'] }, T08: { urgency: ['Undetermined'], primary: ['ORG01'] },
++  T09: { urgency: ['Priority'], primary: ['ORG01'] }, T10: { urgency: ['Priority'], primary: ['ORG06'] },
++  T11: { urgency: ['Urgent'], primary: ['Undetermined'] }, T12: { urgency: ['Priority'], primary: ['ORG01'] },
++  T13: { urgency: ['Routine'], primary: ['ORG07'] }, T14: { urgency: ['Priority'], primary: ['ORG01'] },
++  T15: { urgency: ['Routine'], primary: ['ORG02'] }, T16: { urgency: ['Priority'], primary: ['ORG01'] },
++  T17: { urgency: ['Urgent'], primary: ['Undetermined'] }, T18: { urgency: ['Undetermined'], primary: ['Undetermined'] },
++  T19: { urgency: ['Undetermined'], primary: ['Undetermined'] }, T20: { urgency: ['Undetermined', 'Routine', 'Priority'], primary: ['ORG07', 'ORG06'] },
++  T21: { urgency: ['Priority'], primary: ['ORG03'] }, T22: { urgency: ['Priority'], primary: ['ORG04'] },
++}
++
++// Safety / boundary invariants that must hold whatever the model says (rulebook §0, §6, cross-case invariants).
++export const invariants: Record<string, { name: string; check: (d: DecisionResult) => boolean }[]> = {
++  T01: [{ name: 'Ambiguous "lost money" is not a financial event; no fabricated bank (CL02)', check: d => d.facts.financial_status?.value !== 'Yes' && !d.routes.some(r => r.id === 'ORG01') }],
++  T08: [{ name: 'BSB/account is not a password/OTP exposure (CL03/UG05)', check: d => !(d.facts.exposure_type?.values || []).some(v => ['Login credential', 'OTP'].includes(v)) }],
++  T12: [{ name: 'Contradictory transfer kept as Conflicting, no silent selection (VE02)', check: d => d.facts.financial_status?.value === 'Conflicting' }],
++  T02: [{ name: 'SMS alone does not route to ORG03 (RT10)', check: d => !d.routes.some(r => r.id === 'ORG03') }],
++  T06: [{ name: 'SMS alone does not route to ORG03 (RT10)', check: d => !d.routes.some(r => r.id === 'ORG03') }],
++  T13: [{ name: 'Language need alone does not raise urgency (VU02)', check: d => !['Urgent', 'Priority'].includes(d.urgency) },
++        { name: 'SMS alone does not route to ORG03 (RT10)', check: d => !d.routes.some(r => r.id === 'ORG03') }],
++  T05: [{ name: 'Ongoing deductions are Urgent (UG02)', check: d => d.urgency === 'Urgent' }],
++  T10: [{ name: 'Distress alone does not trigger safety escalation', check: d => !d.safety }],
++  T11: [{ name: 'Safety escalation fires (SAFE01)', check: d => d.safety && d.urgency === 'Urgent' }],
++  T16: [{ name: 'Single unclear debit is not Urgent (UG02 boundary)', check: d => d.urgency !== 'Urgent' }],
++  T17: [{ name: 'Safety escalation fires without ABC facts (SAFE01)', check: d => d.safety && d.urgency === 'Urgent' }],
++  T18: [{ name: 'Stored banking info is not exposure (CL03/VE07)', check: d => d.facts.exposure_status?.value !== 'Yes' },
++        { name: 'No forced organisation route (RT09)', check: d => d.primary === 'Undetermined' }],
++  T19: [{ name: 'Authority claim stays unverified (VE06)', check: d => d.authorityVerificationStatus !== 'Independently verified through official channel' }],
++}
++const universal: { name: string; check: (d: DecisionResult) => boolean }[] = [
++  { name: 'At most one primary route', check: d => d.routes.filter(r => r.primary).length <= 1 },
++  { name: 'At most 3 clarification questions', check: d => d.questions.length <= 3 },
++  { name: 'Every route explains rule and evidence (CTL03/CTL04)', check: d => d.routes.every(r => r.rationale.includes(r.rule) && r.rationale.includes('Reported evidence:')) },
++]
++
++const observedValue = (ext: Extraction, field: string) => {
++  const values = [...new Set(ext.facts.filter(f => f.field === field).map(f => f.value))].filter(v => !['Unknown', 'unknown'].includes(v))
++  return values.includes('Conflicting') || (values.includes('Yes') && values.includes('No')) ? ['Conflicting'] : values.length ? values : ['Unknown']
++}
++
++export function scoreRecord(rec: LiveRecord) {
++  const s = (scenarios as { id: string; narrative: string; expected: Record<string, string> }[]).find(x => x.id === rec.id)!
++  const sources = { original: s.narrative, clarification: '', correction: '' }
++  const ext = rec.body?.analysis
++  if (rec.http !== 200 || !ext) return { id: rec.id, run: rec.run, status: 'ERROR' as const, error: rec.error || rec.body?.error || `HTTP ${rec.http}` }
++  const valid = validateExtraction(ext, sources)
++  if (!valid) return { id: rec.id, run: rec.run, status: 'FAIL' as const, valid, error: 'Extraction failed schema or exact source-evidence validation (engine refuses to analyse).' }
++  const d = evaluate(ext, sources)
++  const want = rulebookExpected[rec.id]
++  const routes = d.routes.map(r => r.id)
++  const decision = { urgency: d.urgency, primary: d.primary, routes, safety: d.safety, provisional: d.provisional }
++  const decisionFails: string[] = []
++  if (d.urgency !== want.urgency) decisionFails.push(`urgency ${d.urgency} ≠ ${want.urgency}`)
++  if (d.primary !== want.primary) decisionFails.push(`primary ${d.primary} ≠ ${want.primary}`)
++  if (JSON.stringify(routes) !== JSON.stringify(want.routes)) decisionFails.push(`routes [${routes}] ≠ [${want.routes}]`)
++  // Field-level extraction vs human-curated facts (enum fields only; free-text normalisation is not exact).
++  const curated: Record<string, string | string[]> = { ...(curatedFacts as Record<string, Record<string, string | string[]>>)[rec.id] }
++  for (const f of ['contact_status', 'financial_status', 'exposure_status']) curated[f] ??= 'Unknown'
++  const fieldFails: string[] = []
++  for (const [field, value] of Object.entries(curated)) {
++    if (!(fieldDefinitions as Record<string, [string, string[] | null]>)[field][1]) continue
++    const obs = observedValue(ext, field)
++    for (const w of Array.isArray(value) ? value : [value]) if (!obs.includes(w)) fieldFails.push(`${field}: expected ${w}, got ${obs.join('/')}`)
++  }
++  for (const field of ['immediate_safety_threat', 'ongoing_financial_activity', 'suspicious_access', 'platform_controlled_issue', 'telecom_service_issue', 'bank_account_concern', 'reporting_need', 'distress_prevents_proceeding', 'language_need', 'accessibility_need'])
++    if (!curated[field] && ext.facts.some(f => f.field === field && ['Yes', 'Needed'].includes(f.value))) fieldFails.push(`${field}: unsupported positive`)
++  const invariantFails = [...universal, ...(invariants[rec.id] || [])].filter(i => !i.check(d)).map(i => i.name)
++  const pub = published[rec.id]
++  const publishedMatch = pub.urgency.includes(d.urgency) && pub.primary.includes(d.primary)
++  const status = !valid || invariantFails.length ? 'FAIL' as const : decisionFails.length ? 'MISMATCH' as const : 'PASS' as const
++  return { id: rec.id, run: rec.run, status, valid, model: rec.body?.model, ms: rec.ms, decision, decisionFails, fieldFails, invariantFails, publishedMatch, rulesFired: d.rulesFired.map(r => r.id), questions: d.questions }
++}
++
++export function scoreRuns(records: LiveRecord[]) {
++  const results = records.map(scoreRecord)
++  const byCase = Object.fromEntries((scenarios as { id: string }[]).map(s => {
++    const rs = results.filter(r => r.id === s.id)
++    const decisions = new Set(rs.filter(r => r.status !== 'ERROR').map(r => JSON.stringify((r as { decision: unknown }).decision)))
++    return [s.id, { runs: rs.length, ok: rs.filter(r => r.status !== 'ERROR').length, pass: rs.filter(r => r.status === 'PASS').length, stable: decisions.size <= 1 }]
++  }))
++  const count = (st: string) => results.filter(r => r.status === st).length
++  return { totals: { results: results.length, PASS: count('PASS'), MISMATCH: count('MISMATCH'), FAIL: count('FAIL'), ERROR: count('ERROR') }, byCase, results }
++}
+-- 
+2.43.0
+

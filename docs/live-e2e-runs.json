@@ -1,16 +1,16 @@
 {
-  "base": "http://localhost:5173",
+  "base": "https://scamsafe-aliance-ai-assistant.onrender.com/",
   "status": {
     "configuredProvider": "gemini",
     "policyVersion": "1.1"
   },
-  "recordedAt": "2026-11-10T04:48:02.038Z",
+  "recordedAt": "2026-11-10T11:30:40.236Z",
   "records": [
     {
       "run": 1,
       "id": "T01",
       "http": 200,
-      "ms": 3161,
+      "ms": 3791,
       "body": {
         "mode": "gemini",
         "analysisMode": "real_ai",
@@ -18,8 +18,1274 @@
         "model": "gemini-3.5-flash-lite",
         "policyVersion": "1.1",
         "requestStatus": "succeeded",
+        "attempts": 1,
         "analysis": {
-          "summary": "The user reported losing money but stated they are unsure what happened.",
+          "summary": "The individual stated that they lost money and were not sure what happened. No additional details were provided regarding the event.",
+          "facts": []
+        }
+      }
+    },
+    {
+      "run": 1,
+      "id": "T02",
+      "http": 200,
+      "ms": 8252,
+      "body": {
+        "mode": "gemini",
+        "analysisMode": "real_ai",
+        "provider": "gemini",
+        "model": "gemini-3.5-flash-lite",
+        "policyVersion": "1.1",
+        "requestStatus": "succeeded",
+        "attempts": 2,
+        "analysis": {
+          "summary": "The user received a fake bank SMS yesterday and did not click, reply, share data, or send any money. They reported needing no extra support.",
+          "facts": [
+            {
+              "field": "reporting_organisation",
+              "value": "Bank",
+              "source": "original",
+              "evidence": [
+                "fake bank SMS"
+              ]
+            },
+            {
+              "field": "contact_status",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "Yesterday I got a fake bank SMS."
+              ]
+            },
+            {
+              "field": "contact_channel",
+              "value": "SMS",
+              "source": "original",
+              "evidence": [
+                "fake bank SMS"
+              ]
+            },
+            {
+              "field": "contact_action",
+              "value": "None",
+              "source": "original",
+              "evidence": [
+                "I did not click, reply, share data or send any money."
+              ]
+            },
+            {
+              "field": "financial_status",
+              "value": "No",
+              "source": "original",
+              "evidence": [
+                "I did not click, reply, share data or send any money."
+              ]
+            },
+            {
+              "field": "exposure_status",
+              "value": "No",
+              "source": "original",
+              "evidence": [
+                "I did not click, reply, share data or send any money."
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "run": 1,
+      "id": "T03",
+      "http": 200,
+      "ms": 11858,
+      "body": {
+        "mode": "gemini",
+        "analysisMode": "real_ai",
+        "provider": "gemini",
+        "model": "gemini-3.5-flash-lite",
+        "policyVersion": "1.1",
+        "requestStatus": "succeeded",
+        "attempts": 2,
+        "analysis": {
+          "summary": "The user received an SMS containing a suspicious link and clicked it. They are unsure if they entered any information or if any money was moved.",
+          "facts": [
+            {
+              "field": "reporting_organisation",
+              "value": "Unknown",
+              "source": "original",
+              "evidence": [
+                "I received an SMS with a suspicious link and clicked it."
+              ]
+            },
+            {
+              "field": "contact_status",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "I received an SMS with a suspicious link and clicked it."
+              ]
+            },
+            {
+              "field": "contact_channel",
+              "value": "SMS",
+              "source": "original",
+              "evidence": [
+                "I received an SMS with a suspicious link and clicked it."
+              ]
+            },
+            {
+              "field": "contact_action",
+              "value": "Clicked",
+              "source": "original",
+              "evidence": [
+                "clicked it."
+              ]
+            },
+            {
+              "field": "financial_status",
+              "value": "Unknown",
+              "source": "original",
+              "evidence": [
+                "I don't know if I entered anything or if money moved."
+              ]
+            },
+            {
+              "field": "exposure_status",
+              "value": "Unknown",
+              "source": "original",
+              "evidence": [
+                "I don't know if I entered anything or if money moved."
+              ]
+            },
+            {
+              "field": "device_action_taken",
+              "value": "Clicked link",
+              "source": "original",
+              "evidence": [
+                "clicked it."
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "run": 1,
+      "id": "T04",
+      "http": 200,
+      "ms": 3235,
+      "body": {
+        "mode": "gemini",
+        "analysisMode": "real_ai",
+        "provider": "gemini",
+        "model": "gemini-3.5-flash-lite",
+        "policyVersion": "1.1",
+        "requestStatus": "succeeded",
+        "attempts": 1,
+        "analysis": {
+          "summary": "The user reported an unrecognised $800 transaction that occurred yesterday. They have not yet specified which bank is involved.",
+          "facts": [
+            {
+              "field": "financial_status",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "There was an $800 transaction yesterday I didn't recognise."
+              ]
+            },
+            {
+              "field": "financial_event_type",
+              "value": "Unauthorised transaction",
+              "source": "original",
+              "evidence": [
+                "There was an $800 transaction yesterday I didn't recognise."
+              ]
+            },
+            {
+              "field": "amount",
+              "value": "$800",
+              "source": "original",
+              "evidence": [
+                "There was an $800 transaction"
+              ]
+            },
+            {
+              "field": "transaction_time",
+              "value": "yesterday",
+              "source": "original",
+              "evidence": [
+                "yesterday"
+              ]
+            },
+            {
+              "field": "bank_account_concern",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "There was an $800 transaction yesterday I didn't recognise."
+              ]
+            },
+            {
+              "field": "main_actionable_issue",
+              "value": "Financial/account",
+              "source": "original",
+              "evidence": [
+                "There was an $800 transaction yesterday I didn't recognise."
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "run": 1,
+      "id": "T05",
+      "http": 200,
+      "ms": 5662,
+      "body": {
+        "mode": "gemini",
+        "analysisMode": "real_ai",
+        "provider": "gemini",
+        "model": "gemini-3.5-flash-lite",
+        "policyVersion": "1.1",
+        "requestStatus": "succeeded",
+        "attempts": 2,
+        "analysis": {
+          "summary": "The user reports that deductions were made from their account and that the activity is currently ongoing. They do not know the total amount.",
+          "facts": [
+            {
+              "field": "financial_status",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "Someone made three deductions from my account"
+              ]
+            },
+            {
+              "field": "financial_event_type",
+              "value": "Unauthorised transaction",
+              "source": "original",
+              "evidence": [
+                "Someone made three deductions from my account"
+              ]
+            },
+            {
+              "field": "ongoing_financial_activity",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "it is still happening now."
+              ]
+            },
+            {
+              "field": "bank_account_concern",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "Someone made three deductions from my account"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "run": 1,
+      "id": "T06",
+      "http": 200,
+      "ms": 8235,
+      "body": {
+        "mode": "gemini",
+        "analysisMode": "real_ai",
+        "provider": "gemini",
+        "model": "gemini-3.5-flash-lite",
+        "policyVersion": "1.1",
+        "requestStatus": "succeeded",
+        "attempts": 2,
+        "analysis": {
+          "summary": "The user replied to a fraudulent bank SMS message and disclosed their banking password. They are currently unaware if any unauthorized financial transactions have occurred.",
+          "facts": [
+            {
+              "field": "reporting_organisation",
+              "value": "Bank",
+              "source": "original",
+              "evidence": [
+                "fake bank SMS"
+              ]
+            },
+            {
+              "field": "contact_status",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "I replied to a fake bank SMS"
+              ]
+            },
+            {
+              "field": "contact_channel",
+              "value": "SMS",
+              "source": "original",
+              "evidence": [
+                "fake bank SMS"
+              ]
+            },
+            {
+              "field": "contact_action",
+              "value": "Replied",
+              "source": "original",
+              "evidence": [
+                "I replied"
+              ]
+            },
+            {
+              "field": "financial_status",
+              "value": "Unknown",
+              "source": "original",
+              "evidence": [
+                "I don't know if any money was taken."
+              ]
+            },
+            {
+              "field": "financial_event_type",
+              "value": "Unknown",
+              "source": "original",
+              "evidence": [
+                "I don't know if any money was taken."
+              ]
+            },
+            {
+              "field": "exposure_status",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "gave my banking password"
+              ]
+            },
+            {
+              "field": "exposure_type",
+              "value": "Login credential",
+              "source": "original",
+              "evidence": [
+                "banking password"
+              ]
+            },
+            {
+              "field": "bank_account_concern",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "fake bank SMS and gave my banking password"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "run": 1,
+      "id": "T07",
+      "http": 200,
+      "ms": 11467,
+      "body": {
+        "mode": "gemini",
+        "analysisMode": "real_ai",
+        "provider": "gemini",
+        "model": "gemini-3.5-flash-lite",
+        "policyVersion": "1.1",
+        "requestStatus": "succeeded",
+        "attempts": 1,
+        "analysis": {
+          "summary": "The user shared a photo of their identity document with a fake recruitment site. They do not know whether the document has been misused.",
+          "facts": [
+            {
+              "field": "contact_status",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "I sent a photo of my identity document to a fake recruitment site."
+              ]
+            },
+            {
+              "field": "contact_channel",
+              "value": "Web",
+              "source": "original",
+              "evidence": [
+                "recruitment site"
+              ]
+            },
+            {
+              "field": "contact_action",
+              "value": "Shared info",
+              "source": "original",
+              "evidence": [
+                "I sent a photo of my identity document"
+              ]
+            },
+            {
+              "field": "exposure_status",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "I sent a photo of my identity document"
+              ]
+            },
+            {
+              "field": "exposure_type",
+              "value": "Identity document",
+              "source": "original",
+              "evidence": [
+                "identity document"
+              ]
+            },
+            {
+              "field": "identity_misuse",
+              "value": "Unknown",
+              "source": "original",
+              "evidence": [
+                "I don't know whether it has been misused."
+              ]
+            },
+            {
+              "field": "reporting_organisation",
+              "value": "Platform",
+              "source": "original",
+              "evidence": [
+                "recruitment site"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "run": 1,
+      "id": "T08",
+      "http": 200,
+      "ms": 4934,
+      "body": {
+        "mode": "gemini",
+        "analysisMode": "real_ai",
+        "provider": "gemini",
+        "model": "gemini-3.5-flash-lite",
+        "policyVersion": "1.1",
+        "requestStatus": "succeeded",
+        "attempts": 1,
+        "analysis": {
+          "summary": "The user reported providing their BSB and account number to a suspicious person. They confirmed that no money was sent and no unusual transactions occurred.",
+          "facts": [
+            {
+              "field": "contact_status",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "I provided my BSB and account number to a suspicious person."
+              ]
+            },
+            {
+              "field": "contact_channel",
+              "value": "Unknown",
+              "source": "original",
+              "evidence": [
+                "I provided my BSB and account number to a suspicious person."
+              ]
+            },
+            {
+              "field": "contact_action",
+              "value": "Shared info",
+              "source": "original",
+              "evidence": [
+                "I provided my BSB and account number"
+              ]
+            },
+            {
+              "field": "financial_status",
+              "value": "No",
+              "source": "original",
+              "evidence": [
+                "I did not send any money and have not seen an unusual transaction."
+              ]
+            },
+            {
+              "field": "financial_event_type",
+              "value": "N/A",
+              "source": "original",
+              "evidence": [
+                "I did not send any money"
+              ]
+            },
+            {
+              "field": "exposure_status",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "I provided my BSB and account number"
+              ]
+            },
+            {
+              "field": "exposure_type",
+              "value": "BSB+account",
+              "source": "original",
+              "evidence": [
+                "I provided my BSB and account number"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "run": 1,
+      "id": "T09",
+      "http": 200,
+      "ms": 1941,
+      "body": {
+        "mode": "gemini",
+        "analysisMode": "real_ai",
+        "provider": "gemini",
+        "model": "gemini-3.5-flash-lite",
+        "policyVersion": "1.1",
+        "requestStatus": "succeeded",
+        "attempts": 1,
+        "analysis": {
+          "summary": "The user sent $400 and subsequently experienced an impact on their ability to buy groceries for the week. They confirmed that no further payment is taking place.",
+          "facts": [
+            {
+              "field": "financial_status",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "I sent $400 and now can't buy groceries this week."
+              ]
+            },
+            {
+              "field": "financial_event_type",
+              "value": "Induced transfer",
+              "source": "original",
+              "evidence": [
+                "I sent $400"
+              ]
+            },
+            {
+              "field": "amount",
+              "value": "$400",
+              "source": "original",
+              "evidence": [
+                "I sent $400"
+              ]
+            },
+            {
+              "field": "ongoing_financial_activity",
+              "value": "No",
+              "source": "original",
+              "evidence": [
+                "No further payment is taking place."
+              ]
+            },
+            {
+              "field": "basic_needs_impact",
+              "value": "Immediate essentials affected",
+              "source": "original",
+              "evidence": [
+                "can't buy groceries this week."
+              ]
+            },
+            {
+              "field": "main_actionable_issue",
+              "value": "Financial/account",
+              "source": "original",
+              "evidence": [
+                "I sent $400 and now can't buy groceries this week."
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "run": 1,
+      "id": "T10",
+      "http": 502,
+      "ms": 12142,
+      "body": {
+        "mode": "demo",
+        "analysisMode": "limited_demo",
+        "requestStatus": "failed",
+        "error": "Provider output failed schema or exact source-evidence validation."
+      }
+    },
+    {
+      "run": 1,
+      "id": "T11",
+      "http": 200,
+      "ms": 4179,
+      "body": {
+        "mode": "gemini",
+        "analysisMode": "real_ai",
+        "provider": "gemini",
+        "model": "gemini-3.5-flash-lite",
+        "policyVersion": "1.1",
+        "requestStatus": "succeeded",
+        "attempts": 1,
+        "analysis": {
+          "summary": "The user reported receiving a scam call followed by a threat of physical harm. They expressed severe distress and fear of immediate physical danger.",
+          "facts": [
+            {
+              "field": "contact_status",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "After this scam call"
+              ]
+            },
+            {
+              "field": "contact_channel",
+              "value": "Call",
+              "source": "original",
+              "evidence": [
+                "scam call"
+              ]
+            },
+            {
+              "field": "immediate_safety_threat",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "someone threatened to hurt me today. I fear immediate physical danger."
+              ]
+            },
+            {
+              "field": "distress_indicator",
+              "value": "Severe reported",
+              "source": "original",
+              "evidence": [
+                "I fear immediate physical danger."
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "run": 1,
+      "id": "T12",
+      "http": 502,
+      "ms": 9326,
+      "body": {
+        "mode": "demo",
+        "analysisMode": "limited_demo",
+        "requestStatus": "failed",
+        "error": "Provider output failed schema or exact source-evidence validation."
+      }
+    },
+    {
+      "run": 1,
+      "id": "T13",
+      "http": 200,
+      "ms": 11005,
+      "body": {
+        "mode": "gemini",
+        "analysisMode": "real_ai",
+        "provider": "gemini",
+        "model": "gemini-3.5-flash-lite",
+        "policyVersion": "1.1",
+        "requestStatus": "succeeded",
+        "attempts": 2,
+        "analysis": {
+          "summary": "The user received a scam SMS but did not interact with it or make any payments. They requested an explanation in Mandarin due to language difficulties and reported no other urgent concerns.",
+          "facts": [
+            {
+              "field": "contact_status",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "I got a scam SMS"
+              ]
+            },
+            {
+              "field": "contact_channel",
+              "value": "SMS",
+              "source": "original",
+              "evidence": [
+                "scam SMS"
+              ]
+            },
+            {
+              "field": "contact_action",
+              "value": "None",
+              "source": "original",
+              "evidence": [
+                "did not click, reply, share information or pay"
+              ]
+            },
+            {
+              "field": "financial_status",
+              "value": "No",
+              "source": "original",
+              "evidence": [
+                "did not click, reply, share information or pay"
+              ]
+            },
+            {
+              "field": "language_need",
+              "value": "Needed",
+              "source": "original",
+              "evidence": [
+                "Please explain in Mandarin; I struggle with English."
+              ]
+            },
+            {
+              "field": "distress_indicator",
+              "value": "No reported",
+              "source": "original",
+              "evidence": [
+                "I have no other urgent concerns."
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "run": 1,
+      "id": "T14",
+      "http": 200,
+      "ms": 4280,
+      "body": {
+        "mode": "gemini",
+        "analysisMode": "real_ai",
+        "provider": "gemini",
+        "model": "gemini-3.5-flash-lite",
+        "policyVersion": "1.1",
+        "requestStatus": "succeeded",
+        "attempts": 1,
+        "analysis": {
+          "summary": "The user reported sending $1,500 yesterday to a fake marketplace vendor who disappeared. No other deductions are reported.",
+          "facts": [
+            {
+              "field": "financial_status",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "sent $1,500"
+              ]
+            },
+            {
+              "field": "financial_event_type",
+              "value": "Induced transfer",
+              "source": "original",
+              "evidence": [
+                "sent $1,500"
+              ]
+            },
+            {
+              "field": "amount",
+              "value": "$1,500",
+              "source": "original",
+              "evidence": [
+                "$1,500"
+              ]
+            },
+            {
+              "field": "transaction_time",
+              "value": "yesterday",
+              "source": "original",
+              "evidence": [
+                "yesterday"
+              ]
+            },
+            {
+              "field": "ongoing_financial_activity",
+              "value": "No",
+              "source": "original",
+              "evidence": [
+                "No other deductions are reported."
+              ]
+            },
+            {
+              "field": "main_actionable_issue",
+              "value": "Financial/account",
+              "source": "original",
+              "evidence": [
+                "I bought from a fake marketplace and sent $1,500 yesterday."
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "run": 1,
+      "id": "T15",
+      "http": 200,
+      "ms": 5199,
+      "body": {
+        "mode": "gemini",
+        "analysisMode": "real_ai",
+        "provider": "gemini",
+        "model": "gemini-3.5-flash-lite",
+        "policyVersion": "1.1",
+        "requestStatus": "succeeded",
+        "attempts": 1,
+        "analysis": {
+          "summary": "The user was contacted by a suspicious social media account and did not share information or send money. They require an accessible way to report the account.",
+          "facts": [
+            {
+              "field": "reporting_organisation",
+              "value": "Platform",
+              "source": "original",
+              "evidence": [
+                "A suspicious social media account contacted me."
+              ]
+            },
+            {
+              "field": "contact_status",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "A suspicious social media account contacted me."
+              ]
+            },
+            {
+              "field": "contact_channel",
+              "value": "Social",
+              "source": "original",
+              "evidence": [
+                "A suspicious social media account contacted me."
+              ]
+            },
+            {
+              "field": "contact_action",
+              "value": "None",
+              "source": "original",
+              "evidence": [
+                "I didn't share information or send money."
+              ]
+            },
+            {
+              "field": "financial_status",
+              "value": "No",
+              "source": "original",
+              "evidence": [
+                "I didn't share information or send money."
+              ]
+            },
+            {
+              "field": "accessibility_need",
+              "value": "Needed",
+              "source": "original",
+              "evidence": [
+                "I need an accessible way to report the account."
+              ]
+            },
+            {
+              "field": "reporting_need",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "I need an accessible way to report the account."
+              ]
+            },
+            {
+              "field": "main_actionable_issue",
+              "value": "Scam reporting",
+              "source": "original",
+              "evidence": [
+                "I need an accessible way to report the account."
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "run": 1,
+      "id": "T16",
+      "http": 200,
+      "ms": 8884,
+      "body": {
+        "mode": "gemini",
+        "analysisMode": "real_ai",
+        "provider": "gemini",
+        "model": "gemini-3.5-flash-lite",
+        "policyVersion": "1.1",
+        "requestStatus": "succeeded",
+        "attempts": 1,
+        "analysis": {
+          "summary": "The user purchased an online item yesterday for A$200 and entered their bank login information. Subsequently, an additional A$1,000 was deducted while the user remains unsure about its authorization and ongoing account activity.",
+          "facts": [
+            {
+              "field": "financial_status",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "I bought something online yesterday and paid A$200.",
+                "Now another A$1,000 has been deducted;"
+              ]
+            },
+            {
+              "field": "financial_event_type",
+              "value": "Induced transfer",
+              "source": "original",
+              "evidence": [
+                "I bought something online yesterday and paid A$200."
+              ]
+            },
+            {
+              "field": "financial_event_type",
+              "value": "Unauthorised transaction",
+              "source": "original",
+              "evidence": [
+                "Now another A$1,000 has been deducted;"
+              ]
+            },
+            {
+              "field": "amount",
+              "value": "A$200",
+              "source": "original",
+              "evidence": [
+                "I bought something online yesterday and paid A$200."
+              ]
+            },
+            {
+              "field": "amount",
+              "value": "A$1,000",
+              "source": "original",
+              "evidence": [
+                "Now another A$1,000 has been deducted;"
+              ]
+            },
+            {
+              "field": "transaction_time",
+              "value": "yesterday",
+              "source": "original",
+              "evidence": [
+                "I bought something online yesterday and paid A$200."
+              ]
+            },
+            {
+              "field": "transaction_time",
+              "value": "Now",
+              "source": "original",
+              "evidence": [
+                "Now another A$1,000 has been deducted;"
+              ]
+            },
+            {
+              "field": "transaction_authorisation",
+              "value": "Unknown",
+              "source": "original",
+              "evidence": [
+                "I do not know whether it was authorised"
+              ]
+            },
+            {
+              "field": "ongoing_financial_activity",
+              "value": "Unknown",
+              "source": "original",
+              "evidence": [
+                "whether more activity is occurring."
+              ]
+            },
+            {
+              "field": "exposure_status",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "I entered my bank login information."
+              ]
+            },
+            {
+              "field": "exposure_type",
+              "value": "Login credential",
+              "source": "original",
+              "evidence": [
+                "I entered my bank login information."
+              ]
+            },
+            {
+              "field": "bank_account_concern",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "I entered my bank login information."
+              ]
+            },
+            {
+              "field": "main_actionable_issue",
+              "value": "Financial/account",
+              "source": "original",
+              "evidence": [
+                "I bought something online yesterday and paid A$200.",
+                "Now another A$1,000 has been deducted;"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "run": 1,
+      "id": "T17",
+      "http": 502,
+      "ms": 8556,
+      "body": {
+        "mode": "demo",
+        "analysisMode": "limited_demo",
+        "requestStatus": "failed",
+        "error": "Provider unavailable. No successful semantic extraction."
+      }
+    },
+    {
+      "run": 1,
+      "id": "T18",
+      "http": 200,
+      "ms": 4859,
+      "body": {
+        "mode": "gemini",
+        "analysisMode": "real_ai",
+        "provider": "gemini",
+        "model": "gemini-3.5-flash-lite",
+        "policyVersion": "1.1",
+        "requestStatus": "succeeded",
+        "attempts": 1,
+        "analysis": {
+          "summary": "The user clicked an unknown link, resulting in persistent unwanted webpages and an unusable computer. Banking information is stored on the device, but it is unconfirmed whether credentials were entered on the suspicious page.",
+          "facts": [
+            {
+              "field": "contact_status",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "I clicked an unknown link."
+              ]
+            },
+            {
+              "field": "contact_channel",
+              "value": "Web",
+              "source": "original",
+              "evidence": [
+                "I clicked an unknown link."
+              ]
+            },
+            {
+              "field": "contact_action",
+              "value": "Clicked",
+              "source": "original",
+              "evidence": [
+                "I clicked an unknown link."
+              ]
+            },
+            {
+              "field": "device_security_indicator",
+              "value": "persistent unwanted page",
+              "source": "original",
+              "evidence": [
+                "My computer now keeps showing an unwanted webpage"
+              ]
+            },
+            {
+              "field": "device_security_indicator",
+              "value": "device unusable",
+              "source": "original",
+              "evidence": [
+                "and I cannot use it."
+              ]
+            },
+            {
+              "field": "device_credential_exposure",
+              "value": "credentials stored only on device",
+              "source": "original",
+              "evidence": [
+                "Some banking information is stored on the computer, but I have not said whether I entered it on the suspicious page."
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "run": 1,
+      "id": "T19",
+      "http": 502,
+      "ms": 2685,
+      "body": {
+        "mode": "demo",
+        "analysisMode": "limited_demo",
+        "requestStatus": "failed",
+        "error": "Provider unavailable. No successful semantic extraction."
+      }
+    },
+    {
+      "run": 1,
+      "id": "T20",
+      "http": 200,
+      "ms": 9151,
+      "body": {
+        "mode": "gemini",
+        "analysisMode": "real_ai",
+        "provider": "gemini",
+        "model": "gemini-3.5-flash-lite",
+        "policyVersion": "1.1",
+        "requestStatus": "succeeded",
+        "attempts": 2,
+        "analysis": {
+          "summary": "The user reports feeling very anxious following a scam and expresses a need for someone to talk to. Additionally, they state they cannot use the online reporting form due to accessibility issues.",
+          "facts": [
+            {
+              "field": "distress_indicator",
+              "value": "Severe reported",
+              "source": "original",
+              "evidence": [
+                "After a scam I feel very anxious"
+              ]
+            },
+            {
+              "field": "accessibility_need",
+              "value": "Needed",
+              "source": "original",
+              "evidence": [
+                "I also cannot use the online reporting form because it is not accessible to me."
+              ]
+            },
+            {
+              "field": "reporting_need",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "online reporting form"
+              ]
+            },
+            {
+              "field": "main_actionable_issue",
+              "value": "Emotional support",
+              "source": "original",
+              "evidence": [
+                "need someone to talk to."
+              ]
+            },
+            {
+              "field": "support_details",
+              "value": "someone to talk to",
+              "source": "original",
+              "evidence": [
+                "need someone to talk to."
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "run": 1,
+      "id": "T21",
+      "http": 200,
+      "ms": 8634,
+      "body": {
+        "mode": "gemini",
+        "analysisMode": "real_ai",
+        "provider": "gemini",
+        "model": "gemini-3.5-flash-lite",
+        "policyVersion": "1.1",
+        "requestStatus": "succeeded",
+        "attempts": 1,
+        "analysis": {
+          "summary": "The user reports that their mobile number unexpectedly stopped working due to a potential unauthorized SIM transfer identified by their provider. They also express concern regarding bank verification messages.",
+          "facts": [
+            {
+              "field": "reporting_organisation",
+              "value": "Telecom",
+              "source": "original",
+              "evidence": [
+                "My provider says"
+              ]
+            },
+            {
+              "field": "telecom_service_issue",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "My mobile number suddenly stopped working. My provider says the number may have been transferred to another SIM without my permission."
+              ]
+            },
+            {
+              "field": "bank_account_concern",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "I am also concerned about bank verification messages."
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "run": 1,
+      "id": "T22",
+      "http": 200,
+      "ms": 3891,
+      "body": {
+        "mode": "gemini",
+        "analysisMode": "real_ai",
+        "provider": "gemini",
+        "model": "gemini-3.5-flash-lite",
+        "policyVersion": "1.1",
+        "requestStatus": "succeeded",
+        "attempts": 1,
+        "analysis": {
+          "summary": "The user reported sending an identity document to a suspicious recruiter. They later received a notice indicating potential identity misuse for a service application.",
+          "facts": [
+            {
+              "field": "exposure_status",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "I sent a copy of an identity document to a suspicious recruiter."
+              ]
+            },
+            {
+              "field": "exposure_type",
+              "value": "Identity document",
+              "source": "original",
+              "evidence": [
+                "I sent a copy of an identity document to a suspicious recruiter."
+              ]
+            },
+            {
+              "field": "contact_action",
+              "value": "Shared info",
+              "source": "original",
+              "evidence": [
+                "I sent a copy of an identity document to a suspicious recruiter."
+              ]
+            },
+            {
+              "field": "identity_misuse",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "someone may have used my identity to apply for a service."
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "run": 2,
+      "id": "T01",
+      "http": 200,
+      "ms": 4038,
+      "body": {
+        "mode": "gemini",
+        "analysisMode": "real_ai",
+        "provider": "gemini",
+        "model": "gemini-3.5-flash-lite",
+        "policyVersion": "1.1",
+        "requestStatus": "succeeded",
+        "attempts": 1,
+        "analysis": {
+          "summary": "The user reported that they lost money but were unsure of what happened. No further details about the incident were provided.",
           "facts": [
             {
               "field": "financial_status",
@@ -31,7 +1297,7 @@
             },
             {
               "field": "financial_event_type",
-              "value": "Unknown",
+              "value": "Reported loss",
               "source": "original",
               "evidence": [
                 "I lost money."
@@ -42,10 +1308,10 @@
       }
     },
     {
-      "run": 1,
+      "run": 2,
       "id": "T02",
       "http": 200,
-      "ms": 1984,
+      "ms": 1449,
       "body": {
         "mode": "gemini",
         "analysisMode": "real_ai",
@@ -53,12 +1319,13 @@
         "model": "gemini-3.5-flash-lite",
         "policyVersion": "1.1",
         "requestStatus": "succeeded",
+        "attempts": 1,
         "analysis": {
-          "summary": "The user received a fake bank SMS yesterday but did not interact with it or experience financial loss. No further support or action was needed.",
+          "summary": "The user received a fake bank SMS yesterday but did not interact with it or experience financial loss. No further support or action is needed.",
           "facts": [
             {
               "field": "reporting_organisation",
-              "value": "Bank",
+              "value": "Unknown",
               "source": "original",
               "evidence": [
                 "Yesterday I got a fake bank SMS."
@@ -117,10 +1384,10 @@
       }
     },
     {
-      "run": 1,
+      "run": 2,
       "id": "T03",
       "http": 200,
-      "ms": 5096,
+      "ms": 8396,
       "body": {
         "mode": "gemini",
         "analysisMode": "real_ai",
@@ -128,15 +1395,16 @@
         "model": "gemini-3.5-flash-lite",
         "policyVersion": "1.1",
         "requestStatus": "succeeded",
+        "attempts": 1,
         "analysis": {
-          "summary": "The user received an SMS containing a suspicious link and clicked it. They are unsure whether any information was entered or if any money moved.",
+          "summary": "The user received an SMS containing a suspicious link and clicked it. They are unsure whether they entered any information or if any money moved.",
           "facts": [
             {
               "field": "contact_status",
               "value": "Yes",
               "source": "original",
               "evidence": [
-                "I received an SMS with a suspicious link and clicked it."
+                "I received an SMS"
               ]
             },
             {
@@ -144,7 +1412,7 @@
               "value": "SMS",
               "source": "original",
               "evidence": [
-                "I received an SMS"
+                "SMS"
               ]
             },
             {
@@ -152,23 +1420,7 @@
               "value": "Clicked",
               "source": "original",
               "evidence": [
-                "clicked it."
-              ]
-            },
-            {
-              "field": "exposure_status",
-              "value": "Unknown",
-              "source": "original",
-              "evidence": [
-                "I don't know if I entered anything"
-              ]
-            },
-            {
-              "field": "device_credential_exposure",
-              "value": "unknown",
-              "source": "original",
-              "evidence": [
-                "I don't know if I entered anything"
+                "clicked it"
               ]
             },
             {
@@ -176,15 +1428,7 @@
               "value": "Unknown",
               "source": "original",
               "evidence": [
-                "or if money moved."
-              ]
-            },
-            {
-              "field": "financial_event_type",
-              "value": "Unknown",
-              "source": "original",
-              "evidence": [
-                "or if money moved."
+                "I don't know if I entered anything or if money moved."
               ]
             }
           ]
@@ -192,10 +1436,10 @@
       }
     },
     {
-      "run": 1,
+      "run": 2,
       "id": "T04",
       "http": 200,
-      "ms": 3725,
+      "ms": 4765,
       "body": {
         "mode": "gemini",
         "analysisMode": "real_ai",
@@ -203,8 +1447,9 @@
         "model": "gemini-3.5-flash-lite",
         "policyVersion": "1.1",
         "requestStatus": "succeeded",
+        "attempts": 1,
         "analysis": {
-          "summary": "The user reported an unrecognised transaction that occurred yesterday. They noted that they have not yet specified which bank is involved.",
+          "summary": "The user reports an unrecognised transaction of $800 yesterday and has not specified the bank.",
           "facts": [
             {
               "field": "financial_status",
@@ -251,10 +1496,10 @@
       }
     },
     {
-      "run": 1,
+      "run": 2,
       "id": "T05",
       "http": 200,
-      "ms": 1641,
+      "ms": 1522,
       "body": {
         "mode": "gemini",
         "analysisMode": "real_ai",
@@ -262,8 +1507,9 @@
         "model": "gemini-3.5-flash-lite",
         "policyVersion": "1.1",
         "requestStatus": "succeeded",
+        "attempts": 1,
         "analysis": {
-          "summary": "The reporting person states that three deductions were made from their account and that unexpected financial activity is still happening. The total amount is unknown.",
+          "summary": "The user reports three unauthorized deductions from their account that are still continuing. The total amount is unknown.",
           "facts": [
             {
               "field": "financial_status",
@@ -282,14 +1528,6 @@
               ]
             },
             {
-              "field": "ongoing_financial_activity",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "it is still happening now"
-              ]
-            },
-            {
               "field": "amount",
               "value": "Unknown",
               "source": "original",
@@ -298,19 +1536,19 @@
               ]
             },
             {
+              "field": "ongoing_financial_activity",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "it is still happening now"
+              ]
+            },
+            {
               "field": "bank_account_concern",
               "value": "Yes",
               "source": "original",
               "evidence": [
-                "three deductions from my account"
-              ]
-            },
-            {
-              "field": "main_actionable_issue",
-              "value": "Financial/account",
-              "source": "original",
-              "evidence": [
-                "three deductions from my account and it is still happening now"
+                "Someone made three deductions from my account"
               ]
             }
           ]
@@ -318,10 +1556,10 @@
       }
     },
     {
-      "run": 1,
+      "run": 2,
       "id": "T06",
       "http": 200,
-      "ms": 5202,
+      "ms": 4580,
       "body": {
         "mode": "gemini",
         "analysisMode": "real_ai",
@@ -329,8 +1567,9 @@
         "model": "gemini-3.5-flash-lite",
         "policyVersion": "1.1",
         "requestStatus": "succeeded",
+        "attempts": 1,
         "analysis": {
-          "summary": "The user replied to a suspicious bank SMS message and disclosed their banking password. They are currently unsure if any unauthorized financial transactions have occurred.",
+          "summary": "The user replied to a fake bank SMS and provided their banking password. They stated they do not know if any money was taken.",
           "facts": [
             {
               "field": "contact_status",
@@ -345,7 +1584,7 @@
               "value": "SMS",
               "source": "original",
               "evidence": [
-                "I replied to a fake bank SMS and gave my banking password."
+                "fake bank SMS"
               ]
             },
             {
@@ -353,7 +1592,7 @@
               "value": "Replied",
               "source": "original",
               "evidence": [
-                "I replied to a fake bank SMS and gave my banking password."
+                "I replied to a fake bank SMS"
               ]
             },
             {
@@ -377,7 +1616,7 @@
               "value": "Login credential",
               "source": "original",
               "evidence": [
-                "gave my banking password."
+                "banking password"
               ]
             },
             {
@@ -385,15 +1624,7 @@
               "value": "Yes",
               "source": "original",
               "evidence": [
-                "I replied to a fake bank SMS and gave my banking password."
-              ]
-            },
-            {
-              "field": "main_actionable_issue",
-              "value": "Financial/account",
-              "source": "original",
-              "evidence": [
-                "I replied to a fake bank SMS and gave my banking password."
+                "gave my banking password. I don't know if any money was taken."
               ]
             }
           ]
@@ -401,10 +1632,10 @@
       }
     },
     {
-      "run": 1,
+      "run": 2,
       "id": "T07",
       "http": 200,
-      "ms": 3581,
+      "ms": 5797,
       "body": {
         "mode": "gemini",
         "analysisMode": "real_ai",
@@ -412,9 +1643,18 @@
         "model": "gemini-3.5-flash-lite",
         "policyVersion": "1.1",
         "requestStatus": "succeeded",
+        "attempts": 1,
         "analysis": {
-          "summary": "The user sent an identity document photo to a fake recruitment site. They are unsure if it has been misused.",
+          "summary": "The user reported sending a photo of their identity document to a fake recruitment site. They stated they do not know whether the document has been misused.",
           "facts": [
+            {
+              "field": "reporting_organisation",
+              "value": "Platform",
+              "source": "original",
+              "evidence": [
+                "recruitment site"
+              ]
+            },
             {
               "field": "contact_status",
               "value": "Yes",
@@ -428,7 +1668,7 @@
               "value": "Web",
               "source": "original",
               "evidence": [
-                "I sent a photo of my identity document to a fake recruitment site."
+                "recruitment site"
               ]
             },
             {
@@ -436,7 +1676,7 @@
               "value": "Shared info",
               "source": "original",
               "evidence": [
-                "I sent a photo of my identity document to a fake recruitment site."
+                "I sent a photo of my identity document"
               ]
             },
             {
@@ -444,7 +1684,7 @@
               "value": "Yes",
               "source": "original",
               "evidence": [
-                "I sent a photo of my identity document to a fake recruitment site."
+                "I sent a photo of my identity document"
               ]
             },
             {
@@ -452,7 +1692,7 @@
               "value": "Identity document",
               "source": "original",
               "evidence": [
-                "I sent a photo of my identity document to a fake recruitment site."
+                "photo of my identity document"
               ]
             },
             {
@@ -462,24 +1702,16 @@
               "evidence": [
                 "I don't know whether it has been misused."
               ]
-            },
-            {
-              "field": "main_actionable_issue",
-              "value": "Identity recovery",
-              "source": "original",
-              "evidence": [
-                "I sent a photo of my identity document to a fake recruitment site."
-              ]
             }
           ]
         }
       }
     },
     {
-      "run": 1,
+      "run": 2,
       "id": "T08",
       "http": 200,
-      "ms": 6623,
+      "ms": 2888,
       "body": {
         "mode": "gemini",
         "analysisMode": "real_ai",
@@ -487,20 +1719,13 @@
         "model": "gemini-3.5-flash-lite",
         "policyVersion": "1.1",
         "requestStatus": "succeeded",
+        "attempts": 1,
         "analysis": {
-          "summary": "The user provided their BSB and account number to a suspicious person. They confirmed they did not send any money and have not observed any unusual transactions.",
+          "summary": "The user provided their BSB and account number to a suspicious person. No money was sent and no unusual transactions have occurred.",
           "facts": [
             {
               "field": "contact_status",
               "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "I provided my BSB and account number to a suspicious person."
-              ]
-            },
-            {
-              "field": "contact_action",
-              "value": "Shared info",
               "source": "original",
               "evidence": [
                 "I provided my BSB and account number to a suspicious person."
@@ -537,16 +1762,24 @@
               "evidence": [
                 "I did not send any money and have not seen an unusual transaction."
               ]
+            },
+            {
+              "field": "bank_account_concern",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "I provided my BSB and account number to a suspicious person."
+              ]
             }
           ]
         }
       }
     },
     {
-      "run": 1,
+      "run": 2,
       "id": "T09",
       "http": 200,
-      "ms": 3703,
+      "ms": 7105,
       "body": {
         "mode": "gemini",
         "analysisMode": "real_ai",
@@ -554,8 +1787,9 @@
         "model": "gemini-3.5-flash-lite",
         "policyVersion": "1.1",
         "requestStatus": "succeeded",
+        "attempts": 1,
         "analysis": {
-          "summary": "The user reported sending $400, which impacted their ability to buy groceries for the week. They confirmed that no further payments are taking place.",
+          "summary": "The user sent $400 and cannot buy groceries this week, with no further payments taking place.",
           "facts": [
             {
               "field": "financial_status",
@@ -602,10 +1836,10 @@
       }
     },
     {
-      "run": 1,
+      "run": 2,
       "id": "T10",
       "http": 502,
-      "ms": 5169,
+      "ms": 8045,
       "body": {
         "mode": "demo",
         "analysisMode": "limited_demo",
@@ -614,10 +1848,10 @@
       }
     },
     {
-      "run": 1,
+      "run": 2,
       "id": "T11",
       "http": 200,
-      "ms": 3975,
+      "ms": 8603,
       "body": {
         "mode": "gemini",
         "analysisMode": "real_ai",
@@ -625,8 +1859,9 @@
         "model": "gemini-3.5-flash-lite",
         "policyVersion": "1.1",
         "requestStatus": "succeeded",
+        "attempts": 1,
         "analysis": {
-          "summary": "The user reported receiving a scam call followed by an explicit threat of physical harm today. They expressed severe fear regarding immediate physical danger.",
+          "summary": "The user reported receiving a scam call, followed by a threat of physical harm made today, causing severe distress and immediate safety fears.",
           "facts": [
             {
               "field": "contact_status",
@@ -641,7 +1876,7 @@
               "value": "Call",
               "source": "original",
               "evidence": [
-                "After this scam call"
+                "scam call"
               ]
             },
             {
@@ -665,10 +1900,10 @@
       }
     },
     {
-      "run": 1,
+      "run": 2,
       "id": "T12",
       "http": 200,
-      "ms": 5471,
+      "ms": 9689,
       "body": {
         "mode": "gemini",
         "analysisMode": "real_ai",
@@ -676,8 +1911,9 @@
         "model": "gemini-3.5-flash-lite",
         "policyVersion": "1.1",
         "requestStatus": "succeeded",
+        "attempts": 2,
         "analysis": {
-          "summary": "The user reported sending five hundred dollars yesterday, but subsequently stated they never transferred any money. This creates a conflict regarding the financial transaction.",
+          "summary": "The user initially reported sending $500 yesterday, but subsequently stated that they never transferred any money.",
           "facts": [
             {
               "field": "financial_status",
@@ -686,6 +1922,14 @@
               "evidence": [
                 "I sent $500 yesterday.",
                 "Later I said I never transferred any money."
+              ]
+            },
+            {
+              "field": "financial_event_type",
+              "value": "Induced transfer",
+              "source": "original",
+              "evidence": [
+                "I sent $500 yesterday."
               ]
             },
             {
@@ -718,22 +1962,10 @@
       }
     },
     {
-      "run": 1,
+      "run": 2,
       "id": "T13",
-      "http": 502,
-      "ms": 1532,
-      "body": {
-        "mode": "demo",
-        "analysisMode": "limited_demo",
-        "requestStatus": "failed",
-        "error": "Provider unavailable. No successful semantic extraction."
-      }
-    },
-    {
-      "run": 1,
-      "id": "T14",
       "http": 200,
-      "ms": 1786,
+      "ms": 5753,
       "body": {
         "mode": "gemini",
         "analysisMode": "real_ai",
@@ -741,17 +1973,86 @@
         "model": "gemini-3.5-flash-lite",
         "policyVersion": "1.1",
         "requestStatus": "succeeded",
+        "attempts": 1,
         "analysis": {
-          "summary": "The user bought items from a fake marketplace yesterday and sent $1500, after which the vendor disappeared. No other deductions were reported.",
+          "summary": "The user received a scam SMS message but did not click, reply, share information, or pay. They requested explanations in Mandarin due to language difficulties and reported no other urgent concerns.",
           "facts": [
             {
-              "field": "reporting_organisation",
-              "value": "Other",
+              "field": "contact_status",
+              "value": "Yes",
               "source": "original",
               "evidence": [
-                "I bought from a fake marketplace"
+                "I got a scam SMS"
               ]
             },
+            {
+              "field": "contact_channel",
+              "value": "SMS",
+              "source": "original",
+              "evidence": [
+                "I got a scam SMS"
+              ]
+            },
+            {
+              "field": "contact_action",
+              "value": "None",
+              "source": "original",
+              "evidence": [
+                "did not click, reply, share information or pay"
+              ]
+            },
+            {
+              "field": "financial_status",
+              "value": "No",
+              "source": "original",
+              "evidence": [
+                "did not click, reply, share information or pay"
+              ]
+            },
+            {
+              "field": "exposure_status",
+              "value": "No",
+              "source": "original",
+              "evidence": [
+                "did not click, reply, share information or pay"
+              ]
+            },
+            {
+              "field": "language_need",
+              "value": "Needed",
+              "source": "original",
+              "evidence": [
+                "Please explain in Mandarin; I struggle with English."
+              ]
+            },
+            {
+              "field": "basic_needs_impact",
+              "value": "None reported",
+              "source": "original",
+              "evidence": [
+                "I have no other urgent concerns."
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "run": 2,
+      "id": "T14",
+      "http": 200,
+      "ms": 11405,
+      "body": {
+        "mode": "gemini",
+        "analysisMode": "real_ai",
+        "provider": "gemini",
+        "model": "gemini-3.5-flash-lite",
+        "policyVersion": "1.1",
+        "requestStatus": "succeeded",
+        "attempts": 1,
+        "analysis": {
+          "summary": "The user reported sending $1,500 yesterday to a fake marketplace vendor who subsequently disappeared. No other deductions or ongoing financial activities were noted.",
+          "facts": [
             {
               "field": "financial_status",
               "value": "Yes",
@@ -765,7 +2066,7 @@
               "value": "Induced transfer",
               "source": "original",
               "evidence": [
-                "bought from a fake marketplace and sent $1,500"
+                "sent $1,500 yesterday"
               ]
             },
             {
@@ -773,7 +2074,7 @@
               "value": "$1,500",
               "source": "original",
               "evidence": [
-                "sent $1,500"
+                "sent $1,500 yesterday"
               ]
             },
             {
@@ -781,7 +2082,15 @@
               "value": "yesterday",
               "source": "original",
               "evidence": [
-                "yesterday"
+                "sent $1,500 yesterday"
+              ]
+            },
+            {
+              "field": "transaction_authorisation",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "sent $1,500 yesterday"
               ]
             },
             {
@@ -805,101 +2114,22 @@
       }
     },
     {
-      "run": 1,
+      "run": 2,
       "id": "T15",
-      "http": 200,
-      "ms": 1695,
+      "http": 502,
+      "ms": 1469,
       "body": {
-        "mode": "gemini",
-        "analysisMode": "real_ai",
-        "provider": "gemini",
-        "model": "gemini-3.5-flash-lite",
-        "policyVersion": "1.1",
-        "requestStatus": "succeeded",
-        "analysis": {
-          "summary": "The user was contacted by a suspicious social media account and did not share information or send money. They require an accessible way to report the account.",
-          "facts": [
-            {
-              "field": "reporting_organisation",
-              "value": "Platform",
-              "source": "original",
-              "evidence": [
-                "A suspicious social media account contacted me."
-              ]
-            },
-            {
-              "field": "contact_status",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "A suspicious social media account contacted me."
-              ]
-            },
-            {
-              "field": "contact_channel",
-              "value": "Social",
-              "source": "original",
-              "evidence": [
-                "A suspicious social media account contacted me."
-              ]
-            },
-            {
-              "field": "contact_action",
-              "value": "None",
-              "source": "original",
-              "evidence": [
-                "I didn't share information or send money."
-              ]
-            },
-            {
-              "field": "financial_status",
-              "value": "No",
-              "source": "original",
-              "evidence": [
-                "I didn't share information or send money."
-              ]
-            },
-            {
-              "field": "exposure_status",
-              "value": "No",
-              "source": "original",
-              "evidence": [
-                "I didn't share information or send money."
-              ]
-            },
-            {
-              "field": "accessibility_need",
-              "value": "Needed",
-              "source": "original",
-              "evidence": [
-                "I need an accessible way to report the account."
-              ]
-            },
-            {
-              "field": "reporting_need",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "I need an accessible way to report the account."
-              ]
-            },
-            {
-              "field": "main_actionable_issue",
-              "value": "Scam reporting",
-              "source": "original",
-              "evidence": [
-                "I need an accessible way to report the account."
-              ]
-            }
-          ]
-        }
+        "mode": "demo",
+        "analysisMode": "limited_demo",
+        "requestStatus": "failed",
+        "error": "Provider unavailable. No successful semantic extraction."
       }
     },
     {
-      "run": 1,
+      "run": 2,
       "id": "T16",
       "http": 200,
-      "ms": 5944,
+      "ms": 5658,
       "body": {
         "mode": "gemini",
         "analysisMode": "real_ai",
@@ -907,8 +2137,9 @@
         "model": "gemini-3.5-flash-lite",
         "policyVersion": "1.1",
         "requestStatus": "succeeded",
+        "attempts": 1,
         "analysis": {
-          "summary": "The user bought an item online, paid A$200, and entered their bank login information. Subsequently, an additional A$1,000 was deducted, and the user is unsure if it was authorised or if ongoing activity is occurring.",
+          "summary": "The user made an online purchase yesterday for A$200 and entered their bank login credentials. Subsequently, an additional A$1,000 was deducted, and the user is unsure if it was authorized or if further activity is occurring.",
           "facts": [
             {
               "field": "financial_status",
@@ -920,11 +2151,27 @@
               ]
             },
             {
+              "field": "financial_event_type",
+              "value": "Induced transfer",
+              "source": "original",
+              "evidence": [
+                "I bought something online yesterday and paid A$200."
+              ]
+            },
+            {
+              "field": "financial_event_type",
+              "value": "Unauthorised transaction",
+              "source": "original",
+              "evidence": [
+                "Now another A$1,000 has been deducted"
+              ]
+            },
+            {
               "field": "amount",
               "value": "A$200",
               "source": "original",
               "evidence": [
-                "paid A$200"
+                "paid A$200."
               ]
             },
             {
@@ -933,6 +2180,14 @@
               "source": "original",
               "evidence": [
                 "another A$1,000 has been deducted"
+              ]
+            },
+            {
+              "field": "transaction_time",
+              "value": "yesterday",
+              "source": "original",
+              "evidence": [
+                "yesterday"
               ]
             },
             {
@@ -964,7 +2219,7 @@
               "value": "Unknown",
               "source": "original",
               "evidence": [
-                "whether more activity is occurring"
+                "or whether more activity is occurring."
               ]
             },
             {
@@ -973,15 +2228,23 @@
               "source": "original",
               "evidence": [
                 "I entered my bank login information.",
-                "another A$1,000 has been deducted"
+                "Now another A$1,000 has been deducted"
               ]
             },
             {
-              "field": "main_actionable_issue",
-              "value": "Financial/account",
+              "field": "device_action_taken",
+              "value": "entered information",
               "source": "original",
               "evidence": [
-                "another A$1,000 has been deducted"
+                "I entered my bank login information."
+              ]
+            },
+            {
+              "field": "device_credential_exposure",
+              "value": "Credentials entered on suspicious page",
+              "source": "original",
+              "evidence": [
+                "I entered my bank login information."
               ]
             }
           ]
@@ -989,22 +2252,10 @@
       }
     },
     {
-      "run": 1,
+      "run": 2,
       "id": "T17",
-      "http": 502,
-      "ms": 1903,
-      "body": {
-        "mode": "demo",
-        "analysisMode": "limited_demo",
-        "requestStatus": "failed",
-        "error": "Provider unavailable. No successful semantic extraction."
-      }
-    },
-    {
-      "run": 1,
-      "id": "T18",
       "http": 200,
-      "ms": 4176,
+      "ms": 8608,
       "body": {
         "mode": "gemini",
         "analysisMode": "real_ai",
@@ -1012,8 +2263,61 @@
         "model": "gemini-3.5-flash-lite",
         "policyVersion": "1.1",
         "requestStatus": "succeeded",
+        "attempts": 1,
         "analysis": {
-          "summary": "The user clicked an unknown link, leading to an unwanted webpage and device unusability, with banking information stored on the computer. They report no confirmed financial losses or credential exposures.",
+          "summary": "The user reported receiving a threat to kill them unless they transferred money and stated they are frightened. They also noted they have not disclosed whether any transfer took place.",
+          "facts": [
+            {
+              "field": "immediate_safety_threat",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "Someone threatened to kill me if I did not transfer money."
+              ]
+            },
+            {
+              "field": "distress_indicator",
+              "value": "Some",
+              "source": "original",
+              "evidence": [
+                "I am frightened."
+              ]
+            },
+            {
+              "field": "financial_status",
+              "value": "Unknown",
+              "source": "original",
+              "evidence": [
+                "I have not said whether I transferred anything."
+              ]
+            },
+            {
+              "field": "financial_event_type",
+              "value": "Unknown",
+              "source": "original",
+              "evidence": [
+                "I have not said whether I transferred anything."
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "run": 2,
+      "id": "T18",
+      "http": 200,
+      "ms": 3497,
+      "body": {
+        "mode": "gemini",
+        "analysisMode": "real_ai",
+        "provider": "gemini",
+        "model": "gemini-3.5-flash-lite",
+        "policyVersion": "1.1",
+        "requestStatus": "succeeded",
+        "attempts": 1,
+        "analysis": {
+          "summary": "The user clicked an unknown link, leading to an unwanted persistent webpage and an unusable computer. Banking information is stored on the device, with unknown credential exposure on the suspicious page.",
           "facts": [
             {
               "field": "contact_status",
@@ -1065,23 +2369,7 @@
             },
             {
               "field": "device_credential_exposure",
-              "value": "unknown",
-              "source": "original",
-              "evidence": [
-                "Some banking information is stored on the computer, but I have not said whether I entered it on the suspicious page."
-              ]
-            },
-            {
-              "field": "financial_status",
-              "value": "Unknown",
-              "source": "original",
-              "evidence": [
-                "Some banking information is stored on the computer, but I have not said whether I entered it on the suspicious page."
-              ]
-            },
-            {
-              "field": "exposure_status",
-              "value": "Unknown",
+              "value": "credentials stored only on device",
               "source": "original",
               "evidence": [
                 "Some banking information is stored on the computer, but I have not said whether I entered it on the suspicious page."
@@ -1092,10 +2380,10 @@
       }
     },
     {
-      "run": 1,
+      "run": 2,
       "id": "T19",
       "http": 200,
-      "ms": 4732,
+      "ms": 5868,
       "body": {
         "mode": "gemini",
         "analysisMode": "real_ai",
@@ -1103,17 +2391,10 @@
         "model": "gemini-3.5-flash-lite",
         "policyVersion": "1.1",
         "requestStatus": "succeeded",
+        "attempts": 1,
         "analysis": {
-          "summary": "The user received a text message claiming to be from the police. The communication stated the individual was under investigation and instructed them to make contact.",
+          "summary": "The user received a text message claiming to be from the police stating they are under investigation. No further actions or financial impacts are reported.",
           "facts": [
-            {
-              "field": "reporting_organisation",
-              "value": "Unknown",
-              "source": "original",
-              "evidence": [
-                "I received a text claiming to be from the police saying I am under investigation and must contact them."
-              ]
-            },
             {
               "field": "contact_status",
               "value": "Yes",
@@ -1135,7 +2416,7 @@
               "value": "Yes",
               "source": "original",
               "evidence": [
-                "I received a text claiming to be from the police saying I am under investigation and must contact them."
+                "claiming to be from the police"
               ]
             },
             {
@@ -1143,7 +2424,7 @@
               "value": "Police",
               "source": "original",
               "evidence": [
-                "I received a text claiming to be from the police saying I am under investigation and must contact them."
+                "police"
               ]
             }
           ]
@@ -1151,10 +2432,10 @@
       }
     },
     {
-      "run": 1,
+      "run": 2,
       "id": "T20",
       "http": 200,
-      "ms": 7435,
+      "ms": 7136,
       "body": {
         "mode": "gemini",
         "analysisMode": "real_ai",
@@ -1162,23 +2443,16 @@
         "model": "gemini-3.5-flash-lite",
         "policyVersion": "1.1",
         "requestStatus": "succeeded",
+        "attempts": 1,
         "analysis": {
-          "summary": "The user experienced a scam, resulting in severe distress and a need for emotional support. They also reported an accessibility barrier preventing them from using the online reporting form.",
+          "summary": "The user reported feeling very anxious after a scam and expressed a need for someone to talk to for emotional support. Additionally, they noted an accessibility barrier preventing them from using the online reporting form.",
           "facts": [
-            {
-              "field": "exposure_status",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "After a scam"
-              ]
-            },
             {
               "field": "distress_indicator",
               "value": "Severe reported",
               "source": "original",
               "evidence": [
-                "feel very anxious and need someone to talk to."
+                "After a scam I feel very anxious and need someone to talk to."
               ]
             },
             {
@@ -1202,1319 +2476,7 @@
               "value": "Yes",
               "source": "original",
               "evidence": [
-                "I also cannot use the online reporting form because it is not accessible to me."
-              ]
-            }
-          ]
-        }
-      }
-    },
-    {
-      "run": 1,
-      "id": "T21",
-      "http": 200,
-      "ms": 5326,
-      "body": {
-        "mode": "gemini",
-        "analysisMode": "real_ai",
-        "provider": "gemini",
-        "model": "gemini-3.5-flash-lite",
-        "policyVersion": "1.1",
-        "requestStatus": "succeeded",
-        "analysis": {
-          "summary": "The user reported that their mobile number stopped working after being potentially transferred to another SIM without permission. They also expressed concern regarding bank verification messages.",
-          "facts": [
-            {
-              "field": "telecom_service_issue",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "My mobile number suddenly stopped working. My provider says the number may have been transferred to another SIM without my permission."
-              ]
-            },
-            {
-              "field": "provider_contacted",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "My provider says the number may have been transferred to another SIM without my permission."
-              ]
-            },
-            {
-              "field": "reporting_organisation",
-              "value": "Telecom",
-              "source": "original",
-              "evidence": [
-                "My provider says the number may have been transferred to another SIM without my permission."
-              ]
-            },
-            {
-              "field": "bank_account_concern",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "I am also concerned about bank verification messages."
-              ]
-            },
-            {
-              "field": "main_actionable_issue",
-              "value": "Telecom service",
-              "source": "original",
-              "evidence": [
-                "My mobile number suddenly stopped working. My provider says the number may have been transferred to another SIM without my permission."
-              ]
-            }
-          ]
-        }
-      }
-    },
-    {
-      "run": 1,
-      "id": "T22",
-      "http": 200,
-      "ms": 4995,
-      "body": {
-        "mode": "gemini",
-        "analysisMode": "real_ai",
-        "provider": "gemini",
-        "model": "gemini-3.5-flash-lite",
-        "policyVersion": "1.1",
-        "requestStatus": "succeeded",
-        "analysis": {
-          "summary": "The user reported sharing an identity document with a suspicious recruiter. Subsequently, they received a notice indicating that someone may have used their identity to apply for a service.",
-          "facts": [
-            {
-              "field": "exposure_status",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "I sent a copy of an identity document to a suspicious recruiter."
-              ]
-            },
-            {
-              "field": "exposure_type",
-              "value": "Identity document",
-              "source": "original",
-              "evidence": [
-                "I sent a copy of an identity document to a suspicious recruiter."
-              ]
-            },
-            {
-              "field": "identity_misuse",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "Later I received a notice that someone may have used my identity to apply for a service."
-              ]
-            },
-            {
-              "field": "main_actionable_issue",
-              "value": "Identity recovery",
-              "source": "original",
-              "evidence": [
-                "Later I received a notice that someone may have used my identity to apply for a service."
-              ]
-            }
-          ]
-        }
-      }
-    },
-    {
-      "run": 2,
-      "id": "T01",
-      "http": 200,
-      "ms": 7586,
-      "body": {
-        "mode": "gemini",
-        "analysisMode": "real_ai",
-        "provider": "gemini",
-        "model": "gemini-3.5-flash-lite",
-        "policyVersion": "1.1",
-        "requestStatus": "succeeded",
-        "analysis": {
-          "summary": "The individual stated that they lost money. They also indicated that they are not sure what happened.",
-          "facts": []
-        }
-      }
-    },
-    {
-      "run": 2,
-      "id": "T02",
-      "http": 200,
-      "ms": 3938,
-      "body": {
-        "mode": "gemini",
-        "analysisMode": "real_ai",
-        "provider": "gemini",
-        "model": "gemini-3.5-flash-lite",
-        "policyVersion": "1.1",
-        "requestStatus": "succeeded",
-        "analysis": {
-          "summary": "The user received a fake bank SMS yesterday but did not interact with it, share any information, or experience financial loss. No extra support is needed.",
-          "facts": [
-            {
-              "field": "reporting_organisation",
-              "value": "Unknown",
-              "source": "original",
-              "evidence": [
-                "Yesterday I got a fake bank SMS."
-              ]
-            },
-            {
-              "field": "contact_status",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "Yesterday I got a fake bank SMS."
-              ]
-            },
-            {
-              "field": "contact_channel",
-              "value": "SMS",
-              "source": "original",
-              "evidence": [
-                "Yesterday I got a fake bank SMS."
-              ]
-            },
-            {
-              "field": "contact_action",
-              "value": "None",
-              "source": "original",
-              "evidence": [
-                "I did not click, reply, share data or send any money."
-              ]
-            },
-            {
-              "field": "financial_status",
-              "value": "No",
-              "source": "original",
-              "evidence": [
-                "I did not click, reply, share data or send any money."
-              ]
-            },
-            {
-              "field": "exposure_status",
-              "value": "No",
-              "source": "original",
-              "evidence": [
-                "I did not click, reply, share data or send any money."
-              ]
-            }
-          ]
-        }
-      }
-    },
-    {
-      "run": 2,
-      "id": "T03",
-      "http": 200,
-      "ms": 4715,
-      "body": {
-        "mode": "gemini",
-        "analysisMode": "real_ai",
-        "provider": "gemini",
-        "model": "gemini-3.5-flash-lite",
-        "policyVersion": "1.1",
-        "requestStatus": "succeeded",
-        "analysis": {
-          "summary": "The user received an SMS containing a suspicious link and clicked it. They are unsure whether any information was entered or if any financial loss occurred.",
-          "facts": [
-            {
-              "field": "contact_status",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "I received an SMS with a suspicious link and clicked it."
-              ]
-            },
-            {
-              "field": "contact_channel",
-              "value": "SMS",
-              "source": "original",
-              "evidence": [
-                "I received an SMS with a suspicious link and clicked it."
-              ]
-            },
-            {
-              "field": "contact_action",
-              "value": "Clicked",
-              "source": "original",
-              "evidence": [
-                "I received an SMS with a suspicious link and clicked it."
-              ]
-            },
-            {
-              "field": "exposure_status",
-              "value": "Unknown",
-              "source": "original",
-              "evidence": [
-                "I don't know if I entered anything"
-              ]
-            },
-            {
-              "field": "financial_status",
-              "value": "Unknown",
-              "source": "original",
-              "evidence": [
-                "or if money moved."
-              ]
-            }
-          ]
-        }
-      }
-    },
-    {
-      "run": 2,
-      "id": "T04",
-      "http": 502,
-      "ms": 3084,
-      "body": {
-        "mode": "demo",
-        "analysisMode": "limited_demo",
-        "requestStatus": "failed",
-        "error": "Provider unavailable. No successful semantic extraction."
-      }
-    },
-    {
-      "run": 2,
-      "id": "T05",
-      "http": 200,
-      "ms": 1361,
-      "body": {
-        "mode": "gemini",
-        "analysisMode": "real_ai",
-        "provider": "gemini",
-        "model": "gemini-3.5-flash-lite",
-        "policyVersion": "1.1",
-        "requestStatus": "succeeded",
-        "analysis": {
-          "summary": "The user reported three unauthorised deductions from their account, noting that the activity is still ongoing. The exact total amount remains unknown.",
-          "facts": [
-            {
-              "field": "financial_status",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "Someone made three deductions from my account"
-              ]
-            },
-            {
-              "field": "financial_event_type",
-              "value": "Unauthorised transaction",
-              "source": "original",
-              "evidence": [
-                "Someone made three deductions from my account"
-              ]
-            },
-            {
-              "field": "ongoing_financial_activity",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "it is still happening now"
-              ]
-            },
-            {
-              "field": "bank_account_concern",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "Someone made three deductions from my account"
-              ]
-            }
-          ]
-        }
-      }
-    },
-    {
-      "run": 2,
-      "id": "T06",
-      "http": 200,
-      "ms": 1639,
-      "body": {
-        "mode": "gemini",
-        "analysisMode": "real_ai",
-        "provider": "gemini",
-        "model": "gemini-3.5-flash-lite",
-        "policyVersion": "1.1",
-        "requestStatus": "succeeded",
-        "analysis": {
-          "summary": "The user replied to a suspicious bank text message and provided their banking password, but they are currently unsure if any funds were stolen. They need assistance regarding the incident.",
-          "facts": [
-            {
-              "field": "reporting_organisation",
-              "value": "Bank",
-              "source": "original",
-              "evidence": [
-                "fake bank SMS"
-              ]
-            },
-            {
-              "field": "contact_status",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "I replied to a fake bank SMS"
-              ]
-            },
-            {
-              "field": "contact_channel",
-              "value": "SMS",
-              "source": "original",
-              "evidence": [
-                "fake bank SMS"
-              ]
-            },
-            {
-              "field": "contact_action",
-              "value": "Replied",
-              "source": "original",
-              "evidence": [
-                "I replied to a fake bank SMS"
-              ]
-            },
-            {
-              "field": "financial_status",
-              "value": "Unknown",
-              "source": "original",
-              "evidence": [
-                "I don't know if any money was taken."
-              ]
-            },
-            {
-              "field": "exposure_status",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "gave my banking password"
-              ]
-            },
-            {
-              "field": "exposure_type",
-              "value": "Login credential",
-              "source": "original",
-              "evidence": [
-                "gave my banking password"
-              ]
-            },
-            {
-              "field": "bank_account_concern",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "gave my banking password"
-              ]
-            }
-          ]
-        }
-      }
-    },
-    {
-      "run": 2,
-      "id": "T07",
-      "http": 200,
-      "ms": 4163,
-      "body": {
-        "mode": "gemini",
-        "analysisMode": "real_ai",
-        "provider": "gemini",
-        "model": "gemini-3.5-flash-lite",
-        "policyVersion": "1.1",
-        "requestStatus": "succeeded",
-        "analysis": {
-          "summary": "The user shared an identity document photo with a fake recruitment site and is uncertain if it has been misused. No financial loss or other issues were reported.",
-          "facts": [
-            {
-              "field": "contact_status",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "I sent a photo of my identity document to a fake recruitment site."
-              ]
-            },
-            {
-              "field": "contact_channel",
-              "value": "Web",
-              "source": "original",
-              "evidence": [
-                "recruitment site"
-              ]
-            },
-            {
-              "field": "contact_action",
-              "value": "Shared info",
-              "source": "original",
-              "evidence": [
-                "I sent a photo of my identity document to a fake recruitment site."
-              ]
-            },
-            {
-              "field": "exposure_status",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "I sent a photo of my identity document to a fake recruitment site."
-              ]
-            },
-            {
-              "field": "exposure_type",
-              "value": "Identity document",
-              "source": "original",
-              "evidence": [
-                "I sent a photo of my identity document"
-              ]
-            },
-            {
-              "field": "identity_misuse",
-              "value": "Unknown",
-              "source": "original",
-              "evidence": [
-                "I don't know whether it has been misused."
-              ]
-            },
-            {
-              "field": "main_actionable_issue",
-              "value": "Identity recovery",
-              "source": "original",
-              "evidence": [
-                "I sent a photo of my identity document to a fake recruitment site."
-              ]
-            },
-            {
-              "field": "financial_status",
-              "value": "Unknown",
-              "source": "original",
-              "evidence": [
-                "I sent a photo of my identity document to a fake recruitment site."
-              ]
-            },
-            {
-              "field": "immediate_safety_threat",
-              "value": "No",
-              "source": "original",
-              "evidence": [
-                "I sent a photo of my identity document to a fake recruitment site."
-              ]
-            }
-          ]
-        }
-      }
-    },
-    {
-      "run": 2,
-      "id": "T08",
-      "http": 200,
-      "ms": 2429,
-      "body": {
-        "mode": "gemini",
-        "analysisMode": "real_ai",
-        "provider": "gemini",
-        "model": "gemini-3.5-flash-lite",
-        "policyVersion": "1.1",
-        "requestStatus": "succeeded",
-        "analysis": {
-          "summary": "The user provided their BSB and account number to a suspicious person. No money was sent and no unusual transactions have occurred.",
-          "facts": [
-            {
-              "field": "contact_status",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "I provided my BSB and account number to a suspicious person."
-              ]
-            },
-            {
-              "field": "contact_channel",
-              "value": "Unknown",
-              "source": "original",
-              "evidence": [
-                "I provided my BSB and account number to a suspicious person."
-              ]
-            },
-            {
-              "field": "contact_action",
-              "value": "Shared info",
-              "source": "original",
-              "evidence": [
-                "I provided my BSB and account number to a suspicious person."
-              ]
-            },
-            {
-              "field": "financial_status",
-              "value": "No",
-              "source": "original",
-              "evidence": [
-                "I did not send any money and have not seen an unusual transaction."
-              ]
-            },
-            {
-              "field": "exposure_status",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "I provided my BSB and account number to a suspicious person."
-              ]
-            },
-            {
-              "field": "exposure_type",
-              "value": "BSB+account",
-              "source": "original",
-              "evidence": [
-                "I provided my BSB and account number to a suspicious person."
-              ]
-            },
-            {
-              "field": "main_actionable_issue",
-              "value": "Identity recovery",
-              "source": "original",
-              "evidence": [
-                "I provided my BSB and account number to a suspicious person."
-              ]
-            }
-          ]
-        }
-      }
-    },
-    {
-      "run": 2,
-      "id": "T09",
-      "http": 200,
-      "ms": 5013,
-      "body": {
-        "mode": "gemini",
-        "analysisMode": "real_ai",
-        "provider": "gemini",
-        "model": "gemini-3.5-flash-lite",
-        "policyVersion": "1.1",
-        "requestStatus": "succeeded",
-        "analysis": {
-          "summary": "The user reported sending $400, resulting in an inability to buy groceries for the week. They confirmed that no further payments are taking place.",
-          "facts": [
-            {
-              "field": "financial_status",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "I sent $400"
-              ]
-            },
-            {
-              "field": "financial_event_type",
-              "value": "Induced transfer",
-              "source": "original",
-              "evidence": [
-                "I sent $400"
-              ]
-            },
-            {
-              "field": "amount",
-              "value": "$400",
-              "source": "original",
-              "evidence": [
-                "$400"
-              ]
-            },
-            {
-              "field": "ongoing_financial_activity",
-              "value": "No",
-              "source": "original",
-              "evidence": [
-                "No further payment is taking place."
-              ]
-            },
-            {
-              "field": "basic_needs_impact",
-              "value": "Immediate essentials affected",
-              "source": "original",
-              "evidence": [
-                "now can't buy groceries this week"
-              ]
-            }
-          ]
-        }
-      }
-    },
-    {
-      "run": 2,
-      "id": "T10",
-      "http": 502,
-      "ms": 3203,
-      "body": {
-        "mode": "demo",
-        "analysisMode": "limited_demo",
-        "requestStatus": "failed",
-        "error": "Provider unavailable. No successful semantic extraction."
-      }
-    },
-    {
-      "run": 2,
-      "id": "T11",
-      "http": 200,
-      "ms": 3391,
-      "body": {
-        "mode": "gemini",
-        "analysisMode": "real_ai",
-        "provider": "gemini",
-        "model": "gemini-3.5-flash-lite",
-        "policyVersion": "1.1",
-        "requestStatus": "succeeded",
-        "analysis": {
-          "summary": "The user reported receiving a scam call followed by a threat to hurt them today, expressing fear of immediate physical danger.",
-          "facts": [
-            {
-              "field": "contact_status",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "After this scam call"
-              ]
-            },
-            {
-              "field": "contact_channel",
-              "value": "Call",
-              "source": "original",
-              "evidence": [
-                "scam call"
-              ]
-            },
-            {
-              "field": "immediate_safety_threat",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "someone threatened to hurt me today. I fear immediate physical danger."
-              ]
-            }
-          ]
-        }
-      }
-    },
-    {
-      "run": 2,
-      "id": "T12",
-      "http": 200,
-      "ms": 5612,
-      "body": {
-        "mode": "gemini",
-        "analysisMode": "real_ai",
-        "provider": "gemini",
-        "model": "gemini-3.5-flash-lite",
-        "policyVersion": "1.1",
-        "requestStatus": "succeeded",
-        "analysis": {
-          "summary": "The user reported sending money yesterday, but later stated they never transferred any funds. This creates conflicting accounts regarding the financial transaction.",
-          "facts": [
-            {
-              "field": "financial_status",
-              "value": "Conflicting",
-              "source": "original",
-              "evidence": [
-                "I sent $500 yesterday.",
-                "Later I said I never transferred any money."
-              ]
-            },
-            {
-              "field": "financial_event_type",
-              "value": "Induced transfer",
-              "source": "original",
-              "evidence": [
-                "I sent $500 yesterday."
-              ]
-            },
-            {
-              "field": "amount",
-              "value": "$500",
-              "source": "original",
-              "evidence": [
-                "I sent $500 yesterday."
-              ]
-            },
-            {
-              "field": "transaction_time",
-              "value": "yesterday",
-              "source": "original",
-              "evidence": [
-                "I sent $500 yesterday."
-              ]
-            },
-            {
-              "field": "transaction_authorisation",
-              "value": "Conflicting",
-              "source": "original",
-              "evidence": [
-                "I sent $500 yesterday.",
-                "Later I said I never transferred any money."
-              ]
-            }
-          ]
-        }
-      }
-    },
-    {
-      "run": 2,
-      "id": "T13",
-      "http": 200,
-      "ms": 4345,
-      "body": {
-        "mode": "gemini",
-        "analysisMode": "real_ai",
-        "provider": "gemini",
-        "model": "gemini-3.5-flash-lite",
-        "policyVersion": "1.1",
-        "requestStatus": "succeeded",
-        "analysis": {
-          "summary": "The user reported receiving a scam SMS but did not interact with the message or make any payments. They also indicated a language need for Mandarin because they struggle with English.",
-          "facts": [
-            {
-              "field": "contact_status",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "I got a scam SMS"
-              ]
-            },
-            {
-              "field": "contact_channel",
-              "value": "SMS",
-              "source": "original",
-              "evidence": [
-                "I got a scam SMS"
-              ]
-            },
-            {
-              "field": "contact_action",
-              "value": "None",
-              "source": "original",
-              "evidence": [
-                "did not click, reply, share information or pay."
-              ]
-            },
-            {
-              "field": "financial_status",
-              "value": "No",
-              "source": "original",
-              "evidence": [
-                "did not click, reply, share information or pay."
-              ]
-            },
-            {
-              "field": "financial_event_type",
-              "value": "N/A",
-              "source": "original",
-              "evidence": [
-                "did not click, reply, share information or pay."
-              ]
-            },
-            {
-              "field": "exposure_status",
-              "value": "No",
-              "source": "original",
-              "evidence": [
-                "did not click, reply, share information or pay."
-              ]
-            },
-            {
-              "field": "exposure_type",
-              "value": "N/A",
-              "source": "original",
-              "evidence": [
-                "did not click, reply, share information or pay."
-              ]
-            },
-            {
-              "field": "language_need",
-              "value": "Needed",
-              "source": "original",
-              "evidence": [
-                "Please explain in Mandarin; I struggle with English."
-              ]
-            }
-          ]
-        }
-      }
-    },
-    {
-      "run": 2,
-      "id": "T14",
-      "http": 200,
-      "ms": 3621,
-      "body": {
-        "mode": "gemini",
-        "analysisMode": "real_ai",
-        "provider": "gemini",
-        "model": "gemini-3.5-flash-lite",
-        "policyVersion": "1.1",
-        "requestStatus": "succeeded",
-        "analysis": {
-          "summary": "The user reports sending $1,500 to a fake marketplace vendor yesterday. No further deductions have been observed.",
-          "facts": [
-            {
-              "field": "financial_status",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "sent $1,500 yesterday."
-              ]
-            },
-            {
-              "field": "financial_event_type",
-              "value": "Induced transfer",
-              "source": "original",
-              "evidence": [
-                "I bought from a fake marketplace and sent $1,500 yesterday."
-              ]
-            },
-            {
-              "field": "amount",
-              "value": "$1,500",
-              "source": "original",
-              "evidence": [
-                "sent $1,500"
-              ]
-            },
-            {
-              "field": "transaction_time",
-              "value": "yesterday",
-              "source": "original",
-              "evidence": [
-                "yesterday."
-              ]
-            },
-            {
-              "field": "ongoing_financial_activity",
-              "value": "No",
-              "source": "original",
-              "evidence": [
-                "No other deductions are reported."
-              ]
-            },
-            {
-              "field": "main_actionable_issue",
-              "value": "Financial/account",
-              "source": "original",
-              "evidence": [
-                "I bought from a fake marketplace and sent $1,500 yesterday."
-              ]
-            }
-          ]
-        }
-      }
-    },
-    {
-      "run": 2,
-      "id": "T15",
-      "http": 200,
-      "ms": 2012,
-      "body": {
-        "mode": "gemini",
-        "analysisMode": "real_ai",
-        "provider": "gemini",
-        "model": "gemini-3.5-flash-lite",
-        "policyVersion": "1.1",
-        "requestStatus": "succeeded",
-        "analysis": {
-          "summary": "The user was contacted by a suspicious social media account, but did not share information or send money. They require an accessible way to report the account.",
-          "facts": [
-            {
-              "field": "reporting_organisation",
-              "value": "Platform",
-              "source": "original",
-              "evidence": [
-                "A suspicious social media account contacted me."
-              ]
-            },
-            {
-              "field": "contact_status",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "A suspicious social media account contacted me."
-              ]
-            },
-            {
-              "field": "contact_channel",
-              "value": "Social",
-              "source": "original",
-              "evidence": [
-                "A suspicious social media account contacted me."
-              ]
-            },
-            {
-              "field": "contact_action",
-              "value": "None",
-              "source": "original",
-              "evidence": [
-                "I didn't share information or send money."
-              ]
-            },
-            {
-              "field": "financial_status",
-              "value": "No",
-              "source": "original",
-              "evidence": [
-                "I didn't share information or send money."
-              ]
-            },
-            {
-              "field": "exposure_status",
-              "value": "No",
-              "source": "original",
-              "evidence": [
-                "I didn't share information or send money."
-              ]
-            },
-            {
-              "field": "accessibility_need",
-              "value": "Needed",
-              "source": "original",
-              "evidence": [
-                "I need an accessible way to report the account."
-              ]
-            },
-            {
-              "field": "reporting_need",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "I need an accessible way to report the account."
-              ]
-            },
-            {
-              "field": "main_actionable_issue",
-              "value": "Scam reporting",
-              "source": "original",
-              "evidence": [
-                "I need an accessible way to report the account."
-              ]
-            }
-          ]
-        }
-      }
-    },
-    {
-      "run": 2,
-      "id": "T16",
-      "http": 200,
-      "ms": 4587,
-      "body": {
-        "mode": "gemini",
-        "analysisMode": "real_ai",
-        "provider": "gemini",
-        "model": "gemini-3.5-flash-lite",
-        "policyVersion": "1.1",
-        "requestStatus": "succeeded",
-        "analysis": {
-          "summary": "The user purchased an item online for A$200 and entered their bank login details, receiving no order details. Subsequently, an additional A$1,000 was deducted, and the user is unsure if it was authorized or if further activity is occurring.",
-          "facts": [
-            {
-              "field": "financial_status",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "paid A$200",
-                "another A$1,000 has been deducted"
-              ]
-            },
-            {
-              "field": "financial_event_type",
-              "value": "Induced transfer",
-              "source": "original",
-              "evidence": [
-                "I bought something online yesterday and paid A$200."
-              ]
-            },
-            {
-              "field": "financial_event_type",
-              "value": "Unauthorised transaction",
-              "source": "original",
-              "evidence": [
-                "Now another A$1,000 has been deducted; I do not know whether it was authorised"
-              ]
-            },
-            {
-              "field": "exposure_status",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "I entered my bank login information."
-              ]
-            },
-            {
-              "field": "exposure_type",
-              "value": "Login credential",
-              "source": "original",
-              "evidence": [
-                "I entered my bank login information."
-              ]
-            },
-            {
-              "field": "transaction_authorisation",
-              "value": "Unknown",
-              "source": "original",
-              "evidence": [
-                "I do not know whether it was authorised"
-              ]
-            },
-            {
-              "field": "ongoing_financial_activity",
-              "value": "Unknown",
-              "source": "original",
-              "evidence": [
-                "whether more activity is occurring."
-              ]
-            },
-            {
-              "field": "bank_account_concern",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "I entered my bank login information.",
-                "Now another A$1,000 has been deducted"
-              ]
-            },
-            {
-              "field": "main_actionable_issue",
-              "value": "Financial/account",
-              "source": "original",
-              "evidence": [
-                "paid A$200",
-                "another A$1,000 has been deducted"
-              ]
-            }
-          ]
-        }
-      }
-    },
-    {
-      "run": 2,
-      "id": "T17",
-      "http": 200,
-      "ms": 5023,
-      "body": {
-        "mode": "gemini",
-        "analysisMode": "real_ai",
-        "provider": "gemini",
-        "model": "gemini-3.5-flash-lite",
-        "policyVersion": "1.1",
-        "requestStatus": "succeeded",
-        "analysis": {
-          "summary": "The user reports receiving a death threat demanding a money transfer and expresses fear. They have not disclosed whether any transfer occurred.",
-          "facts": [
-            {
-              "field": "immediate_safety_threat",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "Someone threatened to kill me if I did not transfer money."
-              ]
-            },
-            {
-              "field": "distress_indicator",
-              "value": "Some",
-              "source": "original",
-              "evidence": [
-                "I am frightened."
-              ]
-            },
-            {
-              "field": "financial_status",
-              "value": "Unknown",
-              "source": "original",
-              "evidence": [
-                "I have not said whether I transferred anything."
-              ]
-            },
-            {
-              "field": "financial_event_type",
-              "value": "Unknown",
-              "source": "original",
-              "evidence": [
-                "I have not said whether I transferred anything."
-              ]
-            }
-          ]
-        }
-      }
-    },
-    {
-      "run": 2,
-      "id": "T18",
-      "http": 200,
-      "ms": 4856,
-      "body": {
-        "mode": "gemini",
-        "analysisMode": "real_ai",
-        "provider": "gemini",
-        "model": "gemini-3.5-flash-lite",
-        "policyVersion": "1.1",
-        "requestStatus": "succeeded",
-        "analysis": {
-          "summary": "The user clicked an unknown link, resulting in a persistent unwanted webpage and an unusable computer. Banking information is stored on the device, but whether it was entered on the suspicious page is unknown.",
-          "facts": [
-            {
-              "field": "contact_status",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "I clicked an unknown link."
-              ]
-            },
-            {
-              "field": "contact_channel",
-              "value": "Unknown",
-              "source": "original",
-              "evidence": [
-                "I clicked an unknown link."
-              ]
-            },
-            {
-              "field": "contact_action",
-              "value": "Clicked",
-              "source": "original",
-              "evidence": [
-                "I clicked an unknown link."
-              ]
-            },
-            {
-              "field": "device_security_indicator",
-              "value": "persistent unwanted page",
-              "source": "original",
-              "evidence": [
-                "My computer now keeps showing an unwanted webpage"
-              ]
-            },
-            {
-              "field": "device_security_indicator",
-              "value": "device unusable",
-              "source": "original",
-              "evidence": [
-                "I cannot use it."
-              ]
-            },
-            {
-              "field": "exposure_status",
-              "value": "No",
-              "source": "original",
-              "evidence": [
-                "Some banking information is stored on the computer, but I have not said whether I entered it on the suspicious page."
-              ]
-            },
-            {
-              "field": "device_credential_exposure",
-              "value": "unknown",
-              "source": "original",
-              "evidence": [
-                "I have not said whether I entered it on the suspicious page."
-              ]
-            }
-          ]
-        }
-      }
-    },
-    {
-      "run": 2,
-      "id": "T19",
-      "http": 200,
-      "ms": 4254,
-      "body": {
-        "mode": "gemini",
-        "analysisMode": "real_ai",
-        "provider": "gemini",
-        "model": "gemini-3.5-flash-lite",
-        "policyVersion": "1.1",
-        "requestStatus": "succeeded",
-        "analysis": {
-          "summary": "The user received a text message claiming to be from the police stating they are under investigation. No financial or exposure events are reported.",
-          "facts": [
-            {
-              "field": "contact_status",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "I received a text claiming to be from the police saying I am under investigation and must contact them."
-              ]
-            },
-            {
-              "field": "contact_channel",
-              "value": "SMS",
-              "source": "original",
-              "evidence": [
-                "I received a text claiming to be from the police saying I am under investigation and must contact them."
-              ]
-            },
-            {
-              "field": "authority_claim_present",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "I received a text claiming to be from the police saying I am under investigation and must contact them."
-              ]
-            },
-            {
-              "field": "authority_claimed_entity",
-              "value": "Police",
-              "source": "original",
-              "evidence": [
-                "I received a text claiming to be from the police saying I am under investigation and must contact them."
-              ]
-            }
-          ]
-        }
-      }
-    },
-    {
-      "run": 2,
-      "id": "T20",
-      "http": 200,
-      "ms": 4890,
-      "body": {
-        "mode": "gemini",
-        "analysisMode": "real_ai",
-        "provider": "gemini",
-        "model": "gemini-3.5-flash-lite",
-        "policyVersion": "1.1",
-        "requestStatus": "succeeded",
-        "analysis": {
-          "summary": "The user reports feeling very anxious following a scam and expresses a need for emotional support and someone to talk to. Additionally, they have a reporting need but cannot use the online reporting form due to accessibility issues.",
-          "facts": [
-            {
-              "field": "distress_indicator",
-              "value": "Severe reported",
-              "source": "original",
-              "evidence": [
-                "After a scam I feel very anxious and need someone to talk to."
-              ]
-            },
-            {
-              "field": "main_actionable_issue",
-              "value": "Emotional support",
-              "source": "original",
-              "evidence": [
-                "need someone to talk to."
-              ]
-            },
-            {
-              "field": "accessibility_need",
-              "value": "Needed",
-              "source": "original",
-              "evidence": [
-                "I also cannot use the online reporting form because it is not accessible to me."
-              ]
-            },
-            {
-              "field": "reporting_need",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "I also cannot use the online reporting form because it is not accessible to me."
-              ]
-            },
-            {
-              "field": "contact_status",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "After a scam I feel very anxious and need someone to talk to."
+                "After a scam I feel very anxious and need someone to talk to. I also cannot use the online reporting form because it is not accessible to me."
               ]
             }
           ]
@@ -2525,7 +2487,7 @@
       "run": 2,
       "id": "T21",
       "http": 200,
-      "ms": 5380,
+      "ms": 4187,
       "body": {
         "mode": "gemini",
         "analysisMode": "real_ai",
@@ -2533,15 +2495,16 @@
         "model": "gemini-3.5-flash-lite",
         "policyVersion": "1.1",
         "requestStatus": "succeeded",
+        "attempts": 1,
         "analysis": {
-          "summary": "The user states that their mobile number stopped working and may have been transferred to another SIM without permission, as indicated by their provider. They also express concern regarding bank verification messages.",
+          "summary": "The user reports that their mobile number stopped working due to a potential unauthorized SIM transfer. They also express concern regarding bank verification messages.",
           "facts": [
             {
               "field": "reporting_organisation",
               "value": "Telecom",
               "source": "original",
               "evidence": [
-                "My provider says the number may have been transferred to another SIM without my permission."
+                "My provider says"
               ]
             },
             {
@@ -2549,8 +2512,7 @@
               "value": "Yes",
               "source": "original",
               "evidence": [
-                "My mobile number suddenly stopped working.",
-                "My provider says the number may have been transferred to another SIM without my permission."
+                "My mobile number suddenly stopped working. My provider says the number may have been transferred to another SIM without my permission."
               ]
             },
             {
@@ -2559,15 +2521,6 @@
               "source": "original",
               "evidence": [
                 "I am also concerned about bank verification messages."
-              ]
-            },
-            {
-              "field": "main_actionable_issue",
-              "value": "Telecom service",
-              "source": "original",
-              "evidence": [
-                "My mobile number suddenly stopped working.",
-                "My provider says the number may have been transferred to another SIM without my permission."
               ]
             }
           ]
@@ -2578,7 +2531,7 @@
       "run": 2,
       "id": "T22",
       "http": 200,
-      "ms": 3908,
+      "ms": 11463,
       "body": {
         "mode": "gemini",
         "analysisMode": "real_ai",
@@ -2586,47 +2539,56 @@
         "model": "gemini-3.5-flash-lite",
         "policyVersion": "1.1",
         "requestStatus": "succeeded",
+        "attempts": 2,
         "analysis": {
-          "summary": "The reporter shared a copy of an identity document with a suspicious recruiter. They subsequently received a notice indicating potential misuse of their identity to apply for a service.",
+          "summary": "The user reported interacting with a suspicious recruiter and sharing an identity document. They later received a notice indicating that someone may have used their identity to apply for a service.",
           "facts": [
             {
               "field": "contact_status",
               "value": "Yes",
               "source": "original",
               "evidence": [
-                "I sent a copy of an identity document to a suspicious recruiter."
+                "suspicious recruiter"
+              ]
+            },
+            {
+              "field": "contact_channel",
+              "value": "Unknown",
+              "source": "original",
+              "evidence": [
+                "recruiter"
               ]
             },
             {
               "field": "contact_action",
               "value": "Shared info",
-              "source": "original",
-              "evidence": [
-                "I sent a copy of an identity document to a suspicious recruiter."
-              ]
-            },
-            {
-              "field": "exposure_status",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "I sent a copy of an identity document to a suspicious recruiter."
-              ]
-            },
-            {
-              "field": "exposure_type",
-              "value": "Identity document",
               "source": "original",
               "evidence": [
                 "I sent a copy of an identity document"
               ]
             },
             {
+              "field": "exposure_status",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "I sent a copy of an identity document"
+              ]
+            },
+            {
+              "field": "exposure_type",
+              "value": "Identity document",
+              "source": "original",
+              "evidence": [
+                "identity document"
+              ]
+            },
+            {
               "field": "identity_misuse",
               "value": "Yes",
               "source": "original",
               "evidence": [
-                "someone may have used my identity to apply for a service."
+                "someone may have used my identity to apply for a service"
               ]
             }
           ]
@@ -2637,7 +2599,7 @@
       "run": 3,
       "id": "T01",
       "http": 200,
-      "ms": 4487,
+      "ms": 10393,
       "body": {
         "mode": "gemini",
         "analysisMode": "real_ai",
@@ -2645,8 +2607,9 @@
         "model": "gemini-3.5-flash-lite",
         "policyVersion": "1.1",
         "requestStatus": "succeeded",
+        "attempts": 2,
         "analysis": {
-          "summary": "The user reported losing money and stated they are unsure what happened. The exact nature of the financial event remains ambiguous.",
+          "summary": "The individual reported losing money while expressing uncertainty about the events that transpired. No further specific details were provided.",
           "facts": [
             {
               "field": "financial_status",
@@ -2658,7 +2621,15 @@
             },
             {
               "field": "financial_event_type",
-              "value": "Reported loss",
+              "value": "Unknown",
+              "source": "original",
+              "evidence": [
+                "I lost money."
+              ]
+            },
+            {
+              "field": "main_actionable_issue",
+              "value": "Financial/account",
               "source": "original",
               "evidence": [
                 "I lost money."
@@ -2672,7 +2643,7 @@
       "run": 3,
       "id": "T02",
       "http": 200,
-      "ms": 2347,
+      "ms": 10353,
       "body": {
         "mode": "gemini",
         "analysisMode": "real_ai",
@@ -2680,8 +2651,9 @@
         "model": "gemini-3.5-flash-lite",
         "policyVersion": "1.1",
         "requestStatus": "succeeded",
+        "attempts": 1,
         "analysis": {
-          "summary": "The user received a fake bank SMS yesterday but did not interact with it or experience financial loss. No additional support or reporting is needed.",
+          "summary": "The user reported receiving a fake bank SMS yesterday. They did not engage with the message, shared no data, sent no money, and stated they need no extra support.",
           "facts": [
             {
               "field": "reporting_organisation",
@@ -2754,30 +2726,6 @@
               "evidence": [
                 "I did not click, reply, share data or send any money."
               ]
-            },
-            {
-              "field": "distress_indicator",
-              "value": "No reported",
-              "source": "original",
-              "evidence": [
-                "I need no extra support."
-              ]
-            },
-            {
-              "field": "immediate_safety_threat",
-              "value": "No",
-              "source": "original",
-              "evidence": [
-                "I did not click, reply, share data or send any money. I need no extra support."
-              ]
-            },
-            {
-              "field": "main_actionable_issue",
-              "value": "Unknown",
-              "source": "original",
-              "evidence": [
-                "I need no extra support."
-              ]
             }
           ]
         }
@@ -2787,7 +2735,7 @@
       "run": 3,
       "id": "T03",
       "http": 200,
-      "ms": 4021,
+      "ms": 10321,
       "body": {
         "mode": "gemini",
         "analysisMode": "real_ai",
@@ -2795,9 +2743,18 @@
         "model": "gemini-3.5-flash-lite",
         "policyVersion": "1.1",
         "requestStatus": "succeeded",
+        "attempts": 2,
         "analysis": {
-          "summary": "The user received an SMS with a suspicious link and clicked it. They are uncertain whether they entered any information or if any money was moved.",
+          "summary": "The user received an SMS with a suspicious link and clicked it. They are unsure if they entered any information or if money moved.",
           "facts": [
+            {
+              "field": "reporting_organisation",
+              "value": "Unknown",
+              "source": "original",
+              "evidence": [
+                "I received an SMS with a suspicious link and clicked it."
+              ]
+            },
             {
               "field": "contact_status",
               "value": "Yes",
@@ -2811,7 +2768,7 @@
               "value": "SMS",
               "source": "original",
               "evidence": [
-                "I received an SMS with a suspicious link"
+                "I received an SMS with a suspicious link and clicked it."
               ]
             },
             {
@@ -2823,6 +2780,22 @@
               ]
             },
             {
+              "field": "financial_status",
+              "value": "Unknown",
+              "source": "original",
+              "evidence": [
+                "I don't know if I entered anything or if money moved."
+              ]
+            },
+            {
+              "field": "financial_event_type",
+              "value": "Unknown",
+              "source": "original",
+              "evidence": [
+                "I don't know if I entered anything or if money moved."
+              ]
+            },
+            {
               "field": "exposure_status",
               "value": "Unknown",
               "source": "original",
@@ -2831,19 +2804,19 @@
               ]
             },
             {
-              "field": "financial_status",
-              "value": "Unknown",
-              "source": "original",
-              "evidence": [
-                "or if money moved."
-              ]
-            },
-            {
               "field": "device_action_taken",
               "value": "Clicked link",
               "source": "original",
               "evidence": [
                 "clicked it."
+              ]
+            },
+            {
+              "field": "device_credential_exposure",
+              "value": "unknown",
+              "source": "original",
+              "evidence": [
+                "I don't know if I entered anything"
               ]
             }
           ]
@@ -2854,7 +2827,7 @@
       "run": 3,
       "id": "T04",
       "http": 200,
-      "ms": 4014,
+      "ms": 4132,
       "body": {
         "mode": "gemini",
         "analysisMode": "real_ai",
@@ -2862,8 +2835,9 @@
         "model": "gemini-3.5-flash-lite",
         "policyVersion": "1.1",
         "requestStatus": "succeeded",
+        "attempts": 1,
         "analysis": {
-          "summary": "The user reported an unrecognised $800 transaction that occurred yesterday. They have not yet specified which bank is involved.",
+          "summary": "The user reports an unrecognised $800 transaction from yesterday and has not specified the bank yet.",
           "facts": [
             {
               "field": "financial_status",
@@ -2904,14 +2878,6 @@
               "evidence": [
                 "There was an $800 transaction yesterday I didn't recognise."
               ]
-            },
-            {
-              "field": "financial_provider",
-              "value": "Unknown",
-              "source": "original",
-              "evidence": [
-                "I haven't said which bank yet."
-              ]
             }
           ]
         }
@@ -2921,7 +2887,7 @@
       "run": 3,
       "id": "T05",
       "http": 200,
-      "ms": 6389,
+      "ms": 2096,
       "body": {
         "mode": "gemini",
         "analysisMode": "real_ai",
@@ -2929,15 +2895,16 @@
         "model": "gemini-3.5-flash-lite",
         "policyVersion": "1.1",
         "requestStatus": "succeeded",
+        "attempts": 1,
         "analysis": {
-          "summary": "The user reports that deductions were made from their account and that this unauthorized financial activity is currently ongoing. They state they do not know the total amount.",
+          "summary": "The user reported three unauthorised deductions from their account, stating that the activity is still ongoing and the total amount is unknown.",
           "facts": [
             {
               "field": "financial_status",
               "value": "Yes",
               "source": "original",
               "evidence": [
-                "Someone made three deductions from my account"
+                "Someone made three deductions from my account and it is still happening now."
               ]
             },
             {
@@ -2953,7 +2920,7 @@
               "value": "Yes",
               "source": "original",
               "evidence": [
-                "it is still happening now."
+                "it is still happening now"
               ]
             },
             {
@@ -2961,15 +2928,7 @@
               "value": "Yes",
               "source": "original",
               "evidence": [
-                "from my account"
-              ]
-            },
-            {
-              "field": "main_actionable_issue",
-              "value": "Financial/account",
-              "source": "original",
-              "evidence": [
-                "Someone made three deductions from my account"
+                "Someone made three deductions from my account and it is still happening now."
               ]
             }
           ]
@@ -2980,7 +2939,7 @@
       "run": 3,
       "id": "T06",
       "http": 200,
-      "ms": 1595,
+      "ms": 3900,
       "body": {
         "mode": "gemini",
         "analysisMode": "real_ai",
@@ -2988,8 +2947,9 @@
         "model": "gemini-3.5-flash-lite",
         "policyVersion": "1.1",
         "requestStatus": "succeeded",
+        "attempts": 1,
         "analysis": {
-          "summary": "The user replied to a fake bank SMS and provided their banking password, but is unsure whether any money was taken. No financial losses or ongoing activities have been confirmed yet.",
+          "summary": "The user replied to a fake bank SMS, shared their banking password, and is unsure if any money was taken. They expressed a need regarding bank account security and reporting.",
           "facts": [
             {
               "field": "reporting_organisation",
@@ -3032,19 +2992,11 @@
               ]
             },
             {
-              "field": "financial_event_type",
-              "value": "Unknown",
-              "source": "original",
-              "evidence": [
-                "I don't know if any money was taken."
-              ]
-            },
-            {
               "field": "exposure_status",
               "value": "Yes",
               "source": "original",
               "evidence": [
-                "gave my banking password."
+                "gave my banking password"
               ]
             },
             {
@@ -3052,7 +3004,7 @@
               "value": "Login credential",
               "source": "original",
               "evidence": [
-                "gave my banking password."
+                "banking password"
               ]
             },
             {
@@ -3060,7 +3012,23 @@
               "value": "Yes",
               "source": "original",
               "evidence": [
-                "fake bank SMS and gave my banking password."
+                "gave my banking password. I don't know if any money was taken."
+              ]
+            },
+            {
+              "field": "reporting_need",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "I replied to a fake bank SMS and gave my banking password. I don't know if any money was taken."
+              ]
+            },
+            {
+              "field": "main_actionable_issue",
+              "value": "Financial/account",
+              "source": "original",
+              "evidence": [
+                "gave my banking password. I don't know if any money was taken."
               ]
             }
           ]
@@ -3071,7 +3039,7 @@
       "run": 3,
       "id": "T07",
       "http": 200,
-      "ms": 4678,
+      "ms": 5898,
       "body": {
         "mode": "gemini",
         "analysisMode": "real_ai",
@@ -3079,9 +3047,34 @@
         "model": "gemini-3.5-flash-lite",
         "policyVersion": "1.1",
         "requestStatus": "succeeded",
+        "attempts": 1,
         "analysis": {
-          "summary": "The user reported sending a photo of their identity document to a fake recruitment site. They stated they do not know whether the document has been misused.",
+          "summary": "The user shared a photo of their identity document with a fake recruitment site. They are currently unsure if the information has been misused.",
           "facts": [
+            {
+              "field": "contact_status",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "I sent a photo of my identity document to a fake recruitment site."
+              ]
+            },
+            {
+              "field": "contact_channel",
+              "value": "Web",
+              "source": "original",
+              "evidence": [
+                "recruitment site"
+              ]
+            },
+            {
+              "field": "contact_action",
+              "value": "Shared info",
+              "source": "original",
+              "evidence": [
+                "I sent a photo of my identity document"
+              ]
+            },
             {
               "field": "exposure_status",
               "value": "Yes",
@@ -3095,7 +3088,7 @@
               "value": "Identity document",
               "source": "original",
               "evidence": [
-                "I sent a photo of my identity document to a fake recruitment site."
+                "identity document"
               ]
             },
             {
@@ -3105,6 +3098,14 @@
               "evidence": [
                 "I don't know whether it has been misused."
               ]
+            },
+            {
+              "field": "main_actionable_issue",
+              "value": "Identity recovery",
+              "source": "original",
+              "evidence": [
+                "I sent a photo of my identity document to a fake recruitment site."
+              ]
             }
           ]
         }
@@ -3113,59 +3114,20 @@
     {
       "run": 3,
       "id": "T08",
-      "http": 200,
-      "ms": 4300,
+      "http": 502,
+      "ms": 5058,
       "body": {
-        "mode": "gemini",
-        "analysisMode": "real_ai",
-        "provider": "gemini",
-        "model": "gemini-3.5-flash-lite",
-        "policyVersion": "1.1",
-        "requestStatus": "succeeded",
-        "analysis": {
-          "summary": "The user provided their BSB and account number to a suspicious person. No money was sent and no unusual transactions have been observed.",
-          "facts": [
-            {
-              "field": "exposure_status",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "I provided my BSB and account number to a suspicious person."
-              ]
-            },
-            {
-              "field": "exposure_type",
-              "value": "BSB+account",
-              "source": "original",
-              "evidence": [
-                "I provided my BSB and account number to a suspicious person."
-              ]
-            },
-            {
-              "field": "financial_status",
-              "value": "No",
-              "source": "original",
-              "evidence": [
-                "I did not send any money and have not seen an unusual transaction."
-              ]
-            },
-            {
-              "field": "financial_event_type",
-              "value": "N/A",
-              "source": "original",
-              "evidence": [
-                "I did not send any money and have not seen an unusual transaction."
-              ]
-            }
-          ]
-        }
+        "mode": "demo",
+        "analysisMode": "limited_demo",
+        "requestStatus": "failed",
+        "error": "Provider unavailable. No successful semantic extraction."
       }
     },
     {
       "run": 3,
       "id": "T09",
       "http": 200,
-      "ms": 4075,
+      "ms": 4436,
       "body": {
         "mode": "gemini",
         "analysisMode": "real_ai",
@@ -3173,8 +3135,9 @@
         "model": "gemini-3.5-flash-lite",
         "policyVersion": "1.1",
         "requestStatus": "succeeded",
+        "attempts": 1,
         "analysis": {
-          "summary": "The user reported sending a financial amount which directly affected their ability to purchase groceries for the week. They also confirmed that no further payments are taking place.",
+          "summary": "The reporter stated they sent $400, which immediately impacted their ability to buy groceries for the week. They confirmed that no further payments are taking place.",
           "facts": [
             {
               "field": "financial_status",
@@ -3201,19 +3164,19 @@
               ]
             },
             {
+              "field": "basic_needs_impact",
+              "value": "Immediate essentials affected",
+              "source": "original",
+              "evidence": [
+                "now can't buy groceries this week."
+              ]
+            },
+            {
               "field": "ongoing_financial_activity",
               "value": "No",
               "source": "original",
               "evidence": [
                 "No further payment is taking place."
-              ]
-            },
-            {
-              "field": "basic_needs_impact",
-              "value": "Immediate essentials affected",
-              "source": "original",
-              "evidence": [
-                "can't buy groceries this week."
               ]
             }
           ]
@@ -3223,91 +3186,20 @@
     {
       "run": 3,
       "id": "T10",
-      "http": 200,
-      "ms": 1645,
+      "http": 502,
+      "ms": 5651,
       "body": {
-        "mode": "gemini",
-        "analysisMode": "real_ai",
-        "provider": "gemini",
-        "model": "gemini-3.5-flash-lite",
-        "policyVersion": "1.1",
-        "requestStatus": "succeeded",
-        "analysis": {
-          "summary": "The user reported receiving a scam phone call and expressed severe distress that prevents them from managing paperwork. They confirmed they are not in immediate danger and did not send money or share any data.",
-          "facts": [
-            {
-              "field": "contact_status",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "I got a scam phone call."
-              ]
-            },
-            {
-              "field": "contact_channel",
-              "value": "Call",
-              "source": "original",
-              "evidence": [
-                "I got a scam phone call."
-              ]
-            },
-            {
-              "field": "distress_indicator",
-              "value": "Severe reported",
-              "source": "original",
-              "evidence": [
-                "I am panicking and can't manage the paperwork."
-              ]
-            },
-            {
-              "field": "distress_prevents_proceeding",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "I am panicking and can't manage the paperwork."
-              ]
-            },
-            {
-              "field": "immediate_safety_threat",
-              "value": "No",
-              "source": "original",
-              "evidence": [
-                "I am not in immediate danger"
-              ]
-            },
-            {
-              "field": "financial_status",
-              "value": "No",
-              "source": "original",
-              "evidence": [
-                "did not send money or share data."
-              ]
-            },
-            {
-              "field": "exposure_status",
-              "value": "No",
-              "source": "original",
-              "evidence": [
-                "did not send money or share data."
-              ]
-            },
-            {
-              "field": "main_actionable_issue",
-              "value": "Emotional support",
-              "source": "original",
-              "evidence": [
-                "I am panicking and can't manage the paperwork."
-              ]
-            }
-          ]
-        }
+        "mode": "demo",
+        "analysisMode": "limited_demo",
+        "requestStatus": "failed",
+        "error": "Provider output failed schema or exact source-evidence validation."
       }
     },
     {
       "run": 3,
       "id": "T11",
       "http": 200,
-      "ms": 3557,
+      "ms": 5479,
       "body": {
         "mode": "gemini",
         "analysisMode": "real_ai",
@@ -3315,8 +3207,9 @@
         "model": "gemini-3.5-flash-lite",
         "policyVersion": "1.1",
         "requestStatus": "succeeded",
+        "attempts": 1,
         "analysis": {
-          "summary": "The user reported receiving a scam call followed by a threat of physical harm made today, expressing fear of immediate physical danger.",
+          "summary": "The user reported receiving a scam call followed by a threat of harm today, expressing fear of immediate physical danger.",
           "facts": [
             {
               "field": "contact_status",
@@ -3358,7 +3251,7 @@
       "run": 3,
       "id": "T12",
       "http": 200,
-      "ms": 4578,
+      "ms": 4250,
       "body": {
         "mode": "gemini",
         "analysisMode": "real_ai",
@@ -3366,15 +3259,17 @@
         "model": "gemini-3.5-flash-lite",
         "policyVersion": "1.1",
         "requestStatus": "succeeded",
+        "attempts": 1,
         "analysis": {
-          "summary": "The user reported sending money yesterday. Subsequently, they stated that they never transferred any money.",
+          "summary": "The user reported sending $500 yesterday, but subsequently stated they never transferred any money. This creates a direct conflict regarding whether a financial transaction occurred and was authorised.",
           "facts": [
             {
               "field": "financial_status",
-              "value": "Yes",
+              "value": "Conflicting",
               "source": "original",
               "evidence": [
-                "I sent $500 yesterday."
+                "I sent $500 yesterday.",
+                "Later I said I never transferred any money."
               ]
             },
             {
@@ -3410,7 +3305,7 @@
       "run": 3,
       "id": "T13",
       "http": 200,
-      "ms": 2128,
+      "ms": 7754,
       "body": {
         "mode": "gemini",
         "analysisMode": "real_ai",
@@ -3418,17 +3313,10 @@
         "model": "gemini-3.5-flash-lite",
         "policyVersion": "1.1",
         "requestStatus": "succeeded",
+        "attempts": 1,
         "analysis": {
-          "summary": "The user received a scam SMS message but did not interact with it or experience financial loss. They requested an explanation in Mandarin due to language difficulties and reported no other urgent concerns.",
+          "summary": "The user received a scam SMS but did not interact with it or make any payments. They requested explanations in Mandarin due to language difficulties.",
           "facts": [
-            {
-              "field": "reporting_organisation",
-              "value": "Unknown",
-              "source": "original",
-              "evidence": [
-                "I got a scam SMS"
-              ]
-            },
             {
               "field": "contact_status",
               "value": "Yes",
@@ -3462,75 +3350,11 @@
               ]
             },
             {
-              "field": "financial_event_type",
-              "value": "N/A",
-              "source": "original",
-              "evidence": [
-                "did not click, reply, share information or pay"
-              ]
-            },
-            {
-              "field": "exposure_status",
-              "value": "No",
-              "source": "original",
-              "evidence": [
-                "did not click, reply, share information or pay"
-              ]
-            },
-            {
               "field": "language_need",
               "value": "Needed",
               "source": "original",
               "evidence": [
                 "Please explain in Mandarin; I struggle with English."
-              ]
-            },
-            {
-              "field": "accessibility_need",
-              "value": "Unknown",
-              "source": "original",
-              "evidence": [
-                "I struggle with English."
-              ]
-            },
-            {
-              "field": "basic_needs_impact",
-              "value": "None reported",
-              "source": "original",
-              "evidence": [
-                "I have no other urgent concerns."
-              ]
-            },
-            {
-              "field": "immediate_safety_threat",
-              "value": "No",
-              "source": "original",
-              "evidence": [
-                "I have no other urgent concerns."
-              ]
-            },
-            {
-              "field": "bank_account_concern",
-              "value": "No",
-              "source": "original",
-              "evidence": [
-                "did not click, reply, share information or pay"
-              ]
-            },
-            {
-              "field": "reporting_need",
-              "value": "Unknown",
-              "source": "original",
-              "evidence": [
-                "I got a scam SMS but did not click, reply, share information or pay."
-              ]
-            },
-            {
-              "field": "main_actionable_issue",
-              "value": "Scam reporting",
-              "source": "original",
-              "evidence": [
-                "I got a scam SMS"
               ]
             }
           ]
@@ -3541,7 +3365,7 @@
       "run": 3,
       "id": "T14",
       "http": 200,
-      "ms": 3546,
+      "ms": 5688,
       "body": {
         "mode": "gemini",
         "analysisMode": "real_ai",
@@ -3549,8 +3373,9 @@
         "model": "gemini-3.5-flash-lite",
         "policyVersion": "1.1",
         "requestStatus": "succeeded",
+        "attempts": 1,
         "analysis": {
-          "summary": "The user reported sending money yesterday to a fake marketplace vendor who subsequently disappeared, with no other deductions reported.",
+          "summary": "The user reported sending money to a fake marketplace vendor yesterday. No further deductions were reported.",
           "facts": [
             {
               "field": "financial_status",
@@ -3565,7 +3390,7 @@
               "value": "Induced transfer",
               "source": "original",
               "evidence": [
-                "sent $1,500"
+                "bought from a fake marketplace and sent $1,500"
               ]
             },
             {
@@ -3585,6 +3410,14 @@
               ]
             },
             {
+              "field": "transaction_authorisation",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "sent $1,500"
+              ]
+            },
+            {
               "field": "ongoing_financial_activity",
               "value": "No",
               "source": "original",
@@ -3600,7 +3433,7 @@
       "run": 3,
       "id": "T15",
       "http": 200,
-      "ms": 2089,
+      "ms": 1856,
       "body": {
         "mode": "gemini",
         "analysisMode": "real_ai",
@@ -3608,8 +3441,9 @@
         "model": "gemini-3.5-flash-lite",
         "policyVersion": "1.1",
         "requestStatus": "succeeded",
+        "attempts": 1,
         "analysis": {
-          "summary": "The user was contacted by a suspicious social media account, but did not share information or send money. They require an accessible way to report the account.",
+          "summary": "The user was contacted by a suspicious social media account, did not share information or send money, and requested an accessible way to report the account.",
           "facts": [
             {
               "field": "reporting_organisation",
@@ -3691,7 +3525,7 @@
       "run": 3,
       "id": "T16",
       "http": 200,
-      "ms": 5565,
+      "ms": 8355,
       "body": {
         "mode": "gemini",
         "analysisMode": "real_ai",
@@ -3699,32 +3533,49 @@
         "model": "gemini-3.5-flash-lite",
         "policyVersion": "1.1",
         "requestStatus": "succeeded",
+        "attempts": 1,
         "analysis": {
-          "summary": "The user purchased an online item, paid A$200, and entered their bank login information. Subsequently, another A$1,000 was deducted, and the user is unsure about its authorisation or if further activity is occurring.",
+          "summary": "The user purchased an item online and paid A$200 after entering their bank login credentials, receiving no order details. An additional A$1,000 was subsequently deducted, and the user is uncertain whether it was authorized or if further activity is taking place.",
           "facts": [
+            {
+              "field": "reporting_organisation",
+              "value": "Unknown",
+              "source": "original",
+              "evidence": [
+                "I bought something online yesterday and paid A$200."
+              ]
+            },
             {
               "field": "financial_status",
               "value": "Yes",
               "source": "original",
               "evidence": [
                 "I bought something online yesterday and paid A$200.",
-                "Now another A$1,000 has been deducted;"
+                "Now another A$1,000 has been deducted"
               ]
             },
             {
-              "field": "exposure_status",
-              "value": "Yes",
+              "field": "amount",
+              "value": "A$200",
               "source": "original",
               "evidence": [
-                "I entered my bank login information."
+                "I bought something online yesterday and paid A$200."
               ]
             },
             {
-              "field": "exposure_type",
-              "value": "Login credential",
+              "field": "amount",
+              "value": "A$1,000",
               "source": "original",
               "evidence": [
-                "I entered my bank login information."
+                "Now another A$1,000 has been deducted"
+              ]
+            },
+            {
+              "field": "transaction_time",
+              "value": "yesterday",
+              "source": "original",
+              "evidence": [
+                "I bought something online yesterday and paid A$200."
               ]
             },
             {
@@ -3744,11 +3595,36 @@
               ]
             },
             {
-              "field": "bank_account_concern",
+              "field": "exposure_status",
               "value": "Yes",
               "source": "original",
               "evidence": [
                 "I entered my bank login information."
+              ]
+            },
+            {
+              "field": "exposure_type",
+              "value": "Login credential",
+              "source": "original",
+              "evidence": [
+                "I entered my bank login information."
+              ]
+            },
+            {
+              "field": "bank_account_concern",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "I entered my bank login information.",
+                "Now another A$1,000 has been deducted"
+              ]
+            },
+            {
+              "field": "main_actionable_issue",
+              "value": "Financial/account",
+              "source": "original",
+              "evidence": [
+                "Now another A$1,000 has been deducted; I do not know whether it was authorised or whether more activity is occurring."
               ]
             }
           ]
@@ -3759,7 +3635,7 @@
       "run": 3,
       "id": "T17",
       "http": 200,
-      "ms": 3729,
+      "ms": 5954,
       "body": {
         "mode": "gemini",
         "analysisMode": "real_ai",
@@ -3767,8 +3643,9 @@
         "model": "gemini-3.5-flash-lite",
         "policyVersion": "1.1",
         "requestStatus": "succeeded",
+        "attempts": 2,
         "analysis": {
-          "summary": "The user reported receiving a threat to kill them if they did not transfer money and stated they are frightened. The user has not indicated whether any transfer took place.",
+          "summary": "The user reported receiving an explicit threat to kill them if they did not transfer money and stated they are frightened. They have not confirmed whether any transfer took place.",
           "facts": [
             {
               "field": "immediate_safety_threat",
@@ -3793,20 +3670,8 @@
     {
       "run": 3,
       "id": "T18",
-      "http": 502,
-      "ms": 2824,
-      "body": {
-        "mode": "demo",
-        "analysisMode": "limited_demo",
-        "requestStatus": "failed",
-        "error": "Provider unavailable. No successful semantic extraction."
-      }
-    },
-    {
-      "run": 3,
-      "id": "T19",
       "http": 200,
-      "ms": 3581,
+      "ms": 2442,
       "body": {
         "mode": "gemini",
         "analysisMode": "real_ai",
@@ -3814,9 +3679,102 @@
         "model": "gemini-3.5-flash-lite",
         "policyVersion": "1.1",
         "requestStatus": "succeeded",
+        "attempts": 1,
         "analysis": {
-          "summary": "The user received a text message claiming to originate from the police, stating they were under investigation and must contact them. No financial losses or further actions were reported.",
+          "summary": "The user clicked an unknown link, leading to an unwanted webpage and rendering their computer unusable. Banking information is stored on the device, but it is unknown if credentials were entered.",
           "facts": [
+            {
+              "field": "contact_status",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "I clicked an unknown link."
+              ]
+            },
+            {
+              "field": "contact_channel",
+              "value": "Other",
+              "source": "original",
+              "evidence": [
+                "I clicked an unknown link."
+              ]
+            },
+            {
+              "field": "contact_action",
+              "value": "Clicked",
+              "source": "original",
+              "evidence": [
+                "I clicked an unknown link."
+              ]
+            },
+            {
+              "field": "device_security_indicator",
+              "value": "persistent unwanted page",
+              "source": "original",
+              "evidence": [
+                "My computer now keeps showing an unwanted webpage"
+              ]
+            },
+            {
+              "field": "device_security_indicator",
+              "value": "device unusable",
+              "source": "original",
+              "evidence": [
+                "and I cannot use it."
+              ]
+            },
+            {
+              "field": "device_action_taken",
+              "value": "Clicked link",
+              "source": "original",
+              "evidence": [
+                "I clicked an unknown link."
+              ]
+            },
+            {
+              "field": "device_credential_exposure",
+              "value": "credentials stored only on device",
+              "source": "original",
+              "evidence": [
+                "Some banking information is stored on the computer, but I have not said whether I entered it on the suspicious page."
+              ]
+            },
+            {
+              "field": "bank_account_concern",
+              "value": "Yes",
+              "source": "original",
+              "evidence": [
+                "Some banking information is stored on the computer"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "run": 3,
+      "id": "T19",
+      "http": 200,
+      "ms": 2088,
+      "body": {
+        "mode": "gemini",
+        "analysisMode": "real_ai",
+        "provider": "gemini",
+        "model": "gemini-3.5-flash-lite",
+        "policyVersion": "1.1",
+        "requestStatus": "succeeded",
+        "attempts": 1,
+        "analysis": {
+          "summary": "The user received a text message claiming to be from the police stating they are under investigation and need to contact them. No financial losses or further actions were reported.",
+          "facts": [
+            {
+              "field": "reporting_organisation",
+              "value": "Unknown",
+              "source": "original",
+              "evidence": [
+                "I received a text claiming to be from the police saying I am under investigation and must contact them."
+              ]
+            },
             {
               "field": "contact_status",
               "value": "Yes",
@@ -3834,11 +3792,35 @@
               ]
             },
             {
+              "field": "contact_action",
+              "value": "None",
+              "source": "original",
+              "evidence": [
+                "I received a text claiming to be from the police saying I am under investigation and must contact them."
+              ]
+            },
+            {
+              "field": "financial_status",
+              "value": "Unknown",
+              "source": "original",
+              "evidence": [
+                "I received a text claiming to be from the police saying I am under investigation and must contact them."
+              ]
+            },
+            {
+              "field": "exposure_status",
+              "value": "Unknown",
+              "source": "original",
+              "evidence": [
+                "I received a text claiming to be from the police saying I am under investigation and must contact them."
+              ]
+            },
+            {
               "field": "authority_claim_present",
               "value": "Yes",
               "source": "original",
               "evidence": [
-                "claiming to be from the police"
+                "I received a text claiming to be from the police saying I am under investigation and must contact them."
               ]
             },
             {
@@ -3846,7 +3828,15 @@
               "value": "Police",
               "source": "original",
               "evidence": [
-                "claiming to be from the police"
+                "I received a text claiming to be from the police saying I am under investigation and must contact them."
+              ]
+            },
+            {
+              "field": "authority_contact_action",
+              "value": "No action",
+              "source": "original",
+              "evidence": [
+                "I received a text claiming to be from the police saying I am under investigation and must contact them."
               ]
             }
           ]
@@ -3857,7 +3847,7 @@
       "run": 3,
       "id": "T20",
       "http": 200,
-      "ms": 5026,
+      "ms": 5552,
       "body": {
         "mode": "gemini",
         "analysisMode": "real_ai",
@@ -3865,8 +3855,9 @@
         "model": "gemini-3.5-flash-lite",
         "policyVersion": "1.1",
         "requestStatus": "succeeded",
+        "attempts": 1,
         "analysis": {
-          "summary": "The user reports feeling very anxious following a scam and expresses a need for someone to talk to. They also note an accessibility barrier preventing them from using the online reporting form.",
+          "summary": "The individual reports feeling very anxious following a scam and requires emotional support and someone to talk to. They are also unable to use the online reporting form due to accessibility issues.",
           "facts": [
             {
               "field": "distress_indicator",
@@ -3889,15 +3880,7 @@
               "value": "Emotional support",
               "source": "original",
               "evidence": [
-                "need someone to talk to."
-              ]
-            },
-            {
-              "field": "reporting_need",
-              "value": "Yes",
-              "source": "original",
-              "evidence": [
-                "I also cannot use the online reporting form because it is not accessible to me."
+                "After a scam I feel very anxious and need someone to talk to."
               ]
             }
           ]
@@ -3908,7 +3891,7 @@
       "run": 3,
       "id": "T21",
       "http": 200,
-      "ms": 5059,
+      "ms": 4854,
       "body": {
         "mode": "gemini",
         "analysisMode": "real_ai",
@@ -3916,15 +3899,16 @@
         "model": "gemini-3.5-flash-lite",
         "policyVersion": "1.1",
         "requestStatus": "succeeded",
+        "attempts": 1,
         "analysis": {
-          "summary": "The user reported that their mobile number stopped working due to a potential unauthorized SIM transfer identified by their provider. They also expressed concern regarding bank verification messages.",
+          "summary": "The user reported that their mobile number suddenly stopped working and may have been transferred to another SIM without permission. They also expressed concern regarding bank verification messages.",
           "facts": [
             {
               "field": "reporting_organisation",
               "value": "Telecom",
               "source": "original",
               "evidence": [
-                "My provider says"
+                "My provider says the number may have been transferred to another SIM without my permission."
               ]
             },
             {
@@ -3932,7 +3916,8 @@
               "value": "Yes",
               "source": "original",
               "evidence": [
-                "My mobile number suddenly stopped working. My provider says the number may have been transferred to another SIM without my permission."
+                "My mobile number suddenly stopped working.",
+                "My provider says the number may have been transferred to another SIM without my permission."
               ]
             },
             {
@@ -3941,14 +3926,6 @@
               "source": "original",
               "evidence": [
                 "I am also concerned about bank verification messages."
-              ]
-            },
-            {
-              "field": "main_actionable_issue",
-              "value": "Telecom service",
-              "source": "original",
-              "evidence": [
-                "My mobile number suddenly stopped working. My provider says the number may have been transferred to another SIM without my permission."
               ]
             }
           ]
@@ -3959,7 +3936,7 @@
       "run": 3,
       "id": "T22",
       "http": 200,
-      "ms": 5360,
+      "ms": 1829,
       "body": {
         "mode": "gemini",
         "analysisMode": "real_ai",
@@ -3967,8 +3944,9 @@
         "model": "gemini-3.5-flash-lite",
         "policyVersion": "1.1",
         "requestStatus": "succeeded",
+        "attempts": 1,
         "analysis": {
-          "summary": "The user reported sharing a copy of their identity document with a suspicious recruiter. They later received a notice indicating someone may have used their identity to apply for a service.",
+          "summary": "The user sent an identity document copy to a suspicious recruiter and later received a notice that their identity may have been misused. They need identity recovery support.",
           "facts": [
             {
               "field": "contact_status",
@@ -3980,15 +3958,7 @@
             },
             {
               "field": "contact_channel",
-              "value": "Unknown",
-              "source": "original",
-              "evidence": [
-                "I sent a copy of an identity document to a suspicious recruiter."
-              ]
-            },
-            {
-              "field": "contact_action",
-              "value": "Shared info",
+              "value": "Other",
               "source": "original",
               "evidence": [
                 "I sent a copy of an identity document to a suspicious recruiter."
@@ -4015,7 +3985,7 @@
               "value": "Yes",
               "source": "original",
               "evidence": [
-                "someone may have used my identity to apply for a service."
+                "Later I received a notice that someone may have used my identity to apply for a service."
               ]
             },
             {
@@ -4023,8 +3993,15 @@
               "value": "Identity recovery",
               "source": "original",
               "evidence": [
-                "I sent a copy of an identity document to a suspicious recruiter.",
-                "someone may have used my identity to apply for a service."
+                "I sent a copy of an identity document to a suspicious recruiter. Later I received a notice that someone may have used my identity to apply for a service."
+              ]
+            },
+            {
+              "field": "reporting_organisation",
+              "value": "Unknown",
+              "source": "original",
+              "evidence": [
+                "I sent a copy of an identity document to a suspicious recruiter."
               ]
             }
           ]

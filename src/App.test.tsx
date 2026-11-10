@@ -12,8 +12,34 @@ const click=async(name:string)=>act(async()=>{
 })
 const mount=async()=>{Object.assign(globalThis,{IS_REACT_ACT_ENVIRONMENT:true});host=document.createElement('div');document.body.append(host);root=createRoot(host);await act(async()=>root!.render(<App/>))}
 const edit=async(element:HTMLTextAreaElement,value:string)=>act(async()=>{Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype,'value')!.set!.call(element,value);element.dispatchEvent(new Event('input',{bubbles:true}))})
-afterEach(async()=>{if(root)await act(async()=>root?.unmount());root=undefined;host?.remove();vi.unstubAllGlobals()})
+afterEach(async()=>{if(root)await act(async()=>root?.unmount());root=undefined;host?.remove();vi.unstubAllGlobals();vi.useRealTimers()})
 describe('preserved three-screen human review workflow',()=>{
+ it('explains disabled staff recording and briefly confirms completed review actions',async()=>{
+  const s=structuredScenarios.find(s=>s.id==='T11')!
+  vi.stubGlobal('fetch',vi.fn(async(url:RequestInfo|URL)=>String(url).includes('/api/status')?{ok:true,json:async()=>({policyVersion:'1.1'})}:{ok:true,json:async()=>({mode:'gemini',provider:'gemini',analysisMode:'real_ai',requestStatus:'succeeded',model:'mock-test',policyVersion:'1.1',analysis:s.extraction})}))
+  await mount();await click('T11 —');await click('Analyse Case')
+  vi.useFakeTimers()
+  const record=[...document.querySelectorAll('button')].find(button=>button.textContent==='Record staff decision')!
+  const rationale=document.querySelector<HTMLTextAreaElement>('textarea[aria-label="Staff decision rationale"]')!
+  const help=document.getElementById('staff-rationale-help')!
+  const status=document.querySelector('[role="status"]')!
+
+  expect(record.disabled).toBe(true)
+  expect(help.textContent).toContain('Enter a rationale')
+  await edit(rationale,'Contact staff@example.com for review.')
+  expect(record.disabled).toBe(true)
+  expect(help.textContent).toContain('Remove sensitive information')
+  await edit(rationale,'The reported safety concern requires immediate review.')
+  expect(record.disabled).toBe(false)
+  expect(record.classList.contains('primary')).toBe(true)
+  await click('Record staff decision')
+  expect(status.textContent).toBe('Staff decision recorded.')
+  await click('Update Analysis')
+  expect(status.textContent).toBe('Analysis updated.')
+  expect(record.disabled).toBe(true)
+  await act(async()=>{vi.advanceTimersByTime(3000)})
+  expect(status.textContent).toBe('')
+ })
  it('supports Accept/Modify/Reject, navigation, evidence and NOT SENT report for T11',async()=>{
   const s=structuredScenarios.find(s=>s.id==='T11')!
   vi.stubGlobal('fetch',vi.fn(async(url:RequestInfo|URL)=>String(url).includes('/api/status')?{ok:true,json:async()=>({policyVersion:'1.1'})}:{ok:true,json:async()=>({mode:'gemini',provider:'gemini',analysisMode:'real_ai',requestStatus:'succeeded',model:'mock-test',policyVersion:'1.1',analysis:s.extraction})}))
@@ -43,6 +69,15 @@ describe('preserved three-screen human review workflow',()=>{
   vi.stubGlobal('fetch',vi.fn(async()=>({ok:false,json:async()=>({error:'API unavailable'})})))
   await mount();await click('T11 —');await click('Analyse Case')
   expect(document.body.textContent).toContain('Limited Demo Mode');expect(document.body.textContent).toContain('Priority pending confirmation');expect(document.querySelector('.priority strong')?.textContent).toBe('Priority pending confirmation');expect(document.body.textContent).toContain('Safety has not been assessed')
-  await click('Back to intake');expect(document.querySelector('textarea')?.readOnly).toBe(true)
+  await click('Back to intake')
+  const description = document.querySelector('textarea')!
+  expect(description.value).toBe('')
+  expect(description.readOnly).toBe(false)
+  expect(document.querySelector<HTMLInputElement>('input[placeholder="e.g. Online store concern"]')?.value).toBe('')
+  expect(document.body.textContent).toContain('Analysis not run')
+  expect(document.querySelector('.error')).toBeNull()
+  await edit(description, 'A new fictional case.')
+  await click('Analyse Case')
+  expect(document.body.textContent).toContain('AI Analysis & Clarification')
  })
 })

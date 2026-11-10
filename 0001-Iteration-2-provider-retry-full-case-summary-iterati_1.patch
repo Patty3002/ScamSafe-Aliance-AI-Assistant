@@ -1,0 +1,240 @@
+From f0916e688dc6dd345bc1183e2cef18b1e0808d4d Mon Sep 17 00:00:00 2001
+From: INFS5706 Team <team@example.invalid>
+Date: Tue, 10 Nov 2026 17:59:00 +1100
+Subject: [PATCH 1/3] Iteration 2: provider retry, full case summary,
+ iteration-2 live report
+
+- server.mjs: retry once (1 s back-off) on provider refusal or rejected
+  output; every attempt still passes the schema/exact-evidence validator
+  and failures after the retry fail closed; overall timeout unchanged
+- src/analysis.ts: case summary no longer drops sentences after the third
+  (T16 lost the A$1,000 deduction); long reports are marked, not cut silently
+- tests for both changes (78 passing)
+- docs/LIVE_E2E_REPORT_2026-11-10_iter2.md: iteration 1 vs thinking-enabled
+  runs (team local + deployed): FAIL 3 -> 0/1, PASS/valid 65% -> 73%,
+  provider errors up to 14% before this retry
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01YLDZ4MPsnx2xDKy1Jzj5mS
+---
+ README.md                                |  2 +-
+ docs/LIVE_E2E_REPORT_2026-11-10_iter2.md | 54 ++++++++++++++++++++++++
+ server.mjs                               | 20 +++++++--
+ server.test.mjs                          | 20 ++++++++-
+ src/analysis.ts                          | 11 ++++-
+ src/summary.test.ts                      | 20 +++++++++
+ 6 files changed, 120 insertions(+), 7 deletions(-)
+ create mode 100644 docs/LIVE_E2E_REPORT_2026-11-10_iter2.md
+ create mode 100644 src/summary.test.ts
+
+diff --git a/README.md b/README.md
+index de8a38b..8695785 100644
+--- a/README.md
++++ b/README.md
+@@ -24,7 +24,7 @@ Original intake and case ID are locked after the first analysis attempt. Clarifi
+ - `pnpm run typecheck`: TypeScript validation.
+ - `pnpm run build`: policy change gate, typecheck and production bundle.
+ - `pnpm run check:policy`: rulebook hash, 48 documented IDs, coverage map and exact fixture narrative synchronization.
+-- `pnpm run eval:e2e -- <baseUrl> [runs] [gapMs]` then `pnpm run eval:e2e:score`: full live pipeline (narrative → provider → validator → rule engine) against a running server, scored for decisions and safety invariants by `src/liveEvaluation.ts`. Latest results: `docs/LIVE_E2E_REPORT_2026-11-10.md`.
++- `pnpm run eval:e2e -- <baseUrl> [runs] [gapMs]` then `pnpm run eval:e2e:score`: full live pipeline (narrative → provider → validator → rule engine) against a running server, scored for decisions and safety invariants by `src/liveEvaluation.ts`. Results: `docs/LIVE_E2E_REPORT_2026-11-10.md` (iteration 1) and `docs/LIVE_E2E_REPORT_2026-11-10_iter2.md` (iteration 2, thinking enabled).
+ - `pnpm run eval:live`: same T01–T22 semantic evaluation against the selected configured provider; writes `docs/provider-evaluation.json`. With no key it records NOT RUN, never PASS.
+ 
+ Fixtures are generated from the supplied acceptance Markdown. Human-curated structured facts are only imported by tests/evaluation, never by the runtime narrative analysis. Expected differences from the scenario prose are explicit in the discrepancy report. Mock provider tests establish request/response handling only. Exact quote validation does not prove that a model interpreted the quote correctly; live semantic evaluation and human review remain necessary.
+diff --git a/docs/LIVE_E2E_REPORT_2026-11-10_iter2.md b/docs/LIVE_E2E_REPORT_2026-11-10_iter2.md
+new file mode 100644
+index 0000000..51b0a58
+--- /dev/null
++++ b/docs/LIVE_E2E_REPORT_2026-11-10_iter2.md
+@@ -0,0 +1,54 @@
++# Live end-to-end evaluation — iteration 2 (2026-11-10)
++
++> Synthetic T01–T22 narratives only. Compares the first live run with two runs after commit `fcda6da` (Gemini `thinkingLevel: 'medium'`, temperature 0.1 → 0.2). Prompt, rule engine and routing are unchanged between iterations (identical SHA-256).
++
++## What changed and how it was measured
++
++| Dataset | Config | Where | Runs |
++| --- | --- | --- | --- |
++| Iter 1 | no thinking, temp 0.1 | deployed site | 3 × 22 |
++| Iter 2a | thinking medium, temp 0.2 | team local server (`docs/live-e2e-runs.json`) | 3 × 22 |
++| Iter 2b | thinking medium, temp 0.2 | deployed site (server.mjs hash = `fcda6da`) | 3 × 22, 5 s spacing |
++
++All scored with the same `src/liveEvaluation.ts` (self-check 22/22 PASS before scoring). Model in all runs: `gemini-3.5-flash-lite`.
++
++## Totals
++
++| | PASS | MISMATCH | FAIL | ERROR | PASS / valid | Median latency |
++| --- | --- | --- | --- | --- | --- | --- |
++| Iter 1 | 39 | 18 | 3 | 6 | 65 % | 1.5 s |
++| Iter 2a | 45 | 14 | 1 | 6 | 75 % | 4.2 s |
++| Iter 2b | 41 | 16 | **0** | 9 | 72 % | 4.6 s (max 9.4 s) |
++
++Safety invariants held in every valid run of every iteration (SAFE01 on T11/T17, no SMS-only ORG03, T16 never Urgent, T18 no exposure, T19 unverified).
++
++## Per-scenario change (iteration 2 = 2a + 2b combined)
++
++| Case | Iter 1 | Iter 2 | Note |
++| --- | --- | --- | --- |
++| T01 | 2/3, 1 FAIL | **6/6** | No longer invents a financial event from "I lost money" |
++| T06 | 2/3 | **6/6** | Bank linkage of disclosed banking password now extracted |
++| T09 | 2/3 | **5/5** | No longer infers a main issue; primary Undetermined as adjudicated |
++| T13 | 0/3 | 3/4 | Routine reached when negatives extracted |
++| T16 | 2/2 | **6/6** | Stable |
++| T12 | 0/2, 2 FAIL | 3/4 pass, 1 FAIL, 2 validation ERROR | Conflict now usually detected; remaining outputs often rejected by validator |
++| T08 | 3/3 | 4/6 | **New:** BSB+account read as bank concern → ORG01 primary (matches *published* row, not team adjudication) |
++| T11 | 0/3 | 2/6 | ORG06 still added from "I fear immediate physical danger" |
++| T14 | 0/3 | 0/6 | `platform_controlled_issue` never set for "fake marketplace" → ORG02 missing |
++| T15 | 0/3 | 0/6 | Primary ORG05 (scam reporting) instead of ORG02 |
++| T20 | 0/3 | 0/6 | Primary ORG06 (allowed by published row) |
++| T21 | 1/2 | 0/5 | Now consistently ORG03 primary (matches published row) |
++
++## Findings
++
++1. **Thinking improved extraction quality** (FAIL 3 → 1 over twice the runs; PASS/valid 65 % → 73 %), at ~3× latency.
++2. **Provider errors increased** (iter 2b: 5 "unavailable" in 1.4–4.4 s, i.e. provider refusals not timeouts; 4 validation rejects). With ~14 % failed requests, about one in seven analyses would show Limited Demo. Addressed in this change by one retry (below); needs re-measuring after deploy.
++3. **Team decision needed — T08, T20, T21.** The model now matches the published acceptance rows while `SPECIFICATION_DISCREPANCIES.md` adjudicates Undetermined. Per rulebook §6, record the chosen reading before changing expectations or prompts.
++4. **Remaining prompt gaps — T14/T15** (platform-controlled marketplace/social account) and **T11** (fear of danger ≠ emotional-support request).
++
++## Code changes in this iteration
++
++- `server.mjs`: one retry (1 s back-off) for provider refusals and rejected outputs, inside the existing 30 s timeout. Every attempt passes the same validator; failure after the retry still fails closed. Response records `attempts`. Tests: retry-then-success, retry-then-fail-closed, attempts=1, timeout.
++- `src/analysis.ts`: case summary no longer keeps only the first three sentences (T16 lost "another A$1,000 has been deducted"). Short reports are shown in full; long reports are cut at a sentence boundary and marked. Tests: all 22 narratives preserved, T16 deduction present, long-report marker.
++
++`pnpm run test`: 78 passed. `typecheck` and `build` pass.
+diff --git a/server.mjs b/server.mjs
+index f58c16c..e742c74 100644
+--- a/server.mjs
++++ b/server.mjs
+@@ -18,7 +18,7 @@ export async function loadBusinessPolicy(){
+   if(createHash('sha256').update(text.replace(/\r\n/g,'\n')).digest('hex')!==lock.rulebookSha256) throw new Error('Rulebook changed: update executable rules, tests and policy lock before running.')
+   return {version:POLICY_VERSION}
+ }
+-export async function extractCase(input,{env=process.env,fetchImpl=fetch,timeoutMs=30000}={}){
++export async function extractCase(input,{env=process.env,fetchImpl=fetch,timeoutMs=30000,attempts=2,retryDelayMs=1000}={}){
+   const provider=analysisMode(env)
+   if(provider==='demo') throw new Error('Selected provider has no API key. Semantic extraction NOT RUN.')
+   if(typeof input.narrative!=='string'||!input.narrative.trim()||input.narrative.length>16000) throw new Error('A bounded synthetic narrative is required.')
+@@ -34,14 +34,26 @@ export async function extractCase(input,{env=process.env,fetchImpl=fetch,timeout
+     const request=provider==='gemini'
+       ? ['https://generativelanguage.googleapis.com/v1beta/models/'+encodeURIComponent(model)+':generateContent',{method:'POST',signal:controller.signal,headers:{'content-type':'application/json','x-goog-api-key':env.GEMINI_API_KEY},body:JSON.stringify({systemInstruction:{parts:[{text:extractionInstructions}]},contents:[{role:'user',parts:[{text:prompt}]}],generationConfig:{thinkingConfig: { thinkingLevel: 'medium' },temperature:0.2,responseMimeType:'application/json',responseSchema:toGeminiResponseSchema(extractionSchema)}})}]
+       : ['https://api.openai.com/v1/responses',{method:'POST',signal:controller.signal,headers:{'content-type':'application/json',authorization:`Bearer ${env.OPENAI_API_KEY}`},body:JSON.stringify({model,store:false,instructions:extractionInstructions,input:prompt,text:{format:{type:'json_schema',name:'scamsafe_extraction',strict:true,schema:extractionSchema}}})}]
+-    const work=(async()=>{
++    // One retry for transient provider refusals (rate limit/overload) and rejected outputs. Every attempt still
++    // passes the same schema + exact-evidence validator; a failure after the last attempt fails closed as before.
++    const attempt=async()=>{
+       const response=await fetchImpl(...request)
+       if(!response.ok) throw new Error('Provider unavailable. No successful semantic extraction.')
+       const payload=await response.json()
+       const raw=provider==='gemini'?payload.candidates?.[0]?.content?.parts?.map(p=>p.text||'').join(''):payload.output?.flatMap(p=>p.content||[]).filter(p=>p.type==='output_text').map(p=>p.text||'').join('')
+-      const extraction=JSON.parse(raw||'null')
++      let extraction
++      try { extraction=JSON.parse(raw||'null') } catch { throw new Error('Provider output failed schema or exact source-evidence validation.') }
+       if(!validateExtraction(extraction,sources)) throw new Error('Provider output failed schema or exact source-evidence validation.')
+-      return {mode:provider,analysisMode:'real_ai',provider,model,policyVersion:POLICY_VERSION,requestStatus:'succeeded',analysis:extraction}
++      return extraction
++    }
++    const work=(async()=>{
++      for(let n=1;;n++){
++        try { return {mode:provider,analysisMode:'real_ai',provider,model,policyVersion:POLICY_VERSION,requestStatus:'succeeded',attempts:n,analysis:await attempt()} }
++        catch(error){
++          if(n>=attempts||controller.signal.aborted) throw error
++          await new Promise(r=>setTimeout(r,retryDelayMs))
++        }
++      }
+     })()
+     return await Promise.race([work,expired])
+   } finally {clearTimeout(timer)}
+diff --git a/server.test.mjs b/server.test.mjs
+index ae99976..724ccba 100644
+--- a/server.test.mjs
++++ b/server.test.mjs
+@@ -37,6 +37,24 @@ describe('provider-neutral extraction integration',()=>{
+    await expect(extractCase({narrative},{env:envFor(provider),fetchImpl:async()=>({ok:false})})).rejects.toThrow('unavailable')
+   })
+  }
++ it('retries once after a transient provider refusal, then validates normally',async()=>{
++  let calls=0
++  const fetchImpl=vi.fn(async()=>++calls===1?{ok:false,status:429}:response('gemini',JSON.stringify(extraction)))
++  const result=await extractCase({narrative},{env:envFor('gemini'),fetchImpl,retryDelayMs:0})
++  expect(fetchImpl).toHaveBeenCalledTimes(2);expect(result.attempts).toBe(2);expect(result.analysis).toEqual(extraction)
++ })
++ it('retries once after a rejected output, and still fails closed if the retry is also invalid',async()=>{
++  const bad=JSON.stringify({...extraction,facts:[{...extraction.facts[0],evidence:['invented quote']}]})
++  const fetchImpl=vi.fn(async()=>response('gemini',bad))
++  await expect(extractCase({narrative},{env:envFor('gemini'),fetchImpl,retryDelayMs:0})).rejects.toThrow('validation')
++  expect(fetchImpl).toHaveBeenCalledTimes(2)
++ })
++ it('does not retry beyond the configured attempts and keeps the overall timeout',async()=>{
++  const fetchImpl=vi.fn(async()=>({ok:false}))
++  await expect(extractCase({narrative},{env:envFor('gemini'),fetchImpl,attempts:1})).rejects.toThrow('unavailable')
++  expect(fetchImpl).toHaveBeenCalledTimes(1)
++  await expect(extractCase({narrative},{env:envFor('gemini'),fetchImpl:()=>new Promise(()=>{}),timeoutMs:10})).rejects.toThrow('timed out')
++ })
+  it('rejects invalid truth states and attempts to set verification status',()=>{
+   expect(validateModelShape({summary:'',facts:[{field:'financial_status',value:'Possibly',source:'original',evidence:[narrative]}]})).toBe(false)
+   expect(validateModelShape({...extraction,facts:[{...extraction.facts[0],review:'Independently verified'}]})).toBe(false)
+@@ -85,6 +103,6 @@ describe('Gemini schema transport compatibility without application contract cha
+     {...extraction.facts[0],evidence:['']},
+    ].map(fact=>({...extraction,facts:[fact]})),
+   ]
+-  for(const invalid of bad) await expect(extractCase({narrative},{env:envFor('gemini'),fetchImpl:async()=>response('gemini',JSON.stringify(invalid))})).rejects.toThrow('schema or exact source-evidence validation')
++  for(const invalid of bad) await expect(extractCase({narrative},{env:envFor('gemini'),retryDelayMs:0,fetchImpl:async()=>response('gemini',JSON.stringify(invalid))})).rejects.toThrow('schema or exact source-evidence validation')
+  })
+ })
+diff --git a/src/analysis.ts b/src/analysis.ts
+index f604496..a2bc70f 100644
+--- a/src/analysis.ts
++++ b/src/analysis.ts
+@@ -5,6 +5,15 @@ import { organisations } from './policy/organisationRouting'
+ import { POLICY_VERSION } from './policy/policyVersion'
+ import scenarios from './policy/scenarios.json'
+ 
++// Exact source-based summary: never drops later sentences of a short report (e.g. T16's second deduction).
++// Long reports are cut at a sentence boundary and marked, so staff know to read the full narrative.
++export function extractiveSummary(narrative:string,limit=600){
++  const text=narrative.trim()
++  if(text.length<=limit) return text
++  const sentences=text.split(/(?<=[.!?])\s+/); let out=''
++  for(const s of sentences){ if((out+' '+s).trim().length>limit) break; out=(out+' '+s).trim() }
++  return (out||text.slice(0,limit))+' … [continues in reported narrative]'
++}
+ export const fixtures = scenarios.map(s=>[`${s.id} — ${s.title}`,s.narrative] as const)
+ export const validateModelExtraction = validateExtraction
+ const id=()=>`SSA-${Date.now()}`
+@@ -21,7 +30,7 @@ function adapt(raw:ModelExtraction,narrative:string,caseId:string,clarification:
+   const interimAction=decision.safety?'Internal Safety Escalation: authorised staff must attend immediately.':decision.urgency==='Urgent'?'Prompt authorised account-security assessment; do not wait for all details.':decision.urgency==='Priority'?'Arrange prompt human assessment of the reported issue.':decision.urgency==='Routine'?'Review the reported contact and any requested reporting or access assistance.':'Urgency is Undetermined. Obtain targeted clarification and human review.'
+   return {caseId,mode,analysisVersion:1,analysisHistory:[],humanOverrides:[],policyVersion:POLICY_VERSION,model,originalNarrative:narrative,workerClarifications:clarification,employeeCorrections:correction,
+     // Exact source-based summary avoids presenting unverified model-generated prose as fact.
+-    summary:narrative.split(/(?<=[.!?])\s+/).slice(0,3).join(' '),summaryOrigin:'case_intake',caseTypes:[...(decision.facts.contact_status.value==='Yes'?['Suspicious scam contact' as const]:[]),...(decision.facts.financial_status.value==='Yes'?['Suspected Financial Loss' as const]:[]),...(decision.facts.exposure_status.value==='Yes'?['Possible identity or account credential disclosure' as const]:[])],reportedFacts,
++    summary:extractiveSummary(narrative),summaryOrigin:'case_intake',caseTypes:[...(decision.facts.contact_status.value==='Yes'?['Suspicious scam contact' as const]:[]),...(decision.facts.financial_status.value==='Yes'?['Suspected Financial Loss' as const]:[]),...(decision.facts.exposure_status.value==='Yes'?['Possible identity or account credential disclosure' as const]:[])],reportedFacts,
+     decision,provisional:decision.provisional,priority:priority[decision.urgency],priorityRule:urgencyRules.map(r=>`${r.id}: ${r.outcome}`).join(' · '),priorityEvidence:[...new Set(urgencyRules.flatMap(r=>r.supportingFacts.flatMap(e=>e.evidence)))],interimAction,
+     safetyReviewRequired:decision.safety,safetyReviewMessage:decision.safety?'Explicit reported threat; timing/location uncertainty must not delay authorised human attention.':'',
+     vulnerabilityIndicators:decision.support.map(s=>({title:s.title,evidence:decision.facts[s.field].evidence.flatMap(e=>e.evidence).join(' | '),suggestion:s.rule==='VU01'?'Emotional recovery support: ORG06.':'Practical assistance: ORG07.',origin:provenance})),
+diff --git a/src/summary.test.ts b/src/summary.test.ts
+new file mode 100644
+index 0000000..a2c03b0
+--- /dev/null
++++ b/src/summary.test.ts
+@@ -0,0 +1,20 @@
++import { describe, it, expect } from 'vitest'
++import { extractiveSummary, reconcileAnalysis } from './analysis'
++import scenarios from './policy/scenarios.json'
++
++describe('case summary', () => {
++  it('keeps every sentence of each T01–T22 narrative (no silent truncation)', () => {
++    for (const s of scenarios) expect(extractiveSummary(s.narrative)).toBe(s.narrative)
++  })
++  it('T16 summary includes the second, A$1,000 deduction', () => {
++    const t16 = scenarios.find(s => s.id === 'T16')!
++    expect(reconcileAnalysis({ summary: '', facts: [] }, t16.narrative, 'T16').summary).toContain('another A$1,000 has been deducted')
++  })
++  it('marks long narratives instead of silently cutting them', () => {
++    const long = Array.from({ length: 40 }, (_, i) => `Sentence ${i} about the synthetic case.`).join(' ')
++    const out = extractiveSummary(long)
++    expect(out.length).toBeLessThan(700)
++    expect(out).toContain('[continues in reported narrative]')
++    expect(long.startsWith(out.replace(' … [continues in reported narrative]', ''))).toBe(true)
++  })
++})
+-- 
+2.43.0
+

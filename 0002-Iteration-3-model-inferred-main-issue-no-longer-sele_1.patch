@@ -1,0 +1,390 @@
+From 6782cbf0a6f77247194ab30c6e21941ff51b18ef Mon Sep 17 00:00:00 2001
+From: INFS5706 Team <team@example.invalid>
+Date: Tue, 10 Nov 2026 21:34:25 +1100
+Subject: [PATCH 2/3] Iteration 3: model-inferred main issue no longer selects
+ the primary route
+
+Team decision (recorded in docs/SPECIFICATION_DISCREPANCIES.md):
+- organisationRouting.ts honours main_actionable_issue only when its quoted
+  evidence states a priority (STATED_PRIORITY); otherwise the deterministic
+  RT08 tie-break applies, so code, not the model, selects the primary
+- T20/T21 primary stays Undetermined with all valid routes offered to staff;
+  a priority stated in a staff clarification still selects it
+- T08 unchanged; recorded as a known model limitation
+- tests: inferred vs stated priority, T20, T21, T05 unaffected, no scenario
+  narrative states a priority (83 passing)
+- offline re-score of 66 recorded real extractions: PASS 45 -> 49,
+  MISMATCH 14 -> 10 (docs/live-e2e-report.json regenerated)
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01YLDZ4MPsnx2xDKy1Jzj5mS
+---
+ docs/SPECIFICATION_DISCREPANCIES.md | 11 +++++
+ docs/live-e2e-report.json           | 64 ++++++++++++-----------------
+ src/analysis.test.ts                |  6 ++-
+ src/policy/organisationRouting.ts   |  7 +++-
+ src/statedPriority.test.ts          | 37 +++++++++++++++++
+ 5 files changed, 86 insertions(+), 39 deletions(-)
+ create mode 100644 src/statedPriority.test.ts
+
+diff --git a/docs/SPECIFICATION_DISCREPANCIES.md b/docs/SPECIFICATION_DISCREPANCIES.md
+index 3e2c110..1415054 100644
+--- a/docs/SPECIFICATION_DISCREPANCIES.md
++++ b/docs/SPECIFICATION_DISCREPANCIES.md
+@@ -16,6 +16,17 @@ The supplied documents are preserved verbatim. The rulebook is authoritative; th
+ | UG03 generic login/OTP versus ORG01 bank mandate | UG03's routing description names ORG01, but ORG01 requires bank/payment linkage and RT09 requires exclusions/mandate fit. | Urgent can trigger on the explicit UG03 conjunction, but ORG01 requires separately supported bank linkage; otherwise clarify the affected account category. |
+ | Provisional on Routine | UG09 and the normative principle attach provisional when decisive facts lack independent verification; scenarios often omit the overlay for Routine. | Routine is a separate level; its decisive reported facts also carry Provisional until independently verified. |
+ 
++## Team decision — 2026-11-10 (iteration 3)
++
++After Gemini thinking was enabled, live runs showed the model filling `main_actionable_issue` from context rather than from an explicitly stated main need (T20 "need someone to talk to" → Emotional support; T21 → Telecom service; T15 → Scam reporting). The routing code took that value as the primary directly, so the model, not the deterministic tie-break, chose the primary route. In T20/T21 this matched the published acceptance rows but contradicted the RT08 adjudications above.
++
++| Item | Decision | Reason | Trade-off accepted |
++| --- | --- | --- | --- |
++| T20, T21 (and any multi-route case) | Keep primary **Undetermined** unless the person states a priority. `organisationRouting.ts` now honours `main_actionable_issue` only when its quoted evidence contains explicit priority wording (`STATED_PRIORITY`: main, most important/urgent, first, priority, above all …). | Keeps the design boundary "the model extracts, code decides"; RT08 forbids a fixed global ranking and says unresolved ties go to staff. | Staff must pick the primary in these cases. T21's published row (ORG03 primary) and ORG03's "Primary when the SIM/number is the principal compromised service" clause were considered and not hard-coded; staff can select ORG03, and a stated priority in a clarification selects it automatically. |
++| T08 | **No change.** Adjudication above stands (no route). | Live model sometimes sets `bank_account_concern=Yes` from BSB/account disclosure, giving ORG01 primary. Either outcome is safe and urgency stays Undetermined; fixing it needs prompt tuning and repeated live runs. | Recorded as a known model limitation; staff review applies. |
++
++Offline re-score of the 66 recorded real extractions (`docs/live-e2e-runs.json`) with this change: PASS 45 → 49, MISMATCH 14 → 10, FAIL and ERROR unchanged. T21 3/3 PASS; T20 primary Undetermined 3/3 (two runs still add ORG05 from `reporting_need`); T15 primary Undetermined (ORG02 still missed).
++
+ The urgency engine chooses maximum triggered urgency and never uses monetary size, recency alone, unknown protective action or a single uncertain debit as an Urgent trigger. Routine requires the stated explicit event negatives and no interaction; language/access assistance alone does not raise urgency (T13).
+ 
+ ## Validation limits
+diff --git a/docs/live-e2e-report.json b/docs/live-e2e-report.json
+index df6be57..62d045a 100644
+--- a/docs/live-e2e-report.json
++++ b/docs/live-e2e-report.json
+@@ -7,8 +7,8 @@
+   "recordedAt": "2026-11-10T04:48:02.038Z",
+   "totals": {
+     "results": 66,
+-    "PASS": 45,
+-    "MISMATCH": 14,
++    "PASS": 49,
++    "MISMATCH": 10,
+     "FAIL": 1,
+     "ERROR": 6
+   },
+@@ -130,13 +130,13 @@
+     "T20": {
+       "runs": 3,
+       "ok": 3,
+-      "pass": 0,
++      "pass": 1,
+       "stable": false
+     },
+     "T21": {
+       "runs": 3,
+       "ok": 3,
+-      "pass": 0,
++      "pass": 3,
+       "stable": true
+     },
+     "T22": {
+@@ -732,7 +732,7 @@
+       "ms": 1695,
+       "decision": {
+         "urgency": "Routine",
+-        "primary": "ORG05",
++        "primary": "Undetermined",
+         "routes": [
+           "ORG05",
+           "ORG07"
+@@ -742,7 +742,7 @@
+       },
+       "decisionFails": [
+         "urgency Routine ≠ Undetermined",
+-        "primary ORG05 ≠ ORG02",
++        "primary Undetermined ≠ ORG02",
+         "routes [ORG05,ORG07] ≠ [ORG02,ORG07]"
+       ],
+       "fieldFails": [
+@@ -939,7 +939,7 @@
+       "ms": 7435,
+       "decision": {
+         "urgency": "Undetermined",
+-        "primary": "ORG06",
++        "primary": "Undetermined",
+         "routes": [
+           "ORG05",
+           "ORG06",
+@@ -949,7 +949,6 @@
+         "provisional": false
+       },
+       "decisionFails": [
+-        "primary ORG06 ≠ Undetermined",
+         "routes [ORG05,ORG06,ORG07] ≠ [ORG06,ORG07]"
+       ],
+       "fieldFails": [
+@@ -959,7 +958,7 @@
+         "reporting_need: unsupported positive"
+       ],
+       "invariantFails": [],
+-      "publishedMatch": true,
++      "publishedMatch": false,
+       "rulesFired": [
+         "CL01",
+         "CL02",
+@@ -999,13 +998,13 @@
+     {
+       "id": "T21",
+       "run": 1,
+-      "status": "MISMATCH",
++      "status": "PASS",
+       "valid": true,
+       "model": "gemini-3.5-flash-lite",
+       "ms": 5326,
+       "decision": {
+         "urgency": "Undetermined",
+-        "primary": "ORG03",
++        "primary": "Undetermined",
+         "routes": [
+           "ORG01",
+           "ORG03"
+@@ -1013,9 +1012,7 @@
+         "safety": false,
+         "provisional": false
+       },
+-      "decisionFails": [
+-        "primary ORG03 ≠ Undetermined"
+-      ],
++      "decisionFails": [],
+       "fieldFails": [],
+       "invariantFails": [],
+       "publishedMatch": false,
+@@ -1675,7 +1672,7 @@
+       "ms": 2012,
+       "decision": {
+         "urgency": "Routine",
+-        "primary": "ORG05",
++        "primary": "Undetermined",
+         "routes": [
+           "ORG05",
+           "ORG07"
+@@ -1685,7 +1682,7 @@
+       },
+       "decisionFails": [
+         "urgency Routine ≠ Undetermined",
+-        "primary ORG05 ≠ ORG02",
++        "primary Undetermined ≠ ORG02",
+         "routes [ORG05,ORG07] ≠ [ORG02,ORG07]"
+       ],
+       "fieldFails": [
+@@ -1925,7 +1922,7 @@
+       "ms": 4890,
+       "decision": {
+         "urgency": "Undetermined",
+-        "primary": "ORG06",
++        "primary": "Undetermined",
+         "routes": [
+           "ORG05",
+           "ORG06",
+@@ -1935,7 +1932,6 @@
+         "provisional": false
+       },
+       "decisionFails": [
+-        "primary ORG06 ≠ Undetermined",
+         "routes [ORG05,ORG06,ORG07] ≠ [ORG06,ORG07]"
+       ],
+       "fieldFails": [
+@@ -1943,7 +1939,7 @@
+         "reporting_need: unsupported positive"
+       ],
+       "invariantFails": [],
+-      "publishedMatch": true,
++      "publishedMatch": false,
+       "rulesFired": [
+         "CL01",
+         "CL02",
+@@ -1983,13 +1979,13 @@
+     {
+       "id": "T21",
+       "run": 2,
+-      "status": "MISMATCH",
++      "status": "PASS",
+       "valid": true,
+       "model": "gemini-3.5-flash-lite",
+       "ms": 5380,
+       "decision": {
+         "urgency": "Undetermined",
+-        "primary": "ORG03",
++        "primary": "Undetermined",
+         "routes": [
+           "ORG01",
+           "ORG03"
+@@ -1997,9 +1993,7 @@
+         "safety": false,
+         "provisional": false
+       },
+-      "decisionFails": [
+-        "primary ORG03 ≠ Undetermined"
+-      ],
++      "decisionFails": [],
+       "fieldFails": [],
+       "invariantFails": [],
+       "publishedMatch": false,
+@@ -2750,7 +2744,7 @@
+       "ms": 2089,
+       "decision": {
+         "urgency": "Routine",
+-        "primary": "ORG05",
++        "primary": "Undetermined",
+         "routes": [
+           "ORG05",
+           "ORG07"
+@@ -2760,7 +2754,7 @@
+       },
+       "decisionFails": [
+         "urgency Routine ≠ Undetermined",
+-        "primary ORG05 ≠ ORG02",
++        "primary Undetermined ≠ ORG02",
+         "routes [ORG05,ORG07] ≠ [ORG02,ORG07]"
+       ],
+       "fieldFails": [
+@@ -2951,13 +2945,13 @@
+     {
+       "id": "T20",
+       "run": 3,
+-      "status": "MISMATCH",
++      "status": "PASS",
+       "valid": true,
+       "model": "gemini-3.5-flash-lite",
+       "ms": 5026,
+       "decision": {
+         "urgency": "Undetermined",
+-        "primary": "ORG06",
++        "primary": "Undetermined",
+         "routes": [
+           "ORG06",
+           "ORG07"
+@@ -2965,16 +2959,14 @@
+         "safety": false,
+         "provisional": false
+       },
+-      "decisionFails": [
+-        "primary ORG06 ≠ Undetermined"
+-      ],
++      "decisionFails": [],
+       "fieldFails": [
+         "contact_status: expected Yes, got Unknown",
+         "distress_indicator: expected Some, got Severe reported",
+         "reporting_need: unsupported positive"
+       ],
+       "invariantFails": [],
+-      "publishedMatch": true,
++      "publishedMatch": false,
+       "rulesFired": [
+         "CL01",
+         "CL02",
+@@ -3010,13 +3002,13 @@
+     {
+       "id": "T21",
+       "run": 3,
+-      "status": "MISMATCH",
++      "status": "PASS",
+       "valid": true,
+       "model": "gemini-3.5-flash-lite",
+       "ms": 5059,
+       "decision": {
+         "urgency": "Undetermined",
+-        "primary": "ORG03",
++        "primary": "Undetermined",
+         "routes": [
+           "ORG01",
+           "ORG03"
+@@ -3024,9 +3016,7 @@
+         "safety": false,
+         "provisional": false
+       },
+-      "decisionFails": [
+-        "primary ORG03 ≠ Undetermined"
+-      ],
++      "decisionFails": [],
+       "fieldFails": [],
+       "invariantFails": [],
+       "publishedMatch": false,
+diff --git a/src/analysis.test.ts b/src/analysis.test.ts
+index 3b9670c..50214ad 100644
+--- a/src/analysis.test.ts
++++ b/src/analysis.test.ts
+@@ -96,7 +96,11 @@ describe('organisation responsibility boundaries',()=>{
+  it('RT08 honours stated dominant need only among valid mandate matches; unresolved ties stay unresolved',()=>{
+   const issues={telecom_service_issue:'Yes',bank_account_concern:'Yes'}
+   expect(run(issues).primary).toBe('Undetermined')
+-  expect(run({...issues,main_actionable_issue:'Telecom service'}).primary).toBe('ORG03')
++  // An inferred main issue (no stated priority in the evidence) no longer selects the primary.
++  expect(run({...issues,main_actionable_issue:'Telecom service'}).primary).toBe('Undetermined')
++  const stated='My main concern is that my number was moved to another SIM.'
++  const statedRun=evaluate({summary:'',facts:[...Object.entries(issues).map(([field,value])=>({field,value,source:'original' as const,evidence:[stated]})),{field:'main_actionable_issue',value:'Telecom service',source:'original',evidence:[stated]}]},{original:stated,clarification:'',correction:''})
++  expect(statedRun.primary).toBe('ORG03')
+   expect(run({...issues,main_actionable_issue:'Identity recovery'}).primary).toBe('Undetermined')
+   expect(run({...issues,ongoing_financial_activity:'Yes'}).primary).toBe('ORG01')
+   expect(run({financial_status:'Yes',distress_indicator:'Severe reported',distress_prevents_proceeding:'Yes'}).primary).toBe('Undetermined')
+diff --git a/src/policy/organisationRouting.ts b/src/policy/organisationRouting.ts
+index 70b4fa0..75ab32e 100644
+--- a/src/policy/organisationRouting.ts
++++ b/src/policy/organisationRouting.ts
+@@ -1,4 +1,6 @@
+ import type { Facts, Route, OrgId } from './types'
++export const STATED_PRIORITY=/\b(main(ly)?|most (important|urgent|worried|concerned)|primar(y|ily)|first|biggest|priority|above all|especially|more (important|urgent|worried|concerned))\b/i
++export const statedMainIssue=(f:Facts)=>(f.main_actionable_issue?.evidence??[]).some(e=>e.evidence.some(q=>STATED_PRIORITY.test(q)))
+ export const organisations: Record<OrgId,string> = {
+   ORG01:'Banks and Payment Providers', ORG02:'Digital Platforms', ORG03:'Telecommunications Providers',
+   ORG04:'Identity Recovery Services', ORG05:'Government Scam Reporting Services', ORG06:'Victim Support Organisations', ORG07:'Community Support Organisations',
+@@ -22,7 +24,10 @@ export function organisationRouting(f: Facts): Route[] {
+   // RT08: explicit main need wins only among independently justified candidates.
+   // Otherwise uniquely urgent operational issue, then sole actionable task; ties stay unresolved.
+   const domains: Record<string,OrgId> = {'Financial/account':'ORG01','Platform content/account':'ORG02','Telecom service':'ORG03','Identity recovery':'ORG04','Scam reporting':'ORG05','Emotional support':'ORG06','Practical support':'ORG07'}
+-  let primary: OrgId | undefined=domains[f.main_actionable_issue?.value]
++  // A dominant need counts only when the person states it as such in the quoted evidence. A model's own
++  // ranking (e.g. reading "need someone to talk to" as the main issue) is ignored, so the deterministic
++  // tie-break below, not the model, selects the primary. Decision recorded in SPECIFICATION_DISCREPANCIES.md.
++  let primary: OrgId | undefined=statedMainIssue(f)?domains[f.main_actionable_issue?.value]:undefined
+   if(!routes.some(r=>r.id===primary)) {
+     const urgent = routes.filter(r=>r.id==='ORG01' && (is('ongoing_financial_activity') || (exposure && (is('exposure_type','Login credential')||is('exposure_type','OTP')) && is('suspicious_access'))))
+     const operational=routes.filter(r=>!['ORG05','ORG06','ORG07'].includes(r.id))
+diff --git a/src/statedPriority.test.ts b/src/statedPriority.test.ts
+new file mode 100644
+index 0000000..5824f34
+--- /dev/null
++++ b/src/statedPriority.test.ts
+@@ -0,0 +1,37 @@
++import { describe, it, expect } from 'vitest'
++import { evaluate } from './policy/ruleEngine'
++import { STATED_PRIORITY } from './policy/organisationRouting'
++import scenarios from './policy/scenarios.json'
++import type { EvidenceFact } from './policy/types'
++
++const n = (id: string) => scenarios.find(s => s.id === id)!.narrative
++const fact = (field: string, value: string, evidence: string, source: EvidenceFact['source'] = 'original'): EvidenceFact => ({ field, value, source, evidence: [evidence] })
++const run = (original: string, facts: EvidenceFact[], clarification = '') => evaluate({ summary: '', facts }, { original, clarification, correction: '' })
++
++describe('RT08: model-inferred main issue does not select the primary route', () => {
++  it('T20: "need someone to talk to" read as main issue → primary stays Undetermined, both support routes kept', () => {
++    const t = n('T20')
++    const d = run(t, [fact('distress_indicator', 'Severe reported', 'After a scam I feel very anxious'), fact('accessibility_need', 'Needed', 'I also cannot use the online reporting form because it is not accessible to me.'), fact('main_actionable_issue', 'Emotional support', 'need someone to talk to.')])
++    expect(d.routes.map(r => r.id)).toEqual(['ORG06', 'ORG07'])
++    expect(d.primary).toBe('Undetermined')
++  })
++  it('T21: telecom read as main issue → primary Undetermined, ORG01 and ORG03 both offered to staff', () => {
++    const t = n('T21')
++    const d = run(t, [fact('telecom_service_issue', 'Yes', 'My mobile number suddenly stopped working.'), fact('bank_account_concern', 'Yes', 'I am also concerned about bank verification messages.'), fact('main_actionable_issue', 'Telecom service', 'My mobile number suddenly stopped working.')])
++    expect(d.routes.map(r => r.id)).toEqual(['ORG01', 'ORG03'])
++    expect(d.primary).toBe('Undetermined')
++  })
++  it('a priority stated in a staff clarification is honoured', () => {
++    const t = n('T21'); const c = 'The person says the SIM takeover is the most urgent issue for them.'
++    const d = run(t, [fact('telecom_service_issue', 'Yes', 'My mobile number suddenly stopped working.'), fact('bank_account_concern', 'Yes', 'I am also concerned about bank verification messages.'), fact('main_actionable_issue', 'Telecom service', c, 'clarification')], c)
++    expect(d.primary).toBe('ORG03')
++  })
++  it('single-route cases are unaffected (e.g. T05 bank stays primary)', () => {
++    const t = n('T05')
++    const d = run(t, [fact('financial_status', 'Yes', 'Someone made three deductions from my account and it is still happening now.'), fact('ongoing_financial_activity', 'Yes', 'and it is still happening now.'), fact('main_actionable_issue', 'Financial/account', 'Someone made three deductions from my account and it is still happening now.')])
++    expect(d.primary).toBe('ORG01'); expect(d.urgency).toBe('Urgent')
++  })
++  it('no T01–T22 narrative states a priority, so no scenario primary depends on the model ranking', () => {
++    for (const s of scenarios) expect(STATED_PRIORITY.test(s.narrative)).toBe(false)
++  })
++})
+-- 
+2.43.0
+

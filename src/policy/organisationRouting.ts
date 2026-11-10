@@ -1,4 +1,6 @@
 import type { Facts, Route, OrgId } from './types'
+export const STATED_PRIORITY=/\b(main(ly)?|most (important|urgent|worried|concerned)|primar(y|ily)|first|biggest|priority|above all|especially|more (important|urgent|worried|concerned))\b/i
+export const statedMainIssue=(f:Facts)=>(f.main_actionable_issue?.evidence??[]).some(e=>e.evidence.some(q=>STATED_PRIORITY.test(q)))
 export const organisations: Record<OrgId,string> = {
   ORG01:'Banks and Payment Providers', ORG02:'Digital Platforms', ORG03:'Telecommunications Providers',
   ORG04:'Identity Recovery Services', ORG05:'Government Scam Reporting Services', ORG06:'Victim Support Organisations', ORG07:'Community Support Organisations',
@@ -22,7 +24,10 @@ export function organisationRouting(f: Facts): Route[] {
   // RT08: explicit main need wins only among independently justified candidates.
   // Otherwise uniquely urgent operational issue, then sole actionable task; ties stay unresolved.
   const domains: Record<string,OrgId> = {'Financial/account':'ORG01','Platform content/account':'ORG02','Telecom service':'ORG03','Identity recovery':'ORG04','Scam reporting':'ORG05','Emotional support':'ORG06','Practical support':'ORG07'}
-  let primary: OrgId | undefined=domains[f.main_actionable_issue?.value]
+  // A dominant need counts only when the person states it as such in the quoted evidence. A model's own
+  // ranking (e.g. reading "need someone to talk to" as the main issue) is ignored, so the deterministic
+  // tie-break below, not the model, selects the primary. Decision recorded in SPECIFICATION_DISCREPANCIES.md.
+  let primary: OrgId | undefined=statedMainIssue(f)?domains[f.main_actionable_issue?.value]:undefined
   if(!routes.some(r=>r.id===primary)) {
     const urgent = routes.filter(r=>r.id==='ORG01' && (is('ongoing_financial_activity') || (exposure && (is('exposure_type','Login credential')||is('exposure_type','OTP')) && is('suspicious_access'))))
     const operational=routes.filter(r=>!['ORG05','ORG06','ORG07'].includes(r.id))

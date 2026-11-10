@@ -16,6 +16,17 @@ The supplied documents are preserved verbatim. The rulebook is authoritative; th
 | UG03 generic login/OTP versus ORG01 bank mandate | UG03's routing description names ORG01, but ORG01 requires bank/payment linkage and RT09 requires exclusions/mandate fit. | Urgent can trigger on the explicit UG03 conjunction, but ORG01 requires separately supported bank linkage; otherwise clarify the affected account category. |
 | Provisional on Routine | UG09 and the normative principle attach provisional when decisive facts lack independent verification; scenarios often omit the overlay for Routine. | Routine is a separate level; its decisive reported facts also carry Provisional until independently verified. |
 
+## Team decision — 2026-11-10 (iteration 3)
+
+After Gemini thinking was enabled, live runs showed the model filling `main_actionable_issue` from context rather than from an explicitly stated main need (T20 "need someone to talk to" → Emotional support; T21 → Telecom service; T15 → Scam reporting). The routing code took that value as the primary directly, so the model, not the deterministic tie-break, chose the primary route. In T20/T21 this matched the published acceptance rows but contradicted the RT08 adjudications above.
+
+| Item | Decision | Reason | Trade-off accepted |
+| --- | --- | --- | --- |
+| T20, T21 (and any multi-route case) | Keep primary **Undetermined** unless the person states a priority. `organisationRouting.ts` now honours `main_actionable_issue` only when its quoted evidence contains explicit priority wording (`STATED_PRIORITY`: main, most important/urgent, first, priority, above all …). | Keeps the design boundary "the model extracts, code decides"; RT08 forbids a fixed global ranking and says unresolved ties go to staff. | Staff must pick the primary in these cases. T21's published row (ORG03 primary) and ORG03's "Primary when the SIM/number is the principal compromised service" clause were considered and not hard-coded; staff can select ORG03, and a stated priority in a clarification selects it automatically. |
+| T08 | **No change.** Adjudication above stands (no route). | Live model sometimes sets `bank_account_concern=Yes` from BSB/account disclosure, giving ORG01 primary. Either outcome is safe and urgency stays Undetermined; fixing it needs prompt tuning and repeated live runs. | Recorded as a known model limitation; staff review applies. |
+
+Offline re-score of the 66 recorded real extractions (`docs/live-e2e-runs.json`) with this change: PASS 45 → 49, MISMATCH 14 → 10, FAIL and ERROR unchanged. T21 3/3 PASS; T20 primary Undetermined 3/3 (two runs still add ORG05 from `reporting_need`); T15 primary Undetermined (ORG02 still missed).
+
 The urgency engine chooses maximum triggered urgency and never uses monetary size, recency alone, unknown protective action or a single uncertain debit as an Urgent trigger. Routine requires the stated explicit event negatives and no interaction; language/access assistance alone does not raise urgency (T13).
 
 ## Validation limits

@@ -96,7 +96,11 @@ describe('organisation responsibility boundaries',()=>{
  it('RT08 honours stated dominant need only among valid mandate matches; unresolved ties stay unresolved',()=>{
   const issues={telecom_service_issue:'Yes',bank_account_concern:'Yes'}
   expect(run(issues).primary).toBe('Undetermined')
-  expect(run({...issues,main_actionable_issue:'Telecom service'}).primary).toBe('ORG03')
+  // An inferred main issue (no stated priority in the evidence) no longer selects the primary.
+  expect(run({...issues,main_actionable_issue:'Telecom service'}).primary).toBe('Undetermined')
+  const stated='My main concern is that my number was moved to another SIM.'
+  const statedRun=evaluate({summary:'',facts:[...Object.entries(issues).map(([field,value])=>({field,value,source:'original' as const,evidence:[stated]})),{field:'main_actionable_issue',value:'Telecom service',source:'original',evidence:[stated]}]},{original:stated,clarification:'',correction:''})
+  expect(statedRun.primary).toBe('ORG03')
   expect(run({...issues,main_actionable_issue:'Identity recovery'}).primary).toBe('Undetermined')
   expect(run({...issues,ongoing_financial_activity:'Yes'}).primary).toBe('ORG01')
   expect(run({financial_status:'Yes',distress_indicator:'Severe reported',distress_prevents_proceeding:'Yes'}).primary).toBe('Undetermined')

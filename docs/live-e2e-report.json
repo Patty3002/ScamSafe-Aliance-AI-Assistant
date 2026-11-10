@@ -7,8 +7,8 @@
   "recordedAt": "2026-11-10T04:48:02.038Z",
   "totals": {
     "results": 66,
-    "PASS": 45,
-    "MISMATCH": 14,
+    "PASS": 49,
+    "MISMATCH": 10,
     "FAIL": 1,
     "ERROR": 6
   },
@@ -130,13 +130,13 @@
     "T20": {
       "runs": 3,
       "ok": 3,
-      "pass": 0,
+      "pass": 1,
       "stable": false
     },
     "T21": {
       "runs": 3,
       "ok": 3,
-      "pass": 0,
+      "pass": 3,
       "stable": true
     },
     "T22": {
@@ -732,7 +732,7 @@
       "ms": 1695,
       "decision": {
         "urgency": "Routine",
-        "primary": "ORG05",
+        "primary": "Undetermined",
         "routes": [
           "ORG05",
           "ORG07"
@@ -742,7 +742,7 @@
       },
       "decisionFails": [
         "urgency Routine ≠ Undetermined",
-        "primary ORG05 ≠ ORG02",
+        "primary Undetermined ≠ ORG02",
         "routes [ORG05,ORG07] ≠ [ORG02,ORG07]"
       ],
       "fieldFails": [
@@ -939,7 +939,7 @@
       "ms": 7435,
       "decision": {
         "urgency": "Undetermined",
-        "primary": "ORG06",
+        "primary": "Undetermined",
         "routes": [
           "ORG05",
           "ORG06",
@@ -949,7 +949,6 @@
         "provisional": false
       },
       "decisionFails": [
-        "primary ORG06 ≠ Undetermined",
         "routes [ORG05,ORG06,ORG07] ≠ [ORG06,ORG07]"
       ],
       "fieldFails": [
@@ -959,7 +958,7 @@
         "reporting_need: unsupported positive"
       ],
       "invariantFails": [],
-      "publishedMatch": true,
+      "publishedMatch": false,
       "rulesFired": [
         "CL01",
         "CL02",
@@ -999,13 +998,13 @@
     {
       "id": "T21",
       "run": 1,
-      "status": "MISMATCH",
+      "status": "PASS",
       "valid": true,
       "model": "gemini-3.5-flash-lite",
       "ms": 5326,
       "decision": {
         "urgency": "Undetermined",
-        "primary": "ORG03",
+        "primary": "Undetermined",
         "routes": [
           "ORG01",
           "ORG03"
@@ -1013,9 +1012,7 @@
         "safety": false,
         "provisional": false
       },
-      "decisionFails": [
-        "primary ORG03 ≠ Undetermined"
-      ],
+      "decisionFails": [],
       "fieldFails": [],
       "invariantFails": [],
       "publishedMatch": false,
@@ -1675,7 +1672,7 @@
       "ms": 2012,
       "decision": {
         "urgency": "Routine",
-        "primary": "ORG05",
+        "primary": "Undetermined",
         "routes": [
           "ORG05",
           "ORG07"
@@ -1685,7 +1682,7 @@
       },
       "decisionFails": [
         "urgency Routine ≠ Undetermined",
-        "primary ORG05 ≠ ORG02",
+        "primary Undetermined ≠ ORG02",
         "routes [ORG05,ORG07] ≠ [ORG02,ORG07]"
       ],
       "fieldFails": [
@@ -1925,7 +1922,7 @@
       "ms": 4890,
       "decision": {
         "urgency": "Undetermined",
-        "primary": "ORG06",
+        "primary": "Undetermined",
         "routes": [
           "ORG05",
           "ORG06",
@@ -1935,7 +1932,6 @@
         "provisional": false
       },
       "decisionFails": [
-        "primary ORG06 ≠ Undetermined",
         "routes [ORG05,ORG06,ORG07] ≠ [ORG06,ORG07]"
       ],
       "fieldFails": [
@@ -1943,7 +1939,7 @@
         "reporting_need: unsupported positive"
       ],
       "invariantFails": [],
-      "publishedMatch": true,
+      "publishedMatch": false,
       "rulesFired": [
         "CL01",
         "CL02",
@@ -1983,13 +1979,13 @@
     {
       "id": "T21",
       "run": 2,
-      "status": "MISMATCH",
+      "status": "PASS",
       "valid": true,
       "model": "gemini-3.5-flash-lite",
       "ms": 5380,
       "decision": {
         "urgency": "Undetermined",
-        "primary": "ORG03",
+        "primary": "Undetermined",
         "routes": [
           "ORG01",
           "ORG03"
@@ -1997,9 +1993,7 @@
         "safety": false,
         "provisional": false
       },
-      "decisionFails": [
-        "primary ORG03 ≠ Undetermined"
-      ],
+      "decisionFails": [],
       "fieldFails": [],
       "invariantFails": [],
       "publishedMatch": false,
@@ -2750,7 +2744,7 @@
       "ms": 2089,
       "decision": {
         "urgency": "Routine",
-        "primary": "ORG05",
+        "primary": "Undetermined",
         "routes": [
           "ORG05",
           "ORG07"
@@ -2760,7 +2754,7 @@
       },
       "decisionFails": [
         "urgency Routine ≠ Undetermined",
-        "primary ORG05 ≠ ORG02",
+        "primary Undetermined ≠ ORG02",
         "routes [ORG05,ORG07] ≠ [ORG02,ORG07]"
       ],
       "fieldFails": [
@@ -2951,13 +2945,13 @@
     {
       "id": "T20",
       "run": 3,
-      "status": "MISMATCH",
+      "status": "PASS",
       "valid": true,
       "model": "gemini-3.5-flash-lite",
       "ms": 5026,
       "decision": {
         "urgency": "Undetermined",
-        "primary": "ORG06",
+        "primary": "Undetermined",
         "routes": [
           "ORG06",
           "ORG07"
@@ -2965,16 +2959,14 @@
         "safety": false,
         "provisional": false
       },
-      "decisionFails": [
-        "primary ORG06 ≠ Undetermined"
-      ],
+      "decisionFails": [],
       "fieldFails": [
         "contact_status: expected Yes, got Unknown",
         "distress_indicator: expected Some, got Severe reported",
         "reporting_need: unsupported positive"
       ],
       "invariantFails": [],
-      "publishedMatch": true,
+      "publishedMatch": false,
       "rulesFired": [
         "CL01",
         "CL02",
@@ -3010,13 +3002,13 @@
     {
       "id": "T21",
       "run": 3,
-      "status": "MISMATCH",
+      "status": "PASS",
       "valid": true,
       "model": "gemini-3.5-flash-lite",
       "ms": 5059,
       "decision": {
         "urgency": "Undetermined",
-        "primary": "ORG03",
+        "primary": "Undetermined",
         "routes": [
           "ORG01",
           "ORG03"
@@ -3024,9 +3016,7 @@
         "safety": false,
         "provisional": false
       },
-      "decisionFails": [
-        "primary ORG03 ≠ Undetermined"
-      ],
+      "decisionFails": [],
       "fieldFails": [],
       "invariantFails": [],
       "publishedMatch": false,

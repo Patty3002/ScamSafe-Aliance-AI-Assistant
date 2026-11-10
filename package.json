@@ -11,7 +11,9 @@
     "check:policy": "node scripts/check-policy.mjs",
     "prebuild": "node scripts/check-policy.mjs",
     "pretest": "node scripts/check-policy.mjs",
-    "eval:live": "node scripts/evaluate-provider.mjs"
+    "eval:live": "node scripts/evaluate-provider.mjs",
+    "eval:e2e": "node scripts/run-live-e2e.mjs",
+    "eval:e2e:score": "vitest run src/liveEvaluation.test.ts"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",

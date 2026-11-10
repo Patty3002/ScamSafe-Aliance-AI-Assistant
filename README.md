@@ -24,7 +24,7 @@ Original intake and case ID are locked after the first analysis attempt. Clarifi
 - `pnpm run typecheck`: TypeScript validation.
 - `pnpm run build`: policy change gate, typecheck and production bundle.
 - `pnpm run check:policy`: rulebook hash, 48 documented IDs, coverage map and exact fixture narrative synchronization.
-- `pnpm run eval:e2e -- <baseUrl> [runs] [gapMs]` then `pnpm run eval:e2e:score`: full live pipeline (narrative → provider → validator → rule engine) against a running server, scored for decisions and safety invariants by `src/liveEvaluation.ts`. Latest results: `docs/LIVE_E2E_REPORT_2026-11-10.md`.
+- `pnpm run eval:e2e -- <baseUrl> [runs] [gapMs]` then `pnpm run eval:e2e:score`: full live pipeline (narrative → provider → validator → rule engine) against a running server, scored for decisions and safety invariants by `src/liveEvaluation.ts`. Results: `docs/LIVE_E2E_REPORT_2026-11-10.md` (iteration 1) and `docs/LIVE_E2E_REPORT_2026-11-10_iter2.md` (iteration 2, thinking enabled).
 - `pnpm run eval:live`: same T01–T22 semantic evaluation against the selected configured provider; writes `docs/provider-evaluation.json`. With no key it records NOT RUN, never PASS.
 
 Fixtures are generated from the supplied acceptance Markdown. Human-curated structured facts are only imported by tests/evaluation, never by the runtime narrative analysis. Expected differences from the scenario prose are explicit in the discrepancy report. Mock provider tests establish request/response handling only. Exact quote validation does not prove that a model interpreted the quote correctly; live semantic evaluation and human review remain necessary.

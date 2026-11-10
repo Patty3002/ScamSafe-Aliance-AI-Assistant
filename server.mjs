@@ -18,7 +18,7 @@ export async function loadBusinessPolicy(){
   if(createHash('sha256').update(text.replace(/\r\n/g,'\n')).digest('hex')!==lock.rulebookSha256) throw new Error('Rulebook changed: update executable rules, tests and policy lock before running.')
   return {version:POLICY_VERSION}
 }
-export async function extractCase(input,{env=process.env,fetchImpl=fetch,timeoutMs=30000}={}){
+export async function extractCase(input,{env=process.env,fetchImpl=fetch,timeoutMs=30000,attempts=2,retryDelayMs=1000}={}){
   const provider=analysisMode(env)
   if(provider==='demo') throw new Error('Selected provider has no API key. Semantic extraction NOT RUN.')
   if(typeof input.narrative!=='string'||!input.narrative.trim()||input.narrative.length>16000) throw new Error('A bounded synthetic narrative is required.')
@@ -34,14 +34,26 @@ export async function extractCase(input,{env=process.env,fetchImpl=fetch,timeout
     const request=provider==='gemini'
       ? ['https://generativelanguage.googleapis.com/v1beta/models/'+encodeURIComponent(model)+':generateContent',{method:'POST',signal:controller.signal,headers:{'content-type':'application/json','x-goog-api-key':env.GEMINI_API_KEY},body:JSON.stringify({systemInstruction:{parts:[{text:extractionInstructions}]},contents:[{role:'user',parts:[{text:prompt}]}],generationConfig:{thinkingConfig: { thinkingLevel: 'medium' },temperature:0.2,responseMimeType:'application/json',responseSchema:toGeminiResponseSchema(extractionSchema)}})}]
       : ['https://api.openai.com/v1/responses',{method:'POST',signal:controller.signal,headers:{'content-type':'application/json',authorization:`Bearer ${env.OPENAI_API_KEY}`},body:JSON.stringify({model,store:false,instructions:extractionInstructions,input:prompt,text:{format:{type:'json_schema',name:'scamsafe_extraction',strict:true,schema:extractionSchema}}})}]
-    const work=(async()=>{
+    // One retry for transient provider refusals (rate limit/overload) and rejected outputs. Every attempt still
+    // passes the same schema + exact-evidence validator; a failure after the last attempt fails closed as before.
+    const attempt=async()=>{
       const response=await fetchImpl(...request)
       if(!response.ok) throw new Error('Provider unavailable. No successful semantic extraction.')
       const payload=await response.json()
       const raw=provider==='gemini'?payload.candidates?.[0]?.content?.parts?.map(p=>p.text||'').join(''):payload.output?.flatMap(p=>p.content||[]).filter(p=>p.type==='output_text').map(p=>p.text||'').join('')
-      const extraction=JSON.parse(raw||'null')
+      let extraction
+      try { extraction=JSON.parse(raw||'null') } catch { throw new Error('Provider output failed schema or exact source-evidence validation.') }
       if(!validateExtraction(extraction,sources)) throw new Error('Provider output failed schema or exact source-evidence validation.')
-      return {mode:provider,analysisMode:'real_ai',provider,model,policyVersion:POLICY_VERSION,requestStatus:'succeeded',analysis:extraction}
+      return extraction
+    }
+    const work=(async()=>{
+      for(let n=1;;n++){
+        try { return {mode:provider,analysisMode:'real_ai',provider,model,policyVersion:POLICY_VERSION,requestStatus:'succeeded',attempts:n,analysis:await attempt()} }
+        catch(error){
+          if(n>=attempts||controller.signal.aborted) throw error
+          await new Promise(r=>setTimeout(r,retryDelayMs))
+        }
+      }
     })()
     return await Promise.race([work,expired])
   } finally {clearTimeout(timer)}

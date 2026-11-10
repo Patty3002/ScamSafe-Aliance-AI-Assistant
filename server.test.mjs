@@ -37,6 +37,24 @@ describe('provider-neutral extraction integration',()=>{
    await expect(extractCase({narrative},{env:envFor(provider),fetchImpl:async()=>({ok:false})})).rejects.toThrow('unavailable')
   })
  }
+ it('retries once after a transient provider refusal, then validates normally',async()=>{
+  let calls=0
+  const fetchImpl=vi.fn(async()=>++calls===1?{ok:false,status:429}:response('gemini',JSON.stringify(extraction)))
+  const result=await extractCase({narrative},{env:envFor('gemini'),fetchImpl,retryDelayMs:0})
+  expect(fetchImpl).toHaveBeenCalledTimes(2);expect(result.attempts).toBe(2);expect(result.analysis).toEqual(extraction)
+ })
+ it('retries once after a rejected output, and still fails closed if the retry is also invalid',async()=>{
+  const bad=JSON.stringify({...extraction,facts:[{...extraction.facts[0],evidence:['invented quote']}]})
+  const fetchImpl=vi.fn(async()=>response('gemini',bad))
+  await expect(extractCase({narrative},{env:envFor('gemini'),fetchImpl,retryDelayMs:0})).rejects.toThrow('validation')
+  expect(fetchImpl).toHaveBeenCalledTimes(2)
+ })
+ it('does not retry beyond the configured attempts and keeps the overall timeout',async()=>{
+  const fetchImpl=vi.fn(async()=>({ok:false}))
+  await expect(extractCase({narrative},{env:envFor('gemini'),fetchImpl,attempts:1})).rejects.toThrow('unavailable')
+  expect(fetchImpl).toHaveBeenCalledTimes(1)
+  await expect(extractCase({narrative},{env:envFor('gemini'),fetchImpl:()=>new Promise(()=>{}),timeoutMs:10})).rejects.toThrow('timed out')
+ })
  it('rejects invalid truth states and attempts to set verification status',()=>{
   expect(validateModelShape({summary:'',facts:[{field:'financial_status',value:'Possibly',source:'original',evidence:[narrative]}]})).toBe(false)
   expect(validateModelShape({...extraction,facts:[{...extraction.facts[0],review:'Independently verified'}]})).toBe(false)
@@ -85,6 +103,6 @@ describe('Gemini schema transport compatibility without application contract cha
     {...extraction.facts[0],evidence:['']},
    ].map(fact=>({...extraction,facts:[fact]})),
   ]
-  for(const invalid of bad) await expect(extractCase({narrative},{env:envFor('gemini'),fetchImpl:async()=>response('gemini',JSON.stringify(invalid))})).rejects.toThrow('schema or exact source-evidence validation')
+  for(const invalid of bad) await expect(extractCase({narrative},{env:envFor('gemini'),retryDelayMs:0,fetchImpl:async()=>response('gemini',JSON.stringify(invalid))})).rejects.toThrow('schema or exact source-evidence validation')
  })
 })

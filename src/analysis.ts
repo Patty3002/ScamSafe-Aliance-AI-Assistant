@@ -5,6 +5,15 @@ import { organisations } from './policy/organisationRouting'
 import { POLICY_VERSION } from './policy/policyVersion'
 import scenarios from './policy/scenarios.json'
 
+// Exact source-based summary: never drops later sentences of a short report (e.g. T16's second deduction).
+// Long reports are cut at a sentence boundary and marked, so staff know to read the full narrative.
+export function extractiveSummary(narrative:string,limit=600){
+  const text=narrative.trim()
+  if(text.length<=limit) return text
+  const sentences=text.split(/(?<=[.!?])\s+/); let out=''
+  for(const s of sentences){ if((out+' '+s).trim().length>limit) break; out=(out+' '+s).trim() }
+  return (out||text.slice(0,limit))+' … [continues in reported narrative]'
+}
 export const fixtures = scenarios.map(s=>[`${s.id} — ${s.title}`,s.narrative] as const)
 export const validateModelExtraction = validateExtraction
 const id=()=>`SSA-${Date.now()}`
@@ -21,7 +30,7 @@ function adapt(raw:ModelExtraction,narrative:string,caseId:string,clarification:
   const interimAction=decision.safety?'Internal Safety Escalation: authorised staff must attend immediately.':decision.urgency==='Urgent'?'Prompt authorised account-security assessment; do not wait for all details.':decision.urgency==='Priority'?'Arrange prompt human assessment of the reported issue.':decision.urgency==='Routine'?'Review the reported contact and any requested reporting or access assistance.':'Urgency is Undetermined. Obtain targeted clarification and human review.'
   return {caseId,mode,analysisVersion:1,analysisHistory:[],humanOverrides:[],policyVersion:POLICY_VERSION,model,originalNarrative:narrative,workerClarifications:clarification,employeeCorrections:correction,
     // Exact source-based summary avoids presenting unverified model-generated prose as fact.
-    summary:narrative.split(/(?<=[.!?])\s+/).slice(0,3).join(' '),summaryOrigin:'case_intake',caseTypes:[...(decision.facts.contact_status.value==='Yes'?['Suspicious scam contact' as const]:[]),...(decision.facts.financial_status.value==='Yes'?['Suspected Financial Loss' as const]:[]),...(decision.facts.exposure_status.value==='Yes'?['Possible identity or account credential disclosure' as const]:[])],reportedFacts,
+    summary:extractiveSummary(narrative),summaryOrigin:'case_intake',caseTypes:[...(decision.facts.contact_status.value==='Yes'?['Suspicious scam contact' as const]:[]),...(decision.facts.financial_status.value==='Yes'?['Suspected Financial Loss' as const]:[]),...(decision.facts.exposure_status.value==='Yes'?['Possible identity or account credential disclosure' as const]:[])],reportedFacts,
     decision,provisional:decision.provisional,priority:priority[decision.urgency],priorityRule:urgencyRules.map(r=>`${r.id}: ${r.outcome}`).join(' · '),priorityEvidence:[...new Set(urgencyRules.flatMap(r=>r.supportingFacts.flatMap(e=>e.evidence)))],interimAction,
     safetyReviewRequired:decision.safety,safetyReviewMessage:decision.safety?'Explicit reported threat; timing/location uncertainty must not delay authorised human attention.':'',
     vulnerabilityIndicators:decision.support.map(s=>({title:s.title,evidence:decision.facts[s.field].evidence.flatMap(e=>e.evidence).join(' | '),suggestion:s.rule==='VU01'?'Emotional recovery support: ORG06.':'Practical assistance: ORG07.',origin:provenance})),
